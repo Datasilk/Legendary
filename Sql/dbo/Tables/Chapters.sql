@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[Chapters]
 (
-	[legendId] INT NOT NULL, 
+	[bookId] INT NOT NULL, 
     [chapter] INT NOT NULL, 
-    [title] NVARCHAR(255) NOT NULL
+    [title] NVARCHAR(255) NOT NULL, 
+    [summary] NVARCHAR(255) NOT NULL DEFAULT ''
 )
