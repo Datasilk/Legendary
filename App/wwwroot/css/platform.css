@@ -2673,7 +2673,6 @@ html {
   min-height: 100%;
 }
 body {
-  display: flex;
   width: 100%;
   position: relative;
   overflow-x: hidden;

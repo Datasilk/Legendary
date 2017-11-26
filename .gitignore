@@ -16,6 +16,7 @@ app/wwwroot/images/workflow
 app/wwwroot/tests
 app/wwwroot/topics
 *.bak
+*.jfm
 /.vs
 
 # Build results

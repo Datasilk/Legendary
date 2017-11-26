@@ -1,0 +1,38 @@
+﻿<header>
+    <img class="logo" src="/images/logo-xs-white.png"/>
+</header>
+<div class="sidebar">
+    <ul class="menu">
+        <li>
+            <a href="#">
+                <span class="col icon small pad-top-sm pad-width">
+                    <svg viewBox="0 0 32 32">
+                        <use xlink:href="#icon-book" x="0" y="0" width="32" height="32"></use>
+                    </svg>
+                </span>
+                <span>Books</span>
+            </a>
+            {{books}}
+        </li>
+        <li>
+            <a href="#">
+                <span class="col icon small pad-top-sm pad-width">
+                    <svg viewBox="0 0 32 32">
+                        <use xlink:href="#icon-tag" x="0" y="0" width="32" height="32"></use>
+                    </svg>
+                </span>
+                <span>Tags ({{tags-count}})</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="col icon small pad-top-sm pad-width">
+                    <svg viewBox="0 0 32 32">
+                        <use xlink:href="#icon-trash" x="0" y="0" width="32" height="32"></use>
+                    </svg>
+                </span>
+                <span>Trash ({{trash-count}})</span>
+            </a>
+        </li>
+    </ul>
+</div>

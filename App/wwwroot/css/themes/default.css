@@ -2554,6 +2554,236 @@ body {
 .box table.spreadsheet tbody > tr:nth-child(even).selected a.text:active {
   color: #00272f;
 }
+.box header {
+  background: #2ca038;
+  color: #fff;
+}
+.box header a.no-link {
+  color: #fff !important;
+}
+.box header a:link {
+  color: #fff;
+}
+.box header a:visited {
+  color: #fff;
+}
+.box header a:hover {
+  color: #fff;
+}
+.box header a:active {
+  color: #fff;
+}
+.box header a:link use {
+  color: #fff;
+  fill: #fff;
+}
+.box header a:visited use {
+  color: #fff;
+  fill: #fff;
+}
+.box header a:hover use {
+  color: #fff;
+  fill: #fff;
+}
+.box header a:active use {
+  color: #fff;
+  fill: #fff;
+}
+.box header a.faded:link {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:visited {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:active {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:link use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:visited use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:hover use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:active use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box header .icon a:link,
+.box header .nolinks a:link,
+.box header a.icon:link,
+.box header.icon a:link {
+  color: #fff !important;
+}
+.box header .icon a:visited,
+.box header .nolinks a:visited,
+.box header a.icon:visited,
+.box header.icon a:visited {
+  color: #fff !important;
+}
+.box header .icon a:hover,
+.box header .nolinks a:hover,
+.box header a.icon:hover,
+.box header.icon a:hover {
+  color: #fff !important;
+}
+.box header .icon a:active,
+.box header .nolinks a:active,
+.box header a.icon:active,
+.box header.icon a:active {
+  color: #fff !important;
+}
+.box header .icon a:link use,
+.box header .nolinks a:link use,
+.box header a.icon:link use,
+.box header.icon a:link use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box header .icon a:visited use,
+.box header .nolinks a:visited use,
+.box header a.icon:visited use,
+.box header.icon a:visited use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box header .icon a:hover use,
+.box header .nolinks a:hover use,
+.box header a.icon:hover use,
+.box header.icon a:hover use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box header .icon a:active use,
+.box header .nolinks a:active use,
+.box header a.icon:active use,
+.box header.icon a:active use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar {
+  background: #2d2d2d;
+  color: #fff;
+}
+.box .sidebar a.no-link {
+  color: #fff !important;
+}
+.box .sidebar a:link {
+  color: #fff;
+}
+.box .sidebar a:visited {
+  color: #fff;
+}
+.box .sidebar a:hover {
+  color: #fff;
+}
+.box .sidebar a:active {
+  color: #fff;
+}
+.box .sidebar a:link use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar a:visited use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar a:hover use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar a:active use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar a.faded:link {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:visited {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:active {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:link use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:visited use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:hover use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:active use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .icon a:link,
+.box .sidebar .nolinks a:link,
+.box .sidebar a.icon:link,
+.box .sidebar.icon a:link {
+  color: #fff !important;
+}
+.box .sidebar .icon a:visited,
+.box .sidebar .nolinks a:visited,
+.box .sidebar a.icon:visited,
+.box .sidebar.icon a:visited {
+  color: #fff !important;
+}
+.box .sidebar .icon a:hover,
+.box .sidebar .nolinks a:hover,
+.box .sidebar a.icon:hover,
+.box .sidebar.icon a:hover {
+  color: #fff !important;
+}
+.box .sidebar .icon a:active,
+.box .sidebar .nolinks a:active,
+.box .sidebar a.icon:active,
+.box .sidebar.icon a:active {
+  color: #fff !important;
+}
+.box .sidebar .icon a:link use,
+.box .sidebar .nolinks a:link use,
+.box .sidebar a.icon:link use,
+.box .sidebar.icon a:link use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .icon a:visited use,
+.box .sidebar .nolinks a:visited use,
+.box .sidebar a.icon:visited use,
+.box .sidebar.icon a:visited use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .icon a:hover use,
+.box .sidebar .nolinks a:hover use,
+.box .sidebar a.icon:hover use,
+.box .sidebar.icon a:hover use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .icon a:active use,
+.box .sidebar .nolinks a:active use,
+.box .sidebar a.icon:active use,
+.box .sidebar.icon a:active use {
+  color: #fff !important;
+  fill: #fff !important;
+}
 .popup {
   background: #fafafa;
   border-color: #dadada;

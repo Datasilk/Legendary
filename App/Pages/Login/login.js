@@ -15,7 +15,7 @@
                     return false;
                 } else if (d.indexOf('success') == 0) {
                     S.message.show(msg, '', 'Login success! Redirecting...');
-                    window.location.href = d.substr(7);
+                    window.location.href = 'dashboard';
                 }
             }
         }, function (err) {

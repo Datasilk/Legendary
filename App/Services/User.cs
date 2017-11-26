@@ -12,9 +12,9 @@
             {
                 if(S.User.lastSubjectId == 0)
                 {
-                    return "success/subjects/";
+                    return "success";
                 }
-                return "success/subjects/#" + S.User.lastSubjectId + "/" + S.User.lastSubjectName.Replace(" ","-").ToLower() ;
+                return "success" ;
             }
             return "err";
         }

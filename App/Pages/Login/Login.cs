@@ -11,7 +11,7 @@
             if(S.User.userId > 0)
             {
                 //redirect to subjects list
-                return base.Render(path, Redirect("/subjects/"));
+                return base.Render(path, Redirect("/dashboard/"));
             }
 
             //check for database reset
