@@ -14,8 +14,6 @@
             dataType:'html',
             success: function (d) {
                 var txt = '';
-                console.log(d);
-                console.log(d.responseText);
                 if (typeof d.responseText != 'undefined') { txt = d.responseText; } else { txt = d;}
                 S.ajax.runQueue(); S.events.ajax.complete(txt); callback(txt);
             },

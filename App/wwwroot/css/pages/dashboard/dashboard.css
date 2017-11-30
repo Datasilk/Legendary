@@ -82,7 +82,7 @@ header .logo-d img {
   border: 0px none transparent !important;
   border-radius: 0px !important;
 }
-.editor .editor-toolbar *:nth-child(1n+14) {
+.editor .editor-toolbar *:nth-child(1n+17) {
   float: right;
 }
 .editor > .message {

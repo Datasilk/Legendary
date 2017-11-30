@@ -38,10 +38,13 @@ namespace Legendary.Services
                 {
                     if(chapterInc != entry.chapter && sort == 0)
                     {
-                        //display chapter
-                        chapter.Data["chapter"] = "Chapter " + entry.chapter.ToString() + ": " + 
-                        chapterlist.Find((Query.Models.Chapter c) => { return c.chapter == entry.chapter; }).title;
-                        html.Append(chapter.Render());
+                        if(entry.chapter > 0)
+                        {
+                            //display chapter
+                            chapter.Data["chapter"] = "Chapter " + entry.chapter.ToString() + ": " +
+                                chapterlist.Find((Query.Models.Chapter c) => { return c.chapter == entry.chapter; }).title;
+                            html.Append(chapter.Render());
+                        }
                         chapterInc = entry.chapter;
                     }
                     item.Data["id"] = entry.entryId.ToString();
