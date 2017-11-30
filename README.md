@@ -1,5 +1,7 @@
 # Legendary
-### An open-source, ASP.NET Core journaling web app with books, chapters, a word processor, & photo/file uploader.
+### An open-source, ASP.NET Core 2.0 journaling web app with books, chapters, a markdown editor, & photo/file uploader.
 
 The aim of this project is to replace pay-for journaling software with a free, open source solution that can be 
 self-hosted offline or on your own web server.
+
+![Legendary Markdown Editor](http://www.markentingh.com/projects/legendary/2017-11-30-Journal-Editor.png)
