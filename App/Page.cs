@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Legendary
+﻿namespace Legendary
 {
     public class Page
     {

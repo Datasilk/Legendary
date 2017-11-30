@@ -68,8 +68,7 @@ paths.working = {
     css: {
         utility: paths.css + 'utility/**/*.css',
         themes: paths.themes + '**/*.css',
-        app: paths.app + '**/*.css',
-        utility: paths.css + 'utility/*.css'
+        app: paths.app + '**/*.css'
     },
 
     vendor: {
@@ -86,7 +85,14 @@ paths.working = {
             '!' + paths.app + 'CSS/',
             '!' + paths.app + 'Scripts/**/'
         ]
-    }
+    },
+
+    dashboard: [
+        paths.scripts + 'utility/simplemde.min.js',
+        paths.scripts + 'utility/highlight.min.js',
+        paths.scripts + 'utility/remarkable.min.js',
+        paths.app + 'pages/dashboard/dashboard.js'
+    ]
 };
 
 //compiled paths
@@ -160,11 +166,20 @@ gulp.task('js:core', function () {
     return p.pipe(gulp.dest(paths.compiled.js + 'core', { overwrite: true }));
 });
 
+/* custom js compiling */
+gulp.task('js:dashboard', function () {
+    var p = gulp.src(paths.working.dashboard, { base: '.' })
+        .pipe(concat(paths.compiled.js + 'dashboard.js'));
+    if (prod == true) { p = p.pipe(uglify()); }
+    return p.pipe(gulp.dest('.', { overwrite: true }));
+});
+
 gulp.task('js', function () {
     gulp.start('js:app');
     gulp.start('js:platform');
     gulp.start('js:utility');
     gulp.start('js:core');
+    gulp.start('js:dashboard');
 });
 
 //tasks for compiling LESS & CSS /////////////////////////////////////////////////////////////////////
@@ -278,6 +293,9 @@ gulp.task('watch', function () {
     }
     pathjs.unshift(paths.working.js.app);
     gulp.watch(pathjs, ['js:app']);
+
+    //watch dashboard JS
+    gulp.watch(paths.working.dashboard, ['js:dashboard']);
 
     //watch app LESS
     var pathless = paths.working.exclude.app.slice(0);

@@ -503,6 +503,11 @@ body {
   padding: 2px 4px;
   box-sizing: border-box;
   width: 100%;
+  border-block-start-style: solid;
+  border-block-end-style: solid;
+  border-inline-end-style: solid;
+  border-inline-start-style: solid;
+  border-width: 1px;
 }
 .box input[type="checkbox"] {
   position: relative;
@@ -2673,10 +2678,12 @@ html {
   min-height: 100%;
 }
 body {
-  display: flex;
   width: 100%;
   position: relative;
   overflow-x: hidden;
+}
+* {
+  box-sizing: border-box;
 }
 body > .bg {
   background-color: rgba(0, 0, 0, 0.5);
@@ -2694,7 +2701,7 @@ body > .bg {
   max-height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 20px 50px 30px 50px;
+  padding: 20px 20px 30px 20px;
 }
 .for-popup > .popup.center {
   margin: 0 auto;
@@ -2704,7 +2711,7 @@ body > .bg {
 }
 .for-popup > .popup .btn-close {
   position: absolute;
-  right: -25px;
+  right: 0px;
   top: 10px;
   z-index: 5010;
 }

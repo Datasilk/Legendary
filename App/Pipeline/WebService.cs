@@ -115,28 +115,35 @@ namespace Legendary.Pipeline
                     }
                 }
                 //cast params to correct (supported) types
-                switch (methodParams[x].ParameterType.Name.ToLower())
+                if(methodParams[x].ParameterType.Name != "String")
                 {
-                    case "int32":
-                        paramVals[x] = Int32.Parse(param);
-                        break;
+                    var i = 0;
+                    if (int.TryParse(param, out i) == true)
+                    {
+                        if (methodParams[x].ParameterType.IsEnum == true)
+                        {
+                            //enum
+                            paramVals[x] = Enum.Parse(methodParams[x].ParameterType, param);
+                        }
+                        else
+                        {
+                            //int
+                            paramVals[x] = Convert.ChangeType(i, methodParams[x].ParameterType);
+                        }
 
-                    case "boolean":
-                        paramVals[x] = param.ToLower() == "true" ? true : false;
-                        break;
-
-                    case "double":
-                        paramVals[x] = double.Parse(param);
-                        break;
-
-                    case "datetime":
-                        paramVals[x] = DateTime.Parse(param);
-                        break;
-
-                    default:
-                        paramVals[x] = param;
-                        break;
+                    }
+                    else
+                    {
+                        paramVals[x] = Convert.ChangeType(param, methodParams[x].ParameterType);
+                    }
                 }
+                else
+                {
+                    //string
+                    paramVals[x] = param;
+                }
+                
+                
             }
 
             object result = null;

@@ -65,6 +65,10 @@
     <Folder Include="dbo\Stored Procedures" />
     <Folder Include="dbo\Tables" />
     <Folder Include="dbo\Stored Procedures\Users" />
+    <Folder Include="dbo\Stored Procedures\Books" />
+    <Folder Include="dbo\Stored Procedures\Entries" />
+    <Folder Include="dbo\Views" />
+    <Folder Include="dbo\Stored Procedures\Chapters" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Functions\SplitArray.sql" />
@@ -80,9 +84,34 @@
     <Build Include="dbo\Stored Procedures\Users\Users_HasAdmin.sql" />
     <Build Include="dbo\Stored Procedures\Users\Users_HasPasswords.sql" />
     <Build Include="dbo\Tables\Entries.sql" />
-    <Build Include="dbo\Tables\Legends.sql" />
+    <Build Include="dbo\Tables\Books.sql" />
     <Build Include="dbo\Tables\Tags.sql" />
     <Build Include="dbo\Tables\Chapters.sql" />
+    <Build Include="dbo\Sequences\SequenceLegends.sql" />
+    <Build Include="dbo\Sequences\SequenceEntries.sql" />
+    <Build Include="dbo\Stored Procedures\Books\Book_Create.sql" />
+    <Build Include="dbo\Stored Procedures\Books\Books_GetList.sql" />
+    <Build Include="dbo\Stored Procedures\Books\Book_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\Books\Book_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Books\Book_UpdateFavorite.sql" />
+    <Build Include="dbo\Stored Procedures\Books\Book_UpdateSort.sql" />
+    <Build Include="dbo\Views\View_Entries.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entries_GetList.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entry_Create.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entry_GetDetails.sql" />
+    <Build Include="dbo\Stored Procedures\Chapters\Chapters_GetList.sql" />
+    <Build Include="dbo\Stored Procedures\Chapters\Chapter_Create.sql" />
+    <Build Include="dbo\Stored Procedures\Chapters\Chapter_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Chapters\Chapter_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entry_UpdateTitle.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entry_UpdateSummary.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entry_UpdateChapter.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entry_UpdateBook.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entry_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entry_UpdateSort.sql" />
+    <Build Include="dbo\Stored Procedures\Books\Book_GetDetails.sql" />
+    <Build Include="dbo\Stored Procedures\Chapters\Chapter_GetMax.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entries_GetFirst.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

@@ -5,17 +5,10 @@
 *.suo
 *.user
 *.sln.docstates
-app/content/articles
-app/content/searchterms
-app/content/neurons
-app/content/rss
-app/content/topics
+app/content/books
 app/wwwroot/content
-app/wwwroot/images/screenshots
-app/wwwroot/images/workflow
-app/wwwroot/tests
-app/wwwroot/topics
 *.bak
+*.jfm
 /.vs
 
 # Build results

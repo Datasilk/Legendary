@@ -1,0 +1,92 @@
+header {
+  width: 100%;
+  padding: 9px;
+  display: block;
+  line-height: 0;
+  height: 50px;
+}
+header .logo {
+  width: 160px;
+  padding-left: 10px;
+}
+header .logo-d {
+  float: right;
+  margin: 1px 20px 0 0;
+}
+header .logo-d img {
+  height: 30px;
+  opacity: 0.2;
+}
+.sidebar {
+  float: left;
+  height: calc(100% - 50px);
+  max-width: 250px;
+  width: 30%;
+  line-height: 1.5;
+}
+.sidebar ul.menu {
+  padding: 10px;
+}
+.sidebar ul.menu li.row {
+  padding: 7px;
+  margin: 3px 0;
+}
+.sidebar ul.menu li.root > a {
+  font-size: 17px;
+}
+.sidebar ul.menu li.sub {
+  padding-left: 40px;
+}
+.subbar {
+  float: left;
+  height: calc(100% - 50px);
+  max-width: 350px;
+  width: 40%;
+  line-height: 1.5;
+}
+.subbar .no-entries {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+.subbar .entry {
+  border-bottom: 1px solid transparent;
+}
+.box .addentry {
+  position: relative;
+  top: -4px;
+}
+.box .addentry .button.circle.large {
+  padding: 10px;
+}
+#txtentry_summary {
+  height: 70px;
+}
+.editor {
+  height: calc(100% - 50px);
+  width: calc(100% - 600px);
+  float: left;
+  position: relative;
+}
+.editor .CodeMirror {
+  height: calc(100% - 50px);
+  border-radius: 0px !important;
+  border-left-style: none;
+  border-right-style: none;
+  border-bottom-style: none;
+}
+.editor .editor-statusbar {
+  display: none;
+}
+.editor .editor-toolbar {
+  border: 0px none transparent !important;
+  border-radius: 0px !important;
+}
+.editor .editor-toolbar *:nth-child(1n+14) {
+  float: right;
+}
+.editor > .message {
+  width: 97%;
+  z-index: 100;
+  margin-top: 10px !important;
+}

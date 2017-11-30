@@ -1,0 +1,31 @@
+﻿<script type="text/html" id="template_newchapter">
+    <div class="row message hide"><span></span></div>
+    <form method="post">
+        <div class="row">
+            <div class="col">
+                <div class="row field">Number</div>
+                <div class="row input hover">
+                    <input type="number" id="txtchapter_num" placeholder="1" style="width:50px" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="row field">Title</div>
+                <div class="row input hover">
+                    <input type="text" id="txtchapter_title" placeholder="My New Chapter" style="width:280px" />
+                </div>
+            </div>
+        </div>
+        <div class="row field">Summary</div>
+        <div class="row input hover">
+            <textarea id="txtentry_summary" placeholder="A short description about this new chapter" maxlength="255" />
+        </div>
+        <div class="row pad-top text-center">
+            <div class="col pad-right">
+                <input type="submit" class="button apply" value="Create Chapter" />
+            </div>
+            <div class="col">
+                <input type="button" class="button cancel" onclick="S.chapters.create.cancel()" value="Cancel" />
+            </div>
+        </div>
+    </form>
+</script>

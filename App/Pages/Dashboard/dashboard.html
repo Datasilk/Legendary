@@ -1,0 +1,56 @@
+﻿<header>
+    <img class="logo" src="/images/logo-xs-white.png"/>
+    <a class="logo-d" href="http://www.github.com/datasilk"/><img src="/images/logo-D-xs.png" title="Datasilk"/></a>
+</header>
+<div class="sidebar">
+    <ul class="menu">
+        <li class="root item-books row hover">
+            <a href="#">
+                <span class="col icon small pad-width">
+                    <svg viewBox="0 0 32 32">
+                        <use xlink:href="#icon-book" x="0" y="0" width="32" height="32"></use>
+                    </svg>
+                </span>
+                <span>Books</span>
+            </a>
+            <span class="col right icon small pad-width-sm">
+                <a href="javascript:" id="btn_newbook" title="Create a new Book">
+                    <svg viewBox="0 0 32 32">
+                        <use xlink:href="#icon-add" x="0" y="0" width="32" height="32"></use>
+                    </svg>
+                </a>
+            </span>
+        </li>
+        {{books}}
+        <li class="root item-tags row hover">
+            <a href="#">
+                <span class="col icon small pad-width">
+                    <svg viewBox="0 0 32 32">
+                        <use xlink:href="#icon-tag" x="0" y="0" width="32" height="32"></use>
+                    </svg>
+                </span>
+                <span>Tags <span class="faded pad-left-sm">({{tags-count}})</span></span>
+            </a>
+        </li>
+        <li class="root item-trash row hover">
+            <a href="#">
+                <span class="col icon small pad-width">
+                    <svg viewBox="0 0 32 32">
+                        <use xlink:href="#icon-trash" x="0" y="0" width="32" height="32"></use>
+                    </svg>
+                </span>
+                <span>Trash <span class="faded pad-left-sm">({{trash-count}})</span></span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="subbar">
+    <div class="entries">
+        {{entries}}
+    </div>
+</div>
+<div class="editor">
+    <div class="row message hide absolute margin"><span></span></div>
+    <textarea id="editor">{{editor-content}}</textarea>
+</div>
+{{templates}}

@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Content\themes\default\icons.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content\themes\default\icons.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.4.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
@@ -28,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Partials\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

@@ -1,7 +1,50 @@
 /* fonts */
-@import url(https://fonts.googleapis.com/css?family=Jaldi:400,700);
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Open Sans Light Italic'), local('OpenSans-LightItalic'), url(/fonts/opensans/opensans-lightitalic.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(/fonts/opensans/opensans-italic.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(/fonts/opensans/opensans-bolditalic.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(/fonts/opensans/opensans-light.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(/fonts/opensans/opensans-regular.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/fonts/opensans/opensans-bold.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+/* tapestry theme engine */
 body {
-  font-family: Jaldi, Arial, Helvetica, sans-serif;
+  font-family: Open Sans, Arial, Helvetica, sans;
+  font-weight: lighter;
 }
 .box {
   background: #eee;
@@ -1296,9 +1339,15 @@ body {
   /* IE 10+ */
   color: #aaa;
 }
-.box input[type]:not([type=button]):not([type=submit]):not([type=radio]):-moz-placeholder {
-  /* Firefox 18- */
+.box textarea::-webkit-input-placeholder {
   color: #aaa;
+}
+.box textarea::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #aaa;
+}
+.box textarea:-ms-input-placeholder {
+  color: green !important;
 }
 .box input[type]:not([type=button]):not([type=submit]):not([type=radio]):hover,
 .box textarea:hover,
@@ -1336,7 +1385,7 @@ body {
 }
 .box .button,
 .box a.button {
-  background: #00bfb9;
+  background: #2ca038;
   border-color: transparent;
   outline-color: transparent;
   color: #fff !important;
@@ -1345,21 +1394,21 @@ body {
 .box a.button:hover,
 .box .button:focus,
 .box a.button:focus {
-  background: #1aa992;
+  background: #17b45d;
   border-color: transparent;
   outline-color: transparent;
   color: #fff !important;
 }
 .box .button:active,
 .box a.button:active {
-  background: #1aa992;
+  background: #17b45d;
   border-color: transparent;
   outline-color: transparent;
   color: #fff;
 }
 .box .button.selected,
 .box a.button.selected {
-  background: #1aa992;
+  background: #17b45d;
   border-color: transparent;
   outline-color: transparent;
   color: #fff;
@@ -1402,7 +1451,7 @@ body {
 }
 .box .button.apply,
 .box a.button.apply {
-  background: #00bfb9;
+  background: #2ca038;
   border-color: transparent;
   outline-color: transparent;
   color: #fff !important;
@@ -1411,21 +1460,21 @@ body {
 .box a.button.apply:hover,
 .box .button.apply:focus,
 .box a.button.apply:focus {
-  background: #00c4fe;
+  background: #17b45d;
   border-color: transparent;
   outline-color: transparent;
   color: #fff !important;
 }
 .box .button.apply:active,
 .box a.button.apply:active {
-  background: #00a890;
+  background: #17b45d;
   border-color: transparent;
   outline-color: transparent;
   color: #fff;
 }
 .box .button.apply.selected,
 .box a.button.apply.selected {
-  background: #00a890;
+  background: #17b45d;
   border-color: transparent;
   outline-color: transparent;
   color: #fff;
@@ -1463,72 +1512,6 @@ body {
 }
 .box .button.apply:active use,
 .box a.button.apply:active use {
-  color: #fff;
-  fill: #fff;
-}
-.box .button.special,
-.box a.button.special {
-  background: #9b56ab;
-  border-color: transparent;
-  outline-color: transparent;
-  color: #fff !important;
-}
-.box .button.special:hover,
-.box a.button.special:hover,
-.box .button.special:focus,
-.box a.button.special:focus {
-  background: #7900b4;
-  border-color: transparent;
-  outline-color: transparent;
-  color: #fff !important;
-}
-.box .button.special:active,
-.box a.button.special:active {
-  background: #7900b4;
-  border-color: transparent;
-  outline-color: transparent;
-  color: #fff;
-}
-.box .button.special.selected,
-.box a.button.special.selected {
-  background: #7900b4;
-  border-color: transparent;
-  outline-color: transparent;
-  color: #fff;
-}
-.box .button.special:link,
-.box a.button.special:link {
-  color: #fff;
-}
-.box .button.special:visited,
-.box a.button.special:visited {
-  color: #fff;
-}
-.box .button.special:hover,
-.box a.button.special:hover {
-  color: #fff;
-}
-.box .button.special:active,
-.box a.button.special:active {
-  color: #fff;
-}
-.box .button.special:link use,
-.box a.button.special:link use {
-  color: #fff;
-  fill: #fff;
-}
-.box .button.special:visited use,
-.box a.button.special:visited use {
-  color: #fff;
-  fill: #fff;
-}
-.box .button.special:hover use,
-.box a.button.special:hover use {
-  color: #fff;
-  fill: #fff;
-}
-.box .button.special:active use,
-.box a.button.special:active use {
   color: #fff;
   fill: #fff;
 }
@@ -2553,6 +2536,761 @@ body {
 }
 .box table.spreadsheet tbody > tr:nth-child(even).selected a.text:active {
   color: #00272f;
+}
+.box header {
+  background: #2ca038;
+  color: #fff;
+}
+.box header a.no-link {
+  color: #fff !important;
+}
+.box header a:link {
+  color: #fff;
+}
+.box header a:visited {
+  color: #fff;
+}
+.box header a:hover {
+  color: #fff;
+}
+.box header a:active {
+  color: #fff;
+}
+.box header a:link use {
+  color: #fff;
+  fill: #fff;
+}
+.box header a:visited use {
+  color: #fff;
+  fill: #fff;
+}
+.box header a:hover use {
+  color: #fff;
+  fill: #fff;
+}
+.box header a:active use {
+  color: #fff;
+  fill: #fff;
+}
+.box header a.faded:link {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:visited {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:active {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:link use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:visited use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:hover use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box header a.faded:active use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box header .icon a:link,
+.box header .nolinks a:link,
+.box header a.icon:link,
+.box header.icon a:link {
+  color: #fff !important;
+}
+.box header .icon a:visited,
+.box header .nolinks a:visited,
+.box header a.icon:visited,
+.box header.icon a:visited {
+  color: #fff !important;
+}
+.box header .icon a:hover,
+.box header .nolinks a:hover,
+.box header a.icon:hover,
+.box header.icon a:hover {
+  color: #fff !important;
+}
+.box header .icon a:active,
+.box header .nolinks a:active,
+.box header a.icon:active,
+.box header.icon a:active {
+  color: #fff !important;
+}
+.box header .icon a:link use,
+.box header .nolinks a:link use,
+.box header a.icon:link use,
+.box header.icon a:link use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box header .icon a:visited use,
+.box header .nolinks a:visited use,
+.box header a.icon:visited use,
+.box header.icon a:visited use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box header .icon a:hover use,
+.box header .nolinks a:hover use,
+.box header a.icon:hover use,
+.box header.icon a:hover use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box header .icon a:active use,
+.box header .nolinks a:active use,
+.box header a.icon:active use,
+.box header.icon a:active use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar {
+  background: #2d2d2d;
+  color: #fff;
+}
+.box .sidebar a.no-link {
+  color: #fff !important;
+}
+.box .sidebar a:link {
+  color: #fff;
+}
+.box .sidebar a:visited {
+  color: #fff;
+}
+.box .sidebar a:hover {
+  color: #fff;
+}
+.box .sidebar a:active {
+  color: #fff;
+}
+.box .sidebar a:link use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar a:visited use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar a:hover use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar a:active use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar a.faded:link {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:visited {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:active {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:link use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:visited use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:hover use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar a.faded:active use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .icon a:link,
+.box .sidebar .nolinks a:link,
+.box .sidebar a.icon:link,
+.box .sidebar.icon a:link {
+  color: #fff !important;
+}
+.box .sidebar .icon a:visited,
+.box .sidebar .nolinks a:visited,
+.box .sidebar a.icon:visited,
+.box .sidebar.icon a:visited {
+  color: #fff !important;
+}
+.box .sidebar .icon a:hover,
+.box .sidebar .nolinks a:hover,
+.box .sidebar a.icon:hover,
+.box .sidebar.icon a:hover {
+  color: #fff !important;
+}
+.box .sidebar .icon a:active,
+.box .sidebar .nolinks a:active,
+.box .sidebar a.icon:active,
+.box .sidebar.icon a:active {
+  color: #fff !important;
+}
+.box .sidebar .icon a:link use,
+.box .sidebar .nolinks a:link use,
+.box .sidebar a.icon:link use,
+.box .sidebar.icon a:link use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .icon a:visited use,
+.box .sidebar .nolinks a:visited use,
+.box .sidebar a.icon:visited use,
+.box .sidebar.icon a:visited use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .icon a:hover use,
+.box .sidebar .nolinks a:hover use,
+.box .sidebar a.icon:hover use,
+.box .sidebar.icon a:hover use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .icon a:active use,
+.box .sidebar .nolinks a:active use,
+.box .sidebar a.icon:active use,
+.box .sidebar.icon a:active use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row {
+  background: transparent;
+  color: #eee;
+}
+.box .sidebar .row a:link {
+  color: #eee;
+}
+.box .sidebar .row a:visited {
+  color: #eee;
+}
+.box .sidebar .row a:hover {
+  color: #fff;
+}
+.box .sidebar .row a:active {
+  color: #fff;
+}
+.box .sidebar .row a:link use {
+  color: #eee;
+  fill: #eee;
+}
+.box .sidebar .row a:visited use {
+  color: #eee;
+  fill: #eee;
+}
+.box .sidebar .row a:hover use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row a:active use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row a.faded:link {
+  color: rgba(238, 238, 238, 0.5);
+}
+.box .sidebar .row a.faded:visited {
+  color: rgba(238, 238, 238, 0.5);
+}
+.box .sidebar .row a.faded:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row a.faded:active {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row a.faded:link use {
+  color: rgba(238, 238, 238, 0.5);
+  fill: rgba(238, 238, 238, 0.5);
+}
+.box .sidebar .row a.faded:visited use {
+  color: rgba(238, 238, 238, 0.5);
+  fill: rgba(238, 238, 238, 0.5);
+}
+.box .sidebar .row a.faded:hover use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row a.faded:active use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row .icon a:link,
+.box .sidebar .row .nolinks a:link,
+.box .sidebar .row a.icon:link,
+.box .sidebar .row.icon a:link {
+  color: #eee !important;
+}
+.box .sidebar .row .icon a:visited,
+.box .sidebar .row .nolinks a:visited,
+.box .sidebar .row a.icon:visited,
+.box .sidebar .row.icon a:visited {
+  color: #eee !important;
+}
+.box .sidebar .row .icon a:hover,
+.box .sidebar .row .nolinks a:hover,
+.box .sidebar .row a.icon:hover,
+.box .sidebar .row.icon a:hover {
+  color: #fff !important;
+}
+.box .sidebar .row .icon a:active,
+.box .sidebar .row .nolinks a:active,
+.box .sidebar .row a.icon:active,
+.box .sidebar .row.icon a:active {
+  color: #fff !important;
+}
+.box .sidebar .row .icon a:link use,
+.box .sidebar .row .nolinks a:link use,
+.box .sidebar .row a.icon:link use,
+.box .sidebar .row.icon a:link use {
+  color: #eee !important;
+  fill: #eee !important;
+}
+.box .sidebar .row .icon a:visited use,
+.box .sidebar .row .nolinks a:visited use,
+.box .sidebar .row a.icon:visited use,
+.box .sidebar .row.icon a:visited use {
+  color: #eee !important;
+  fill: #eee !important;
+}
+.box .sidebar .row .icon a:hover use,
+.box .sidebar .row .nolinks a:hover use,
+.box .sidebar .row a.icon:hover use,
+.box .sidebar .row.icon a:hover use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row .icon a:active use,
+.box .sidebar .row .nolinks a:active use,
+.box .sidebar .row a.icon:active use,
+.box .sidebar .row.icon a:active use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row a.text:link {
+  color: #eee;
+}
+.box .sidebar .row a.text:visited {
+  color: #eee;
+}
+.box .sidebar .row a.text:hover {
+  color: #eee;
+}
+.box .sidebar .row a.text:active {
+  color: #eee;
+}
+.box .sidebar .row > .arrow-right:after {
+  border-left-color: transparent;
+}
+.box .sidebar .row > .arrow-left:after {
+  border-right-color: transparent;
+}
+.box .sidebar .row .arrow-expand {
+  border-color: transparent transparent transparent #eee;
+}
+.box .sidebar .row.hover:hover {
+  background: #0d4b55;
+  color: #fff;
+}
+.box .sidebar .row.hover:hover a:link {
+  color: #fff;
+}
+.box .sidebar .row.hover:hover a:visited {
+  color: #fff;
+}
+.box .sidebar .row.hover:hover a:hover {
+  color: #fff;
+}
+.box .sidebar .row.hover:hover a:active {
+  color: #fff;
+}
+.box .sidebar .row.hover:hover a:link use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.hover:hover a:visited use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.hover:hover a:hover use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.hover:hover a:active use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.hover:hover a.faded:link {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.hover:hover a.faded:visited {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.hover:hover a.faded:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.hover:hover a.faded:active {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.hover:hover a.faded:link use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.hover:hover a.faded:visited use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.hover:hover a.faded:hover use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.hover:hover a.faded:active use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.hover:hover .icon a:link,
+.box .sidebar .row.hover:hover .nolinks a:link,
+.box .sidebar .row.hover:hover a.icon:link,
+.box .sidebar .row.hover:hover.icon a:link {
+  color: #fff !important;
+}
+.box .sidebar .row.hover:hover .icon a:visited,
+.box .sidebar .row.hover:hover .nolinks a:visited,
+.box .sidebar .row.hover:hover a.icon:visited,
+.box .sidebar .row.hover:hover.icon a:visited {
+  color: #fff !important;
+}
+.box .sidebar .row.hover:hover .icon a:hover,
+.box .sidebar .row.hover:hover .nolinks a:hover,
+.box .sidebar .row.hover:hover a.icon:hover,
+.box .sidebar .row.hover:hover.icon a:hover {
+  color: #fff !important;
+}
+.box .sidebar .row.hover:hover .icon a:active,
+.box .sidebar .row.hover:hover .nolinks a:active,
+.box .sidebar .row.hover:hover a.icon:active,
+.box .sidebar .row.hover:hover.icon a:active {
+  color: #fff !important;
+}
+.box .sidebar .row.hover:hover .icon a:link use,
+.box .sidebar .row.hover:hover .nolinks a:link use,
+.box .sidebar .row.hover:hover a.icon:link use,
+.box .sidebar .row.hover:hover.icon a:link use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row.hover:hover .icon a:visited use,
+.box .sidebar .row.hover:hover .nolinks a:visited use,
+.box .sidebar .row.hover:hover a.icon:visited use,
+.box .sidebar .row.hover:hover.icon a:visited use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row.hover:hover .icon a:hover use,
+.box .sidebar .row.hover:hover .nolinks a:hover use,
+.box .sidebar .row.hover:hover a.icon:hover use,
+.box .sidebar .row.hover:hover.icon a:hover use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row.hover:hover .icon a:active use,
+.box .sidebar .row.hover:hover .nolinks a:active use,
+.box .sidebar .row.hover:hover a.icon:active use,
+.box .sidebar .row.hover:hover.icon a:active use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row.hover:hover > .arrow-right:after {
+  border-left-color: #0d4b55;
+}
+.box .sidebar .row.hover:hover > .arrow-left:after {
+  border-right-color: #0d4b55;
+}
+.box .sidebar .row.hover:hover .arrow-expand {
+  border-color: transparent transparent transparent #fff;
+}
+.box .sidebar .row.selected,
+.box .sidebar .row.selected:hover {
+  background: #0c645f;
+  color: #fff;
+}
+.box .sidebar .row.selected a:link,
+.box .sidebar .row.selected:hover a:link {
+  color: #fff;
+}
+.box .sidebar .row.selected a:visited,
+.box .sidebar .row.selected:hover a:visited {
+  color: #fff;
+}
+.box .sidebar .row.selected a:hover,
+.box .sidebar .row.selected:hover a:hover {
+  color: #fff;
+}
+.box .sidebar .row.selected a:active,
+.box .sidebar .row.selected:hover a:active {
+  color: #fff;
+}
+.box .sidebar .row.selected a:link use,
+.box .sidebar .row.selected:hover a:link use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.selected a:visited use,
+.box .sidebar .row.selected:hover a:visited use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.selected a:hover use,
+.box .sidebar .row.selected:hover a:hover use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.selected a:active use,
+.box .sidebar .row.selected:hover a:active use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.selected a.faded:link,
+.box .sidebar .row.selected:hover a.faded:link {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.selected a.faded:visited,
+.box .sidebar .row.selected:hover a.faded:visited {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.selected a.faded:hover,
+.box .sidebar .row.selected:hover a.faded:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.selected a.faded:active,
+.box .sidebar .row.selected:hover a.faded:active {
+  color: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.selected a.faded:link use,
+.box .sidebar .row.selected:hover a.faded:link use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.selected a.faded:visited use,
+.box .sidebar .row.selected:hover a.faded:visited use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.selected a.faded:hover use,
+.box .sidebar .row.selected:hover a.faded:hover use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.selected a.faded:active use,
+.box .sidebar .row.selected:hover a.faded:active use {
+  color: rgba(255, 255, 255, 0.5);
+  fill: rgba(255, 255, 255, 0.5);
+}
+.box .sidebar .row.selected .icon a:link,
+.box .sidebar .row.selected:hover .icon a:link,
+.box .sidebar .row.selected .nolinks a:link,
+.box .sidebar .row.selected:hover .nolinks a:link,
+.box .sidebar .row.selected a.icon:link,
+.box .sidebar .row.selected:hover a.icon:link,
+.box .sidebar .row.selected.icon a:link,
+.box .sidebar .row.selected:hover.icon a:link {
+  color: #fff !important;
+}
+.box .sidebar .row.selected .icon a:visited,
+.box .sidebar .row.selected:hover .icon a:visited,
+.box .sidebar .row.selected .nolinks a:visited,
+.box .sidebar .row.selected:hover .nolinks a:visited,
+.box .sidebar .row.selected a.icon:visited,
+.box .sidebar .row.selected:hover a.icon:visited,
+.box .sidebar .row.selected.icon a:visited,
+.box .sidebar .row.selected:hover.icon a:visited {
+  color: #fff !important;
+}
+.box .sidebar .row.selected .icon a:hover,
+.box .sidebar .row.selected:hover .icon a:hover,
+.box .sidebar .row.selected .nolinks a:hover,
+.box .sidebar .row.selected:hover .nolinks a:hover,
+.box .sidebar .row.selected a.icon:hover,
+.box .sidebar .row.selected:hover a.icon:hover,
+.box .sidebar .row.selected.icon a:hover,
+.box .sidebar .row.selected:hover.icon a:hover {
+  color: #fff !important;
+}
+.box .sidebar .row.selected .icon a:active,
+.box .sidebar .row.selected:hover .icon a:active,
+.box .sidebar .row.selected .nolinks a:active,
+.box .sidebar .row.selected:hover .nolinks a:active,
+.box .sidebar .row.selected a.icon:active,
+.box .sidebar .row.selected:hover a.icon:active,
+.box .sidebar .row.selected.icon a:active,
+.box .sidebar .row.selected:hover.icon a:active {
+  color: #fff !important;
+}
+.box .sidebar .row.selected .icon a:link use,
+.box .sidebar .row.selected:hover .icon a:link use,
+.box .sidebar .row.selected .nolinks a:link use,
+.box .sidebar .row.selected:hover .nolinks a:link use,
+.box .sidebar .row.selected a.icon:link use,
+.box .sidebar .row.selected:hover a.icon:link use,
+.box .sidebar .row.selected.icon a:link use,
+.box .sidebar .row.selected:hover.icon a:link use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row.selected .icon a:visited use,
+.box .sidebar .row.selected:hover .icon a:visited use,
+.box .sidebar .row.selected .nolinks a:visited use,
+.box .sidebar .row.selected:hover .nolinks a:visited use,
+.box .sidebar .row.selected a.icon:visited use,
+.box .sidebar .row.selected:hover a.icon:visited use,
+.box .sidebar .row.selected.icon a:visited use,
+.box .sidebar .row.selected:hover.icon a:visited use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row.selected .icon a:hover use,
+.box .sidebar .row.selected:hover .icon a:hover use,
+.box .sidebar .row.selected .nolinks a:hover use,
+.box .sidebar .row.selected:hover .nolinks a:hover use,
+.box .sidebar .row.selected a.icon:hover use,
+.box .sidebar .row.selected:hover a.icon:hover use,
+.box .sidebar .row.selected.icon a:hover use,
+.box .sidebar .row.selected:hover.icon a:hover use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row.selected .icon a:active use,
+.box .sidebar .row.selected:hover .icon a:active use,
+.box .sidebar .row.selected .nolinks a:active use,
+.box .sidebar .row.selected:hover .nolinks a:active use,
+.box .sidebar .row.selected a.icon:active use,
+.box .sidebar .row.selected:hover a.icon:active use,
+.box .sidebar .row.selected.icon a:active use,
+.box .sidebar .row.selected:hover.icon a:active use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row.selected a:link,
+.box .sidebar .row.selected:hover a:link {
+  color: #fff;
+}
+.box .sidebar .row.selected a:visited,
+.box .sidebar .row.selected:hover a:visited {
+  color: #fff;
+}
+.box .sidebar .row.selected a:hover,
+.box .sidebar .row.selected:hover a:hover {
+  color: #fff;
+}
+.box .sidebar .row.selected a:active,
+.box .sidebar .row.selected:hover a:active {
+  color: #fff;
+}
+.box .sidebar .row.selected a:link use,
+.box .sidebar .row.selected:hover a:link use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.selected a:visited use,
+.box .sidebar .row.selected:hover a:visited use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.selected a:hover use,
+.box .sidebar .row.selected:hover a:hover use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.selected a:active use,
+.box .sidebar .row.selected:hover a:active use {
+  color: #fff;
+  fill: #fff;
+}
+.box .sidebar .row.selected > .arrow-right:after,
+.box .sidebar .row.selected:hover > .arrow-right:after {
+  border-left-color: #0c645f;
+}
+.box .sidebar .row.selected > .arrow-left:after,
+.box .sidebar .row.selected:hover > .arrow-left:after {
+  border-right-color: #0c645f;
+}
+.box .sidebar .row.selected .arrow-expand,
+.box .sidebar .row.selected:hover .arrow-expand {
+  border-color: transparent transparent transparent #fff;
+}
+.box .sidebar .row .icon.small .icon a:link,
+.box .sidebar .row .icon.small .nolinks a:link,
+.box .sidebar .row .icon.small a.icon:link,
+.box .sidebar .row .icon.small.icon a:link {
+  color: #fff !important;
+}
+.box .sidebar .row .icon.small .icon a:visited,
+.box .sidebar .row .icon.small .nolinks a:visited,
+.box .sidebar .row .icon.small a.icon:visited,
+.box .sidebar .row .icon.small.icon a:visited {
+  color: #fff !important;
+}
+.box .sidebar .row .icon.small .icon a:hover,
+.box .sidebar .row .icon.small .nolinks a:hover,
+.box .sidebar .row .icon.small a.icon:hover,
+.box .sidebar .row .icon.small.icon a:hover {
+  color: #b6ff00 !important;
+}
+.box .sidebar .row .icon.small .icon a:active,
+.box .sidebar .row .icon.small .nolinks a:active,
+.box .sidebar .row .icon.small a.icon:active,
+.box .sidebar .row .icon.small.icon a:active {
+  color: #fff !important;
+}
+.box .sidebar .row .icon.small .icon a:link use,
+.box .sidebar .row .icon.small .nolinks a:link use,
+.box .sidebar .row .icon.small a.icon:link use,
+.box .sidebar .row .icon.small.icon a:link use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row .icon.small .icon a:visited use,
+.box .sidebar .row .icon.small .nolinks a:visited use,
+.box .sidebar .row .icon.small a.icon:visited use,
+.box .sidebar .row .icon.small.icon a:visited use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .sidebar .row .icon.small .icon a:hover use,
+.box .sidebar .row .icon.small .nolinks a:hover use,
+.box .sidebar .row .icon.small a.icon:hover use,
+.box .sidebar .row .icon.small.icon a:hover use {
+  color: #b6ff00 !important;
+  fill: #b6ff00 !important;
+}
+.box .sidebar .row .icon.small .icon a:active use,
+.box .sidebar .row .icon.small .nolinks a:active use,
+.box .sidebar .row .icon.small a.icon:active use,
+.box .sidebar .row .icon.small.icon a:active use {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.box .subbar {
+  background: #ddd;
+  color: #555;
+}
+.box .subbar a.no-link {
+  color: #555 !important;
+}
+.box .subbar .entry {
+  border-bottom-color: #ccc;
 }
 .popup {
   background: #fafafa;
