@@ -75,14 +75,23 @@ header .logo-d img {
   border-right-style: none;
   border-bottom-style: none;
 }
+.editor .CodeMirror-code {
+  box-sizing: content-box;
+}
+.editor .CodeMirror-vscrollbar {
+  display: none !important;
+}
 .editor .editor-statusbar {
   display: none;
+}
+.editor .editor-preview {
+  overflow: hidden;
 }
 .editor .editor-toolbar {
   border: 0px none transparent !important;
   border-radius: 0px !important;
 }
-.editor .editor-toolbar *:nth-child(1n+17) {
+.editor .editor-toolbar *:nth-child(1n+18) {
   float: right;
 }
 .editor > .message {

@@ -274,6 +274,12 @@ S.editor = {
                     className: "fa fa-header",
                     title: "Heading (Ctrl+H)",
                 },
+                {
+                    name: "quote",
+                    action: SimpleMDE.toggleBlockquote,
+                    className: "fa fa-quote-left",
+                    title: "Quote",
+                },
                 "|",
                 {
                     name: "unordered-list",

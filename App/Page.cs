@@ -7,8 +7,7 @@
         public string title = "Legendary";
         public string description = "";
         public string headCss = "";
-        public string colorsCss = "/css/themes/default.css";
-        public string favicon = "";
+        public string favicon = "/images/favicon.png";
         public string svgIcons = "";
         public string scripts = "";
         public bool useTapestry = true;
@@ -26,7 +25,6 @@
             scaffold.Data["title"] = title;
             scaffold.Data["description"] = description;
             scaffold.Data["head-css"] = headCss;
-            scaffold.Data["colors-css"] = colorsCss;
             scaffold.Data["favicon"] = favicon;
             scaffold.Data["svg-icons"] = svgIcons;
             scaffold.Data["body"] = body;

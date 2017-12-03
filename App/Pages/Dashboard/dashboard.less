@@ -27,9 +27,12 @@
 
 .editor{ height:~"calc(100% - 50px)"; width:~"calc(100% - 600px)"; float:left; position:relative;
     .CodeMirror{height:~"calc(100% - 50px)";border-radius:0px !important; border-left-style:none; border-right-style:none; border-bottom-style:none;}
+    .CodeMirror-code{box-sizing:content-box;}
+    .CodeMirror-vscrollbar{display:none !important;}
     .editor-statusbar{display:none;}
+    .editor-preview{overflow:hidden;}
     .editor-toolbar{border:0px none transparent !important; border-radius:0px !important;
-        *:nth-child(1n+17){float:right;}
+        *:nth-child(1n+18){float:right;}
     }
     & > .message{width:97%; z-index:100; margin-top:10px !important;}
 }

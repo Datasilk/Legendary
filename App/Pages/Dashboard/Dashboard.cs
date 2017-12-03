@@ -15,15 +15,15 @@ namespace Legendary.Pages
             if (!CheckSecurity()) { return AccessDenied(); }
 
             //add scripts to page
-            AddCSS("/css/utility/font-awesome.css");
+            //AddCSS("/css/utility/font-awesome.css");
             //AddScript("/js/utility/simplemde.min.js");
-            AddCSS("/css/utility/simplemde.min.css");
+            //AddCSS("/css/utility/simplemde.min.css");
             //AddScript("/js/utility/highlight.min.js");
-            AddCSS("/css/utility/highlight/atelier-forest-light.css"); // <-- define custom code highlight theme here
+            //AddCSS("/css/utility/highlight/atelier-forest-light.css"); // <-- define custom code highlight theme here
             //AddScript("/js/utility/remarkable.min.js");
             //AddScript("/js/pages/dashboard/dashboard.js");
             AddScript("/js/dashboard.js");
-            AddCSS("/css/pages/dashboard/dashboard.css");
+            AddCSS("/css/dashboard.css");
 
             var dash = new Scaffold(S, "/Pages/Dashboard/dashboard.html");
 
