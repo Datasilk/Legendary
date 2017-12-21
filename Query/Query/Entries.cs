@@ -9,9 +9,9 @@ namespace Legendary.Query
         {
         }
 
-        public void CreateEntry(int userId, int bookId, DateTime dateCreated, string title, string summary = "", int chapter = 0, int sort = 0)
+        public int CreateEntry(int userId, int bookId, DateTime dateCreated, string title, string summary = "", int chapter = 0, int sort = 0)
         {
-            Sql.ExecuteNonQuery("Entry_Create",
+            return Sql.ExecuteScalar<int>("Entry_Create",
                 new Dictionary<string, object>()
                 {
                     {"userId", userId },

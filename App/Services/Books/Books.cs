@@ -14,14 +14,15 @@ namespace Legendary.Services
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var query = new Query.Books(S.Server.sqlConnection);
+            var bookId = 0;
             try { 
-            query.CreateBook(S.User.userId, title, false);
+                bookId = query.CreateBook(S.User.userId, title, false);
             }
             catch (Exception)
             {
                 return Error();
             }
-            return "success|" + GetBooksList();
+            return "success|" + bookId + "|" + GetBooksList();
         }
 
         public string GetBooksList()

@@ -160,6 +160,8 @@ namespace Legendary.Pipeline
             //finally, unload the Legendary Core:
             //close SQL connection, save User info, etc (before sending response)
             S.Unload();
+
+            //send response
             context.Response.ContentType = "text/json";
             if (result != null)
             {

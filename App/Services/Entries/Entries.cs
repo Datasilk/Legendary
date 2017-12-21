@@ -19,7 +19,7 @@ namespace Legendary.Services
             byTitle = 3
         }
 
-        public string GetList(int bookId, int start = 1, int length = 50, SortType sort = 0)
+        public string GetList(int bookId, int start = 1, int length = 50, SortType sort = 0, bool includeCount = false)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var html = new StringBuilder();
@@ -32,7 +32,10 @@ namespace Legendary.Services
             var chapterlist = chapters.GetList(bookId);
             var list = query.GetList(S.User.userId, bookId, start, length, (int)sort);
             var chapterInc = -1;
-            if(list.Count > 0)
+            var book = books.GetDetails(S.User.userId, bookId);
+            entries.Data["book-title"] = book.title;
+
+            if (list.Count > 0)
             {
                 list.ForEach((Query.Models.Entry entry) =>
                 {
@@ -53,32 +56,30 @@ namespace Legendary.Services
                     item.Data["date-created"] = entry.datecreated.ToString("d/MM/yyyy");
                     html.Append(item.Render());
                 });
+                entries.Data["entries"] = html.ToString();
             }
             else
             {
                 html.Append(S.Server.LoadFileFromCache("/Services/Entries/no-entries.html"));
             }
 
-            var book = books.GetDetails(S.User.userId, bookId);
-            entries.Data["book-title"] = book.title;
-            entries.Data["entries"] = html.ToString();
-
-            return entries.Render();
+            return (includeCount == true ? list.Count + "|" : "") + entries.Render();
         }
 
         public string CreateEntry(int bookId, string title, string summary, int chapter = 0, int sort = 0)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var query = new Query.Entries(S.Server.sqlConnection);
+            var entryId = 0;
             try
             {
-                query.CreateEntry(S.User.userId, bookId, DateTime.Now, title, summary, chapter);
+                entryId = query.CreateEntry(S.User.userId, bookId, DateTime.Now, title, summary, chapter);
             }
             catch (Exception ex)
             {
                 return Error();
             }
-            return "success|" + GetList(bookId, 1, 50, (SortType)sort);
+            return entryId + "|" + GetList(bookId, 1, 50, (SortType)sort);
         }
 
         public string SaveEntry(int entryId, string content)

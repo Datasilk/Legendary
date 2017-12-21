@@ -15,39 +15,72 @@ namespace Legendary.Pages
             if (!CheckSecurity()) { return AccessDenied(); }
 
             //add scripts to page
-            AddCSS("/css/utility/font-awesome.css");
+            //AddCSS("/css/utility/font-awesome.css");
             //AddScript("/js/utility/simplemde.min.js");
-            AddCSS("/css/utility/simplemde.min.css");
+            //AddCSS("/css/utility/simplemde.min.css");
             //AddScript("/js/utility/highlight.min.js");
-            AddCSS("/css/utility/highlight/atelier-forest-light.css"); // <-- define custom code highlight theme here
+            //AddCSS("/css/utility/highlight/atelier-forest-light.css"); // <-- define custom code highlight theme here
             //AddScript("/js/utility/remarkable.min.js");
             //AddScript("/js/pages/dashboard/dashboard.js");
             AddScript("/js/dashboard.js");
-            AddCSS("/css/pages/dashboard/dashboard.css");
+            AddCSS("/css/dashboard.css");
 
             var dash = new Scaffold(S, "/Pages/Dashboard/dashboard.html");
 
             //get list of books
             var html = new StringBuilder();
-            var list = new Scaffold(S, "/Services/Books/list-item.html");
             var query = new Query.Books(S.Server.sqlConnection);
             var books = query.GetList(S.User.userId);
-            var i = 0;
-            books.ForEach((Query.Models.Book book) =>
+            if(books.Count > 0)
             {
-                if(i == 0) {
-                    list.Data["selected"] = "selected";
-                }
-                else
+                //books exist
+                var list = new Scaffold(S, "/Services/Books/list-item.html");
+                var i = 0;
+                books.ForEach((Query.Models.Book book) =>
                 {
-                    list.Data["selected"] = "";
+                    if (i == 0)
+                    {
+                        list.Data["selected"] = "selected";
+                    }
+                    else
+                    {
+                        list.Data["selected"] = "";
+                    }
+                    list.Data["id"] = book.bookId.ToString();
+                    list.Data["title"] = book.title;
+                    html.Append(list.Render());
+                    i++;
+                });
+                dash.Data["books"] = html.ToString();
+
+                //get list of entries for top book
+                var entries = new Services.Entries(S);
+                var bookId = 0;
+                if (books.Count > 0)
+                {
+                    bookId = books[0].bookId;
+                    var first = new Query.Entries(S.Server.sqlConnection).GetFirst(S.User.userId, bookId, (int)Services.Entries.SortType.byChapter);
+                    if(first != null)
+                    {
+                        scripts += "<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.editor.entryId=" + first.entryId.ToString() + ";</script>";
+
+                        //load content of first entry
+                        dash.Data["editor-content"] = entries.LoadEntry(first.entryId, bookId);
+                    }
+                    else
+                    {
+                        dash.Data["no-entries"] = "hide";
+                        scripts += "<script language=\"javascript\">S.entries.noentries();</script>";
+                    }
                 }
-                list.Data["id"] = book.bookId.ToString();
-                list.Data["title"] = book.title;
-                html.Append(list.Render());
-                i++;
-            });
-            dash.Data["books"] = html.ToString();
+                dash.Data["entries"] = entries.GetList(bookId, 1, 50, Services.Entries.SortType.byChapter);
+            }
+            else
+            {
+                dash.Data["no-books"] = "hide";
+                dash.Data["no-entries"] = "hide";
+                dash.Data["no-content"] = S.Server.LoadFileFromCache("/Pages/Dashboard/templates/nobooks.html");
+            }
 
             //get count for tags & trash
             var tags = 0;
@@ -60,22 +93,9 @@ namespace Legendary.Pages
             dash.Data["templates"] = 
                 S.Server.LoadFileFromCache("/Pages/Dashboard/templates/newbook.html") + 
                 S.Server.LoadFileFromCache("/Pages/Dashboard/templates/newentry.html") +
-                S.Server.LoadFileFromCache("/Pages/Dashboard/templates/newchapter.html");
-
-            //get list of entries for top book
-            var entries = new Services.Entries(S);
-            var bookId = 0;
-            if (books.Count > 0)
-            {
-                bookId = books[0].bookId;
-                var first = new Query.Entries(S.Server.sqlConnection).GetFirst(S.User.userId, bookId, (int)Services.Entries.SortType.byChapter);
-                scripts += "<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.editor.entryId=" + first.entryId.ToString() + ";</script>";
-
-                //load content of first entry
-                dash.Data["editor-content"] = entries.LoadEntry(first.entryId, bookId);
-            }
-            dash.Data["entries"] = entries.GetList(bookId, 1, 50, Services.Entries.SortType.byChapter);
-
+                S.Server.LoadFileFromCache("/Pages/Dashboard/templates/newchapter.html") +
+                S.Server.LoadFileFromCache("/Pages/Dashboard/templates/noentries.html");
+            
             return base.Render(path, dash.Render(), metadata);
         }
     }

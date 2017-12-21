@@ -6,9 +6,8 @@
 *.user
 *.sln.docstates
 app/content/books
-app/wwwroot/content
 *.bak
-*.jfm
+/**/*.jfm
 /.vs
 
 # Build results

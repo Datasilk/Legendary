@@ -1,6 +1,6 @@
 ﻿<header>
-    <img class="logo" src="/images/logo-xs-white.png"/>
-    <a class="logo-d" href="http://www.github.com/datasilk"/><img src="/images/logo-D-xs.png" title="Datasilk"/></a>
+    <img class="logo" src="/images/logo-xs-white.png" />
+    <a class="logo-d" href="http://www.github.com/datasilk" /><img src="/images/logo-D-xs.png" title="Datasilk" /></a>
 </header>
 <div class="sidebar">
     <ul class="menu">
@@ -14,7 +14,7 @@
                 <span>Books</span>
             </a>
             <span class="col right icon small pad-width-sm">
-                <a href="javascript:" id="btn_newbook" title="Create a new Book">
+                <a href="javascript:" class="btn-newbook" title="Create a new Book">
                     <svg viewBox="0 0 32 32">
                         <use xlink:href="#icon-add" x="0" y="0" width="32" height="32"></use>
                     </svg>
@@ -44,13 +44,14 @@
         </li>
     </ul>
 </div>
-<div class="subbar">
+<div class="subbar {{no-books}}">
     <div class="entries">
         {{entries}}
     </div>
 </div>
-<div class="editor">
+<div class="editor {{no-entries}}">
     <div class="row message hide absolute margin"><span></span></div>
     <textarea id="editor">{{editor-content}}</textarea>
 </div>
+{{no-content}}
 {{templates}}

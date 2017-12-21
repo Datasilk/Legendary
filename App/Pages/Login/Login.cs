@@ -10,7 +10,7 @@
         {
             if(S.User.userId > 0)
             {
-                //redirect to subjects list
+                //redirect to dashboard
                 return base.Render(path, Redirect("/dashboard/"));
             }
 

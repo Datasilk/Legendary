@@ -87,12 +87,20 @@ paths.working = {
         ]
     },
 
-    dashboard: [
-        paths.scripts + 'utility/simplemde.min.js',
-        paths.scripts + 'utility/highlight.min.js',
-        paths.scripts + 'utility/remarkable.min.js',
-        paths.app + 'pages/dashboard/dashboard.js'
-    ]
+    dashboard: {
+        js: [
+            paths.scripts + 'utility/simplemde.min.js',
+            paths.scripts + 'utility/highlight.min.js',
+            paths.scripts + 'utility/remarkable.min.js',
+            paths.app + 'pages/dashboard/dashboard.js'
+        ],
+        css: [
+            paths.css + 'utility/font-awesome.css',
+            paths.css + 'utility/simplemde.min.css',
+            paths.css + 'utility/highlight/atelier-forest-light.css', // <-- code syntax highlighting color scheme
+            paths.webroot + 'css/pages/dashboard/dashboard.css'
+        ]
+    }
 };
 
 //compiled paths
@@ -168,7 +176,7 @@ gulp.task('js:core', function () {
 
 /* custom js compiling */
 gulp.task('js:dashboard', function () {
-    var p = gulp.src(paths.working.dashboard, { base: '.' })
+    var p = gulp.src(paths.working.dashboard.js, { base: '.' })
         .pipe(concat(paths.compiled.js + 'dashboard.js'));
     if (prod == true) { p = p.pipe(uglify()); }
     return p.pipe(gulp.dest('.', { overwrite: true }));
@@ -255,6 +263,14 @@ gulp.task('css:utility', function () {
     return p.pipe(gulp.dest(paths.compiled.css + 'utility', { overwrite: true }));
 });
 
+/* custom css compiling */
+gulp.task('css:dashboard', ['less:app'], function () {
+    var p = gulp.src(paths.working.dashboard.css, { base: '.' })
+        .pipe(concat(paths.compiled.css + 'dashboard.css'));
+    if (prod == true) { p = p.pipe(uglify()); }
+    return p.pipe(gulp.dest('.', { overwrite: true }));
+});
+
 gulp.task('less', function () {
     gulp.start('less:platform');
     gulp.start('less:app');
@@ -295,7 +311,7 @@ gulp.task('watch', function () {
     gulp.watch(pathjs, ['js:app']);
 
     //watch dashboard JS
-    gulp.watch(paths.working.dashboard, ['js:dashboard']);
+    gulp.watch(paths.working.dashboard.js, ['js:dashboard']);
 
     //watch app LESS
     var pathless = paths.working.exclude.app.slice(0);
@@ -341,4 +357,6 @@ gulp.task('watch', function () {
         paths.working.css.utility
     ], ['css:utility']);
 
+    //watch dashboard CSS
+    gulp.watch(paths.working.dashboard.css, ['css:dashboard']);
 });

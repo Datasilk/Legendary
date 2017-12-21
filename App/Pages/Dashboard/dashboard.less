@@ -5,7 +5,7 @@
     }
 }
 
-.sidebar{float:left; height:~"calc(100% - 50px)"; max-width:250px; width:30%; line-height:1.5;
+.sidebar{float:left; height:~"calc(100% - 50px)"; width:250px; line-height:1.5;
     ul.menu {padding:10px;
         li.row{padding:7px; margin:3px 0;}
     }
@@ -15,7 +15,7 @@
     }
 }
 
-.subbar{float:left; height:~"calc(100% - 50px)"; max-width:350px; width:40%; line-height:1.5;
+.subbar{float:left; height:~"calc(100% - 50px)"; width:350px; line-height:1.5;
     .no-entries{width:100%; text-align:center; padding:20px;}
     .entry{border-bottom:1px solid transparent;}
 }
@@ -23,13 +23,19 @@
     .button.circle.large{padding:10px;}
 }
 
+.no-books{float:left; width:~"calc(100% - 250px)"; text-align:center; }
+.no-entries{float:left; width:~"calc(100% - 600px)"; text-align:center; }
+
 #txtentry_summary{height:70px;}
 
 .editor{ height:~"calc(100% - 50px)"; width:~"calc(100% - 600px)"; float:left; position:relative;
     .CodeMirror{height:~"calc(100% - 50px)";border-radius:0px !important; border-left-style:none; border-right-style:none; border-bottom-style:none;}
+    .CodeMirror-code{box-sizing:content-box;}
+    .CodeMirror-vscrollbar{display:none !important;}
     .editor-statusbar{display:none;}
+    .editor-preview{overflow:hidden;}
     .editor-toolbar{border:0px none transparent !important; border-radius:0px !important;
-        *:nth-child(1n+17){float:right;}
+        *:nth-child(1n+18){float:right;}
     }
     & > .message{width:97%; z-index:100; margin-top:10px !important;}
 }
