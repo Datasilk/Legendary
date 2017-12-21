@@ -2438,12 +2438,7 @@ header .logo-d img {
 .sidebar {
   float: left;
   height: calc(100% - 50px);
-<<<<<<< HEAD
   width: 250px;
-=======
-  max-width: 250px;
-  width: 30%;
->>>>>>> 047f0e5d5aed1a63099971a95122bac356895c6c
   line-height: 1.5;
 }
 .sidebar ul.menu {
@@ -2462,12 +2457,7 @@ header .logo-d img {
 .subbar {
   float: left;
   height: calc(100% - 50px);
-<<<<<<< HEAD
   width: 350px;
-=======
-  max-width: 350px;
-  width: 40%;
->>>>>>> 047f0e5d5aed1a63099971a95122bac356895c6c
   line-height: 1.5;
 }
 .subbar .no-entries {
@@ -2485,7 +2475,6 @@ header .logo-d img {
 .box .addentry .button.circle.large {
   padding: 10px;
 }
-<<<<<<< HEAD
 .no-books {
   float: left;
   width: calc(100% - 250px);
@@ -2496,8 +2485,6 @@ header .logo-d img {
   width: calc(100% - 600px);
   text-align: center;
 }
-=======
->>>>>>> 047f0e5d5aed1a63099971a95122bac356895c6c
 #txtentry_summary {
   height: 70px;
 }

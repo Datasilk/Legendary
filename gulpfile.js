@@ -264,7 +264,7 @@ gulp.task('css:utility', function () {
 });
 
 /* custom css compiling */
-gulp.task('css:dashboard', ['less:app'], function () {
+gulp.task('less:dashboard', ['less:app'], function () {
     var p = gulp.src(paths.working.dashboard.css, { base: '.' })
         .pipe(concat(paths.compiled.css + 'dashboard.css'));
     if (prod == true) { p = p.pipe(uglify()); }
@@ -276,6 +276,7 @@ gulp.task('less', function () {
     gulp.start('less:app');
     gulp.start('less:themes');
     gulp.start('less:utility');
+    gulp.start('less:dashboard');
 });
 
 gulp.task('css', function () {
