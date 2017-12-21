@@ -7,7 +7,7 @@
 *.sln.docstates
 app/content/books
 *.bak
-/**/*.jfm
+/Sql/Sql.jfm
 /.vs
 
 # Build results
