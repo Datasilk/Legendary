@@ -26,9 +26,9 @@ namespace Legendary.Services
             var entries = new Scaffold(S, "/Services/Entries/entries.html");
             var item = new Scaffold(S, "/Services/Entries/list-item.html");
             var chapter = new Scaffold(S, "/Services/Entries/chapter.html");
-            var books = new Query.Books(S.Server.sqlConnection);
-            var query = new Query.Entries(S.Server.sqlConnection);
-            var chapters = new Query.Chapters(S.Server.sqlConnection);
+            var books = new Query.Books(S.Server.sqlConnectionString);
+            var query = new Query.Entries(S.Server.sqlConnectionString);
+            var chapters = new Query.Chapters(S.Server.sqlConnectionString);
             var chapterlist = chapters.GetList(bookId);
             var list = query.GetList(S.User.userId, bookId, start, length, (int)sort);
             var chapterInc = -1;
@@ -69,7 +69,7 @@ namespace Legendary.Services
         public string CreateEntry(int bookId, string title, string summary, int chapter = 0, int sort = 0)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            var query = new Query.Entries(S.Server.sqlConnection);
+            var query = new Query.Entries(S.Server.sqlConnectionString);
             var entryId = 0;
             try
             {
@@ -85,7 +85,7 @@ namespace Legendary.Services
         public string SaveEntry(int entryId, string content)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            var query = new Query.Entries(S.Server.sqlConnection);
+            var query = new Query.Entries(S.Server.sqlConnectionString);
             var entry = query.GetDetails(S.User.userId, entryId);
             var path = "/Content/books/" + entry.bookId + "/";
             if (!Directory.Exists(S.Server.MapPath(path)))

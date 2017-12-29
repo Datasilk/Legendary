@@ -1,11 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using ImageSharp;
-//using Nine.Imaging;
-//using Nine.Imaging.Filtering;
-//using Nine.Imaging.Encoding;
 
-namespace Legendary.Utility
+namespace Utility
 {
     public struct structImage
     {

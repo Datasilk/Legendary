@@ -1,4 +1,7 @@
-﻿namespace Legendary.Pages
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Legendary.Pages
 {
     public class Login: Page
     {
@@ -24,7 +27,7 @@
                 scaffold.Data["title"] = "Create an administrator account";
                 scripts += "<script src=\"/js/pages/login/new-admin.js\"></script>";
             }
-            else if (S.Server.environment == Server.enumEnvironment.development && S.Server.resetPass == true)
+            else if (S.Server.environment == Server.enumEnvironment.development && S.User.resetPass == true)
             {
                 //load new password form (for admin only)
                 scaffold = new Scaffold(S, "/Pages/Login/new-pass.html");

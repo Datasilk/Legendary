@@ -1,12 +1,14 @@
 {
+  "namespace":  "Legendary",
   "environment": "development",
   "port": "80",
   "data": {
     "active": "SqlServerTrusted",
-    "SqlServerTrusted": "server=.\\SQL2017; database=Legendary; Trusted_Connection=true"
+    "SqlServerTrusted": "server=.\\SQL2016; database=Legendary; Trusted_Connection=true"
   },
 
   "encryption": {
+    "salt": "?",
     "bcrypt_work_factor": "10"
   }
 }
