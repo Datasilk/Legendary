@@ -2525,3 +2525,10 @@ header .logo-d img {
   z-index: 100;
   margin-top: 10px !important;
 }
+.editor-toolbar.disabled-for-preview a,
+.editor-toolbar.disabled-for-preview .separator:nth-child(-n+17) {
+  opacity: 0.1;
+}
+.editor-toolbar.disabled-for-preview a.no-disable {
+  opacity: 1;
+}

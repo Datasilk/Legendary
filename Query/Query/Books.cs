@@ -22,6 +22,17 @@ namespace Legendary.Query
             );
         }
 
+        public void TrashBook(int userId, int bookId)
+        {
+            Sql.ExecuteNonQuery("Book_Trash",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"bookId", bookId }
+                }
+            );
+        }
+
         public void DeleteBook(int userId, int bookId)
         {
             Sql.ExecuteNonQuery("Book_Delete",

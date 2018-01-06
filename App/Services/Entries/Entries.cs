@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Crypto;
 
 namespace Legendary.Services
 {
@@ -19,13 +20,32 @@ namespace Legendary.Services
             byTitle = 3
         }
 
+        private UInt512 chachaKey = new UInt512(
+            0X03020100U,
+            0X07060504U,
+            0X0B0A0908U,
+            0X0F0E0D0CU,
+            0X13121110U,
+            0X17161514U,
+            0X1B1A1918U,
+            0X1F1E1D1CU,
+            0X00000000U,
+            0X00000000U,
+            0X00000000U,
+            0X00000000U,
+            0X00000000U,
+            0X00000000U,
+            0X00000000U,
+            0X00000000U
+        );
+
         public string GetList(int bookId, int start = 1, int length = 50, SortType sort = 0, bool includeCount = false)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var html = new StringBuilder();
-            var entries = new Scaffold(S, "/Services/Entries/entries.html");
-            var item = new Scaffold(S, "/Services/Entries/list-item.html");
-            var chapter = new Scaffold(S, "/Services/Entries/chapter.html");
+            var entries = new Scaffold(S.Server.MapPath("/Services/Entries/entries.html"), S.Server.Scaffold);
+            var item = new Scaffold(S.Server.MapPath("/Services/Entries/list-item.html"), S.Server.Scaffold);
+            var chapter = new Scaffold(S.Server.MapPath("/Services/Entries/chapter.html"), S.Server.Scaffold);
             var books = new Query.Books(S.Server.sqlConnectionString);
             var query = new Query.Entries(S.Server.sqlConnectionString);
             var chapters = new Query.Chapters(S.Server.sqlConnectionString);
@@ -92,7 +112,14 @@ namespace Legendary.Services
             {
                 Directory.CreateDirectory(S.Server.MapPath(path));
             }
-            File.WriteAllText(S.Server.MapPath(path + entryId + ".md"), content);
+
+            // encrypt content using ChaCha20
+            var data = S.Util.Str.GetBytes(content);
+            var chacha = new ChaCha20(chachaKey);
+            chacha.Transform(data);
+
+            //save encrypted content to file
+            File.WriteAllBytes(S.Server.MapPath(path + entryId + ".dat"), data);
             return "success";
         }
 
@@ -100,10 +127,14 @@ namespace Legendary.Services
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var path = "/Content/books/" + bookId + "/";
-            var file = S.Server.MapPath(path + entryId + ".md");
+            var file = S.Server.MapPath(path + entryId + ".dat");
             if (File.Exists(file))
             {
-                return File.ReadAllText(file);
+                // decrypt content using ChaCha20
+                var data = File.ReadAllBytes(file);
+                var chacha = new ChaCha20(chachaKey);
+                chacha.Transform(data);
+                return Encoding.UTF8.GetString(data);
             }
             return "";
         }

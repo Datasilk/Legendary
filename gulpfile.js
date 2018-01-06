@@ -99,7 +99,8 @@ paths.working = {
             paths.css + 'utility/simplemde.min.css',
             paths.css + 'utility/highlight/atelier-forest-light.css', // <-- code syntax highlighting color scheme
             paths.webroot + 'css/pages/dashboard/dashboard.css'
-        ]
+        ],
+        compiled: paths.webroot + 'css/pages/dashboard/dashboard.css'
     }
 };
 
@@ -264,7 +265,7 @@ gulp.task('css:utility', function () {
 });
 
 /* custom css compiling */
-gulp.task('less:dashboard', ['less:app'], function () {
+gulp.task('css:dashboard', ['less:app'], function () {
     var p = gulp.src(paths.working.dashboard.css, { base: '.' })
         .pipe(concat(paths.compiled.css + 'dashboard.css'));
     if (prod == true) { p = p.pipe(uglify()); }
@@ -276,13 +277,13 @@ gulp.task('less', function () {
     gulp.start('less:app');
     gulp.start('less:themes');
     gulp.start('less:utility');
-    gulp.start('less:dashboard');
 });
 
 gulp.task('css', function () {
     gulp.start('css:themes');
     gulp.start('css:app');
     gulp.start('css:utility');
+    gulp.start('css:dashboard');
 });
 
 //tasks for compiling vendor app dependencies /////////////////////////////////////////////////
@@ -358,6 +359,11 @@ gulp.task('watch', function () {
         paths.working.css.utility
     ], ['css:utility']);
 
+    //watch utility CSS
+    gulp.watch([
+        paths.working.css.utility
+    ], ['css:utility']);
+
     //watch dashboard CSS
-    gulp.watch(paths.working.dashboard.css, ['css:dashboard']);
+    gulp.watch(paths.working.dashboard.compiled, ['css:dashboard']);
 });

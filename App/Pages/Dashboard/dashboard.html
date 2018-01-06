@@ -5,7 +5,7 @@
 <div class="sidebar">
     <ul class="menu">
         <li class="root item-books row hover">
-            <a href="#">
+            <a href="javascript:">
                 <span class="col icon small pad-width">
                     <svg viewBox="0 0 32 32">
                         <use xlink:href="#icon-book" x="0" y="0" width="32" height="32"></use>
@@ -23,7 +23,7 @@
         </li>
         {{books}}
         <li class="root item-tags row hover">
-            <a href="#">
+            <a href="javascript:">
                 <span class="col icon small pad-width">
                     <svg viewBox="0 0 32 32">
                         <use xlink:href="#icon-tag" x="0" y="0" width="32" height="32"></use>
@@ -33,7 +33,7 @@
             </a>
         </li>
         <li class="root item-trash row hover">
-            <a href="#">
+            <a href="javascript:">
                 <span class="col icon small pad-width">
                     <svg viewBox="0 0 32 32">
                         <use xlink:href="#icon-trash" x="0" y="0" width="32" height="32"></use>
@@ -53,5 +53,7 @@
     <div class="row message hide absolute margin"><span></span></div>
     <textarea id="editor">{{editor-content}}</textarea>
 </div>
+<div class="tags hide"></div>
+<div class="trash hide"></div>
 {{no-content}}
 {{templates}}

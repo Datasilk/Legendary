@@ -23,6 +23,29 @@ namespace Legendary.Query
             );
         }
 
+        public void TrashChapter(int bookId, int chapter, bool entries = false)
+        {
+            Sql.ExecuteNonQuery("Chapter_Trash",
+                new Dictionary<string, object>()
+                {
+                    {"bookId", bookId },
+                    {"chapter", chapter },
+                    {"entries", entries }
+                }
+            );
+        }
+
+        public void RestoreChapter(int bookId, int chapter)
+        {
+            Sql.ExecuteNonQuery("Chapter_Restore",
+                new Dictionary<string, object>()
+                {
+                    {"bookId", bookId },
+                    {"chapter", chapter }
+                }
+            );
+        }
+
         public void DeleteChapter(int bookId, int chapter)
         {
             Sql.ExecuteNonQuery("Chapter_Delete",

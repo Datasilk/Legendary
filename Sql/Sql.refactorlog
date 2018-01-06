@@ -343,4 +343,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="legendId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="e392f216-679f-4b43-888f-42df465344b5" ChangeDateTime="01/04/2018 22:24:34">
+    <Property Name="ElementName" Value="[dbo].[Markdown].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Markdown]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="entryId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e734b4d8-2d2a-4acd-9d66-94bbd4259397" ChangeDateTime="01/04/2018 22:26:59">
+    <Property Name="ElementName" Value="[dbo].[Markdown].[historical]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Markdown]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="historicalId" />
+  </Operation>
 </Operations>

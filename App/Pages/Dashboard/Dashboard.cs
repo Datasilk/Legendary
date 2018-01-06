@@ -25,7 +25,7 @@ namespace Legendary.Pages
             AddScript("/js/dashboard.js");
             AddCSS("/css/dashboard.css");
 
-            var dash = new Scaffold(S, "/Pages/Dashboard/dashboard.html");
+            var dash = new Scaffold(S.Server.MapPath("/Pages/Dashboard/dashboard.html"), S.Server.Scaffold);
 
             //get list of books
             var html = new StringBuilder();
@@ -34,7 +34,7 @@ namespace Legendary.Pages
             if(books.Count > 0)
             {
                 //books exist
-                var list = new Scaffold(S, "/Services/Books/list-item.html");
+                var list = new Scaffold(S.Server.MapPath("/Services/Books/list-item.html"), S.Server.Scaffold);
                 var i = 0;
                 books.ForEach((Query.Models.Book book) =>
                 {

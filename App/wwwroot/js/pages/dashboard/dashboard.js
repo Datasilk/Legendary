@@ -2,7 +2,12 @@
 S.dash = {
     init: function() {
         $('.btn-newbook').on('click', S.books.create.view);
+        $('.item-trash > a').on('click', S.trash.show);
         S.editor.init();
+    },
+
+    hideAll: function () {
+        $('.editor, .tags, .trash').hide();
     }
 };
 
@@ -214,7 +219,7 @@ S.chapters = {
             return false;
         }
     }
-}
+};
 
 /* Editor */
 var editor;
@@ -357,7 +362,7 @@ S.editor = {
                     title: "Information About this Entry",
                 },
 
-	        ],
+            ],
             renderingConfig: {
                 codeSyntaxHighlighting: true
             },
@@ -376,7 +381,7 @@ S.editor = {
     },
 
     getContent: function (entryId) {
-        if (editor.value() != '' && S.editor.changed == true) { S.editor.save();}
+        if (editor.value() != '' && S.editor.changed == true) { S.editor.save(); }
         S.editor.setContent('');
         S.editor.entryId = entryId;
         S.ajax.post('Entries/LoadEntry', { entryId: entryId, bookId: S.entries.bookId }, function (d) {
@@ -395,7 +400,7 @@ S.editor = {
         $('#editor').val(content || '');
         if (editor.isPreviewActive() == true) {
             editor.togglePreview();
-            setTimeout(() => editor.togglePreview(),10);
+            setTimeout(() => editor.togglePreview(), 10);
         }
 
         //set up event to detect changes to editor
@@ -422,7 +427,7 @@ S.editor = {
         };
         S.ajax.post('Entries/SaveEntry', data, function (d) {
             if (d.indexOf('success') == 0) {
-                
+
             } else {
                 S.message.show('.editor .message', 'error', 'An error occurred while trying to save your entry');
             }
@@ -446,7 +451,30 @@ S.editor = {
 
         }
     }
-}
+};
+
+/* Tags */
+S.tags = {
+    show: function () {
+        S.dash.hideAll();
+        $('.tags').show();
+    }
+};
+
+/* Trash */
+S.trash = {
+    show: function () {
+        S.dash.hideAll();
+        $('.trash').show();
+        S.ajax.post('Trash/LoadTrash', function (d) {
+            if (d == 'error') {
+                S.message.show('.editor .message', 'error', 'An error occurred while trying to load your trash bin');
+            } else {
+                S.editor.setContent(d);
+            }
+        });
+    }
+};
 
 //finally, initialize dashboard
 S.dash.init();

@@ -25,6 +25,28 @@ namespace Legendary.Query
             );
         }
 
+        public void TrashEntry(int userId, int entryId)
+        {
+            Sql.ExecuteNonQuery("Entry_Trash",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"entryId", entryId }
+                }
+            );
+        }
+
+        public void RestoreEntry(int userId, int entryId)
+        {
+            Sql.ExecuteNonQuery("Entry_Restore",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"entryId", entryId }
+                }
+            );
+        }
+
         public void DeleteEntry(int userId, int entryId)
         {
             Sql.ExecuteNonQuery("Entry_Delete",

@@ -29,7 +29,7 @@ namespace Legendary.Services
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var html = new StringBuilder();
-            var scaffold = new Scaffold(S, "/Services/Books/list-item.html");
+            var scaffold = new Scaffold(S.Server.MapPath("/Services/Books/list-item.html"), S.Server.Scaffold);
             var query = new Query.Books(S.Server.sqlConnectionString);
             var books = query.GetList(S.User.userId);
             books.ForEach((Query.Models.Book book) =>
