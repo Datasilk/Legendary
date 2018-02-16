@@ -7,6 +7,6 @@
 AS
 	DECLARE @id int = NEXT VALUE FOR SequenceUsers
 	INSERT INTO Users (userId, usertype, [name], email, [password], photo, datecreated)
-	VALUES (@id, @Usertype, @name, @email, @password, @photo, GETDATE())
+	VALUES (@id, @usertype, @name, @email, @password, @photo, GETDATE())
 	
 	SELECT @id

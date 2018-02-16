@@ -43,9 +43,9 @@ namespace Legendary.Services
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var html = new StringBuilder();
-            var entries = new Scaffold(S.Server.MapPath("/Services/Entries/entries.html"), S.Server.Scaffold);
-            var item = new Scaffold(S.Server.MapPath("/Services/Entries/list-item.html"), S.Server.Scaffold);
-            var chapter = new Scaffold(S.Server.MapPath("/Services/Entries/chapter.html"), S.Server.Scaffold);
+            var entries = new Scaffold("/Services/Entries/entries.html", S.Server.Scaffold);
+            var item = new Scaffold("/Services/Entries/list-item.html", S.Server.Scaffold);
+            var chapter = new Scaffold("/Services/Entries/chapter.html", S.Server.Scaffold);
             var books = new Query.Books(S.Server.sqlConnectionString);
             var query = new Query.Entries(S.Server.sqlConnectionString);
             var chapters = new Query.Chapters(S.Server.sqlConnectionString);
@@ -95,7 +95,7 @@ namespace Legendary.Services
             {
                 entryId = query.CreateEntry(S.User.userId, bookId, DateTime.Now, title, summary, chapter);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Error();
             }
@@ -134,7 +134,7 @@ namespace Legendary.Services
                 var data = File.ReadAllBytes(file);
                 var chacha = new ChaCha20(chachaKey);
                 chacha.Transform(data);
-                return Encoding.UTF8.GetString(data);
+                return Encoding.UTF8.GetString(data).Replace("\0","");
             }
             return "";
         }

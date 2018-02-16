@@ -10,10 +10,10 @@
         {
             if (!CheckSecurity()) { return AccessDenied(); }
 
-            var scaffold = new Scaffold(S.Server.MapPath("/Services/Trash/trash.html"), S.Server.Scaffold);
-            var scaffBook = new Scaffold(S.Server.MapPath("/Services/Trash/trash-book.html"), S.Server.Scaffold);
+            var scaffold = new Scaffold("/Services/Trash/trash.html", S.Server.Scaffold);
+            var scaffBook = new Scaffold("/Services/Trash/trash-book.html", S.Server.Scaffold);
 
-            scaffBook.Parent("checkbox").Data["label"] = "Book Magic!";
+            scaffBook.Child("checkbox").Data["label"] = "Book Magic!";
 
             scaffold.Data["books"] = scaffBook.Render();
 
