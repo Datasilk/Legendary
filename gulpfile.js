@@ -37,12 +37,20 @@ var paths = {
 paths.working = {
     js: {
         platform: [
-            // paths.webroot + 'js/selector.js',
-            paths.webroot + '/js/core/jquery-2.1.4.min.js',
+            paths.scripts + 'selector/dist/selector.js',
             paths.scripts + 'utility/velocity.min.js',
-            paths.scripts + 'core/platform.js',
-            paths.scripts + 'platform/[^_]*.js',
-            paths.scripts + 'platform/_init.js'
+            paths.scripts + 'platform/_super.js', // <---- Datasilk Core Js: S object
+            paths.scripts + 'platform/ajax.js', //   <---- Optional platform features
+            paths.scripts + 'platform/loader.js',
+            paths.scripts + 'platform/message.js',
+            paths.scripts + 'platform/polyfill.js',
+            paths.scripts + 'platform/popup.js',
+            paths.scripts + 'platform/scaffold.js',
+            paths.scripts + 'platform/svg.js',
+            paths.scripts + 'platform/util.js',
+            paths.scripts + 'platform/util.color.js',
+            paths.scripts + 'platform/validate.js',
+            paths.scripts + 'platform/window.js' //  <---- End of Optional features
         ],
         app: paths.app + '**/*.js',
         utility: [

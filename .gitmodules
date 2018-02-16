@@ -13,3 +13,6 @@
 [submodule "App/Utility/--force"]
 	path = App/Utility/--force
 	url = http://github.com/datasilk/Crypto
+[submodule "App/Scripts/platform"]
+	path = App/Scripts/platform
+	url = http://github.com/datasilk/corejs

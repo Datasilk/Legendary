@@ -10,7 +10,7 @@ namespace Legendary.Pages
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {
-            if (!CheckSecurity()) { return AccessDenied(); }
+            if (!CheckSecurity()) { return AccessDenied(true, new Pages.Login(S)); }
 
             //add scripts to page
             //AddCSS("/css/utility/font-awesome.css");

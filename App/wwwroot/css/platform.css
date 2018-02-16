@@ -430,6 +430,7 @@ body {
 .box .col.wrap {
   white-space: normal;
 }
+.box .row.text > .col,
 .box .row.text-center > .col,
 .box .row.text-right > .col {
   float: none;
@@ -533,6 +534,12 @@ body {
 .box select {
   padding: 5px 4px;
   box-sizing: border-box;
+}
+.box select[disabled] {
+  background: transparent !important;
+  border: transparent !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 .box label {
   padding-right: 5px;
@@ -1228,7 +1235,7 @@ a.no-link:active {
   margin-top: 1px;
 }
 .box .size-sm .col.field.long {
-  width: 120px;
+  width: 100px;
 }
 .box .size-sm .col.field.thin {
   padding: 2px 7px 1px 4px;
@@ -1245,6 +1252,9 @@ a.no-link:active {
 }
 .box .size-sm .col.input.expand {
   width: calc(100% - 80px);
+}
+.box .size-sm .col.input.short {
+  width: calc(100% - 100px);
 }
 .box .size-sm .col.text {
   padding: 9px 7px 7px 4px;
@@ -1455,6 +1465,10 @@ a.no-link:active {
 .box .col.input.expand {
   width: calc(100% - 100px);
 }
+.box .size-med .col.input.short,
+.box .col.input.short {
+  width: calc(100% - 120px);
+}
 .box .size-med .col.text,
 .box .col.text {
   padding: 9px 7px 10px 4px;
@@ -1664,7 +1678,7 @@ a.no-link:active {
   margin-top: 9px;
 }
 .box .size-lg .col.field.long {
-  width: 120px;
+  width: 160px;
 }
 .box .size-lg .col.field.two-lines {
   padding-top: 2px;
@@ -1678,6 +1692,9 @@ a.no-link:active {
 }
 .box .size-lg .col.input.expand {
   width: calc(100% - 130px);
+}
+.box .size-lg .col.input.short {
+  width: calc(100% - 160px);
 }
 .box .size-lg .col.text {
   padding: 9px 7px 19px 4px;

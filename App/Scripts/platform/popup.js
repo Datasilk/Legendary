@@ -5,6 +5,7 @@
         if (options == null) { options = {}; }
         var opts = {
             width: options.width != null ? options.width : 300,
+            maxWidth: options.maxWidth != null ? options.maxWidth : null,
             padding: options.padding != null ? options.padding : 0,
             offsetHeight: options.offsetHeight != null ? options.offsetHeight : 0,
             offsetTop: options.offsetTop != null ? options.offsetTop : 0,
@@ -21,6 +22,7 @@
         div.className = 'popup box ' + opts.className;
 
         popup.css({ width: opts.width });
+        if (opts.maxWidth != null) { popup.css({ maxWidth: opts.maxWidth }); }
         popup.addClass(opts.position);
         if (opts.offsetHeight > 0) {
             popup.css({ Marginbottom: opts.offsetHeight });
@@ -36,26 +38,19 @@
             forpopup.css({ padding: opts.padding });
         }
 
-        var htm = '<div class="row">';
-
-        if (title != '') {
-            htm += '<div class="col pad-sm"><h4>' + title + '</h4></div>';
-        }
-        if (opts.close == true) {
-            //add close button to top of page
-            htm += $('#template_popup_close').html();
-        }
-        htm += '</div>';
-
-        popup.html(htm + html);
+        var scaffold = new S.scaffold($('#template_popup').html(), {
+            title: title,
+            body: html
+        });
+        popup.html(scaffold.render());
         this.elem = popup;
 
         $('body > .for-popup .popup').remove();
         forpopup.removeClass('hide').append(div);
 
         //set up events
-        S.events.doc.resize.callback.add('popup', S.popup.resize, S.popup.resize, S.popup.resize);
-        S.events.doc.scroll.callback.add('popup', S.popup.resize, S.popup.resize, S.popup.resize);
+        $(window).on('resize', S.popup.resize);
+        $(window).on('scroll', S.popup.resize);
 
         if (opts.close == true) {
             $('.popup .btn-close a').on('click', function () {
@@ -66,14 +61,15 @@
         S.popup.resize();
     },
 
-    hide: function(){
+    hide: function () {
         //remove events
         $('body > .for-popup').addClass('hide');
-        S.events.doc.resize.callback.remove('popup');
+        $(window).off('resize', S.popup.resize);
+        $(window).off('scroll', S.popup.resize);
     },
 
     bg: function (e) {
-        if (e.target == $('.bg.for-popup')[0]) { S.popup.hide();}
+        if (e.target == $('.bg.for-popup')[0]) { S.popup.hide(); }
     },
 
     resize: function () {

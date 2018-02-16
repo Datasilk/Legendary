@@ -129,7 +129,7 @@ S.entries = {
                     data.map(a => {
                         list.append(new Option((a.num > 0 ? a.num + ': ' : '') + a.title, a.num));
                     });
-                    if (callback) { callback();}
+                    if (typeof callback == 'function') { callback();}
                 } else {
                     S.message.show('.popup .message', 'error', 'An error occurred while trying to retrieve a list of chapters');
                 }

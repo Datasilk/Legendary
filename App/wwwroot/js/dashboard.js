@@ -33,6 +33,7 @@ S.dash = {
     },
 
     hideAll: function () {
+        $('.sidebar > .menu li.selected').removeClass('selected');
         $('.editor, .tags, .trash').hide();
     }
 };
@@ -491,6 +492,7 @@ S.tags = {
 S.trash = {
     show: function () {
         S.dash.hideAll();
+        $('.sidebar > .menu .item-trash').addClass('selected');
         $('.trash').show();
         S.ajax.post('Trash/LoadTrash', function (d) {
             if (d == 'error') {

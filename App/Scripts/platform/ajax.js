@@ -1,11 +1,8 @@
 ﻿S.ajax = {
     //class used to make simple web service posts to the server
-    expire: new Date(), queue: [],
+    queue: [],
 
-    post: function (url, data, callback, error, json) {
-        this.expire = new Date();
-        S.events.ajax.start();
-
+    post: function (url, data, callback, error, json, opts) {
         var options = {
             method: "POST",
             data: JSON.stringify(data),
@@ -15,13 +12,19 @@
             success: function (d) {
                 var txt = '';
                 if (typeof d.responseText != 'undefined') { txt = d.responseText; } else { txt = d;}
-                S.ajax.runQueue(); S.events.ajax.complete(txt); callback(txt);
+                S.ajax.runQueue(); 
+                if(typeof callback == 'function'){callback(txt);}
             },
             error: function (xhr, status, err) {
-                S.events.ajax.error(status, err);
                 if (typeof error == 'function') { error(xhr, status, err); }
                 S.ajax.runQueue();
             }
+        }
+        if (opts) {
+            //user-specified options
+            if (opts.contentType) { options.contentType = opts.contentType; }
+            if (opts.method) { options.method = opts.method; }
+            if (opts.url) { options.url = opts.url; }
         }
         if (json == true) { options.dataType = 'json'; }
         S.ajax.queue.push(options);

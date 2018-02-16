@@ -14,7 +14,7 @@ namespace Legendary.Pages
             if(S.User.userId > 0)
             {
                 //redirect to dashboard
-                return base.Render(path, Redirect("/dashboard/"));
+                return base.Render(path, Redirect("/"));
             }
 
             //check for database reset
