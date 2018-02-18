@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Legendary.Pages
+﻿namespace Legendary.Pages
 {
     public class Login: Page
     {

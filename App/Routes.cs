@@ -25,6 +25,7 @@ class Routes : Datasilk.Routes
             case "dashboard": return new Legendary.Pages.Dashboard(S);
             case "login": return new Legendary.Pages.Login(S);
             case "logout": return new Legendary.Pages.Logout(S);
+            case "access-denied": return new Legendary.Pages.ErrorCodes.AccessDenied(S);
         }
         return new Page(S);
     }

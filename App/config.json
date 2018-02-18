@@ -10,5 +10,8 @@
   "encryption": {
     "salt": "?",
     "bcrypt_work_factor": "10"
+  },
+  "session": {
+    "expires": 720
   }
 }
