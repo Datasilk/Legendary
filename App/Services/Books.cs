@@ -1,22 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Legendary.Services
 {
     public class Books : Service
     {
-        public Books(Core LegendaryCore) : base(LegendaryCore)
+        public Books(HttpContext context) : base(context)
         {
         }
 
         public string CreateBook(string title)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            var query = new Query.Books(S.Server.sqlConnectionString);
+            var query = new Query.Books(Server.sqlConnectionString);
             var bookId = 0;
             try { 
-                bookId = query.CreateBook(S.User.userId, title, false);
+                bookId = query.CreateBook(User.userId, title, false);
             }
             catch (Exception)
             {
@@ -29,9 +29,9 @@ namespace Legendary.Services
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var html = new StringBuilder();
-            var scaffold = new Scaffold("/Services/Books/list-item.html", S.Server.Scaffold);
-            var query = new Query.Books(S.Server.sqlConnectionString);
-            var books = query.GetList(S.User.userId);
+            var scaffold = new Scaffold("/Views/Books/list-item.html", Server.Scaffold);
+            var query = new Query.Books(Server.sqlConnectionString);
+            var books = query.GetList(User.userId);
             books.ForEach((Query.Models.Book book) =>
             {
                 scaffold.Data["id"] = book.bookId.ToString();

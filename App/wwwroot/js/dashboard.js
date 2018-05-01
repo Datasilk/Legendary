@@ -116,7 +116,7 @@ S.entries = {
                 bookId: S.entries.bookId,
                 title: $('#txtentry_title').val(),
                 summary: $('#txtentry_summary').val(),
-                chapter: $('#lstentry_chapter').val(),
+                chapter: parseInt($('#lstentry_chapter').val()),
                 sort: 0
             };
             if (data.title == '') {
@@ -155,7 +155,7 @@ S.entries = {
                     data.map(a => {
                         list.append(new Option((a.num > 0 ? a.num + ': ' : '') + a.title, a.num));
                     });
-                    if (callback) { callback();}
+                    if (typeof callback == 'function') { callback();}
                 } else {
                     S.message.show('.popup .message', 'error', 'An error occurred while trying to retrieve a list of chapters');
                 }
@@ -253,6 +253,7 @@ var editor;
 var markdown;
 S.editor = {
     entryId: null,
+    div: null,
 
     init: function () {
         //initialize markdown renderer (with code syntax highlighting support)
@@ -401,10 +402,22 @@ S.editor = {
             }
         });
 
+        S.editor.div = $('.markdown-editor');
+
         //set up event to detect changes to editor
         setTimeout(function () {
             editor.codemirror.on('change', S.editor.updated.check);
         }, 1000);
+
+        //set up window resize event
+        $(window).on('resize', S.editor.resize);
+        S.editor.resize();
+    },
+
+    resize: function () {
+        var win = S.window.pos();
+        var pos = S.editor.div.offset();
+        S.editor.div.css({ height: win.h - pos.top - win.scrolly });
     },
 
     getContent: function (entryId) {
@@ -503,6 +516,3 @@ S.trash = {
         });
     }
 };
-
-//finally, initialize dashboard
-S.dash.init();

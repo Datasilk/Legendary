@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Utility.Serialization;
 
 namespace Legendary.Services
 {
     public class Chapters : Service
     {
-        public Chapters(Core LegendaryCore) : base(LegendaryCore)
+        public Chapters(HttpContext context) : base(context)
         {
         }
 
@@ -21,7 +21,7 @@ namespace Legendary.Services
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var list = new List<chapter>();
-            var query = new Query.Chapters(S.Server.sqlConnectionString);
+            var query = new Query.Chapters(Server.sqlConnectionString);
             query.GetList(bookId).ForEach((Query.Models.Chapter chap) =>
             {
                 list.Add(new chapter()
@@ -30,13 +30,13 @@ namespace Legendary.Services
                     title = chap.title
                 });
             });
-            return S.Util.Serializer.WriteObjectToString(list);
+            return Serializer.WriteObjectToString(list);
         }
 
         public string GetMax(int bookId)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            var query = new Query.Chapters(S.Server.sqlConnectionString);
+            var query = new Query.Chapters(Server.sqlConnectionString);
             return query.GetMax(bookId).ToString();
 
         }
@@ -44,7 +44,7 @@ namespace Legendary.Services
         public string CreateChapter(int bookId, int chapter, string title, string summary)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            var query = new Query.Chapters(S.Server.sqlConnectionString);
+            var query = new Query.Chapters(Server.sqlConnectionString);
             try
             {
                 query.CreateChapter(bookId, chapter, title, summary);

@@ -29,15 +29,18 @@
 #txtentry_summary{height:70px;}
 
 .editor{ height:~"calc(100% - 50px)"; width:~"calc(100% - 600px)"; float:left; position:relative;
-    .CodeMirror{height:~"calc(100% - 50px)";border-radius:0px !important; border-left-style:none; border-right-style:none; border-bottom-style:none;}
+    .markdown-editor{overflow:hidden;}
+    .CodeMirror{overflow:auto !important; height:100%; border-radius:0px !important; border-left-style:none; border-right-style:none; border-bottom-style:none;}
+    .CodeMirror-scroll{height:~"calc(100% - 59px)" !important; overflow:auto !important; overflow-y:auto; margin-right:-10px !important; top:-10px;}
     .CodeMirror-code{box-sizing:content-box;}
     .CodeMirror-vscrollbar{display:none !important;}
     .editor-statusbar{display:none;}
-    .editor-preview{overflow:hidden;}
+    .editor-preview{overflow-y:auto; height:~"calc(100% - 48px)" !important;}
     .editor-toolbar{border:0px none transparent !important; border-radius:0px !important;
         *:nth-child(1n+18){float:right;}
     }
     & > .message{width:97%; z-index:100; margin-top:10px !important;}
+    .hljs{display:inline-block; padding:4px 7px !important; position:relative; top:8px;}
 }
 
 .editor-toolbar.disabled-for-preview{

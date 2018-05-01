@@ -1,8 +1,10 @@
-﻿namespace Legendary.Services
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Legendary.Services
 {
     public class Trash : Service
     {
-        public Trash(Core DatasilkCore) : base(DatasilkCore)
+        public Trash(HttpContext context) : base(context)
         {
         }
 
@@ -10,8 +12,8 @@
         {
             if (!CheckSecurity()) { return AccessDenied(); }
 
-            var scaffold = new Scaffold("/Services/Trash/trash.html", S.Server.Scaffold);
-            var scaffBook = new Scaffold("/Services/Trash/trash-book.html", S.Server.Scaffold);
+            var scaffold = new Scaffold("/Views/Trash/trash.html", Server.Scaffold);
+            var scaffBook = new Scaffold("/Views/Trash/trash-book.html", Server.Scaffold);
 
             scaffBook.Child("checkbox").Data["label"] = "Book Magic!";
 

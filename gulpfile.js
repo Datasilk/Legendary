@@ -100,15 +100,15 @@ paths.working = {
             paths.scripts + 'utility/simplemde.min.js',
             paths.scripts + 'utility/highlight.min.js',
             paths.scripts + 'utility/remarkable.min.js',
-            paths.app + 'pages/dashboard/dashboard.js'
+            paths.app + 'views/dashboard/dashboard.js'
         ],
         css: [
             paths.css + 'utility/font-awesome.css',
             paths.css + 'utility/simplemde.min.css',
             paths.css + 'utility/highlight/atelier-forest-light.css', // <-- code syntax highlighting color scheme
-            paths.webroot + 'css/pages/dashboard/dashboard.css'
+            paths.webroot + 'css/views/dashboard/dashboard.css'
         ],
-        compiled: paths.webroot + 'css/pages/dashboard/dashboard.css'
+        compiled: paths.webroot + 'css/views/dashboard/dashboard.css'
     }
 };
 

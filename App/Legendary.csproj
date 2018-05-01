@@ -20,10 +20,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="config.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.4.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.0" />
@@ -49,6 +54,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="config.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\themes\default\icons.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -58,73 +66,67 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="access-denied.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="layout.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Dashboard\dashboard.html">
+    <None Update="Views\Dashboard\dashboard.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Dashboard\templates\newbook.html">
+    <None Update="Views\Dashboard\templates\newbook.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Dashboard\templates\newchapter.html">
+    <None Update="Views\Dashboard\templates\newchapter.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Dashboard\templates\newentry.html">
+    <None Update="Views\Dashboard\templates\newentry.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Dashboard\templates\nobooks.html">
+    <None Update="Views\Dashboard\templates\nobooks.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Dashboard\templates\noentries.html">
+    <None Update="Views\Dashboard\templates\noentries.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Login\login.html">
+    <None Update="Views\Login\login.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Login\new-admin.html">
+    <None Update="Views\Login\new-admin.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Pages\Login\new-pass.html">
+    <None Update="Views\Login\new-pass.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Partials\UI\checkbox.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\Books\list-item.html">
+    <None Update="Views\Books\list-item.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\Entries\chapter.html">
+    <None Update="Views\Entries\chapter.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\Entries\entries.html">
+    <None Update="Views\Entries\entries.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\Entries\list-item.html">
+    <None Update="Views\Entries\list-item.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\Entries\no-entries.html">
+    <None Update="Views\Entries\no-entries.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\Trash\trash-book.html">
+    <None Update="Views\Trash\trash-book.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\Trash\trash-chapter.html">
+    <None Update="Views\Trash\trash-chapter.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\Trash\trash-entry.html">
+    <None Update="Views\Trash\trash-entry.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\Trash\trash.html">
+    <None Update="Views\Trash\trash.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

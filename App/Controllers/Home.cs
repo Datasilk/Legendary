@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
 using System.Text;
 
 namespace Legendary.Pages
 {
     public class Home : Page
     {
-        public Home(Core LegendaryCore) : base(LegendaryCore)
+        public Home(HttpContext context) : base(context)
         {
         }
 

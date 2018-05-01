@@ -1,8 +1,10 @@
-﻿namespace Legendary.Pages.ErrorCodes
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Legendary.Pages.ErrorCodes
 {
     public class AccessDenied : Page
     {
-        public AccessDenied(Core DatasilkCore) : base(DatasilkCore)
+        public AccessDenied(HttpContext context) : base(context)
         {
         }
 

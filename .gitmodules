@@ -8,7 +8,7 @@
 	path = App/Core
 	url = http://github.com/datasilk/core
 [submodule "App/Utility/Crypto"]
-	path = App/Utility/Crypto
+	path = App/Common/Utility/Crypto
 	url = http://github.com/datasilk/Crypto
 [submodule "App/Utility/--force"]
 	path = App/Utility/--force

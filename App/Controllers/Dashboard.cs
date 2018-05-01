@@ -1,16 +1,18 @@
-﻿using System.Text;
+﻿using Microsoft.AspNetCore.Http;
+using System.Text;
+using Legendary.Common.Platform;
 
 namespace Legendary.Pages
 {
     public class Dashboard : Page
     {
-        public Dashboard(Core LegendaryCore) : base(LegendaryCore)
+        public Dashboard(HttpContext context) : base(context)
         {
         }
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {
-            if (!CheckSecurity()) { return AccessDenied(true, new Pages.Login(S)); }
+            if (!CheckSecurity()) { return AccessDenied(true, new Login(context)); }
 
             //add scripts to page
             //AddCSS("/css/utility/font-awesome.css");
@@ -23,16 +25,16 @@ namespace Legendary.Pages
             AddScript("/js/dashboard.js");
             AddCSS("/css/dashboard.css");
 
-            var dash = new Scaffold("/Pages/Dashboard/dashboard.html", S.Server.Scaffold);
+            var dash = new Scaffold("/Views/Dashboard/dashboard.html", Server.Scaffold);
 
             //get list of books
             var html = new StringBuilder();
-            var query = new Query.Books(S.Server.sqlConnectionString);
-            var books = query.GetList(S.User.userId);
+            var query = new Query.Books(Server.sqlConnectionString);
+            var books = query.GetList(User.userId);
             if(books.Count > 0)
             {
                 //books exist
-                var list = new Scaffold("/Services/Books/list-item.html", S.Server.Scaffold);
+                var list = new Scaffold("/Views/Books/list-item.html", Server.Scaffold);
                 var i = 0;
                 books.ForEach((Query.Models.Book book) =>
                 {
@@ -52,32 +54,31 @@ namespace Legendary.Pages
                 dash.Data["books"] = html.ToString();
 
                 //get list of entries for top book
-                var entries = new Services.Entries(S);
                 var bookId = 0;
                 if (books.Count > 0)
                 {
                     bookId = books[0].bookId;
-                    var first = new Query.Entries(S.Server.sqlConnectionString).GetFirst(S.User.userId, bookId, (int)Services.Entries.SortType.byChapter);
+                    var first = new Query.Entries(Server.sqlConnectionString).GetFirst(User.userId, bookId, (int)Common.Platform.Entries.SortType.byChapter);
                     if(first != null)
                     {
-                        scripts += "<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.editor.entryId=" + first.entryId.ToString() + ";</script>";
+                        scripts.Append("<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.editor.entryId=" + first.entryId.ToString() + ";S.dash.init();</script>");
 
                         //load content of first entry
-                        dash.Data["editor-content"] = entries.LoadEntry(first.entryId, bookId);
+                        dash.Data["editor-content"] = Entries.LoadEntry(first.entryId, bookId);
                     }
                     else
                     {
                         dash.Data["no-entries"] = "hide";
-                        scripts += "<script language=\"javascript\">S.entries.noentries();</script>";
+                        scripts.Append("<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.entries.noentries();S.dash.init();</script>");
                     }
                 }
-                dash.Data["entries"] = entries.GetList(bookId, 1, 50, Services.Entries.SortType.byChapter);
+                dash.Data["entries"] = Entries.GetList(this, bookId, 1, 50, Entries.SortType.byChapter);
             }
             else
             {
                 dash.Data["no-books"] = "hide";
                 dash.Data["no-entries"] = "hide";
-                dash.Data["no-content"] = S.Server.LoadFileFromCache("/Pages/Dashboard/templates/nobooks.html");
+                dash.Data["no-content"] = Server.LoadFileFromCache("/Views/Dashboard/templates/nobooks.html");
             }
 
             //get count for tags & trash
@@ -89,10 +90,10 @@ namespace Legendary.Pages
 
             //load script templates (for popups)
             dash.Data["templates"] = 
-                S.Server.LoadFileFromCache("/Pages/Dashboard/templates/newbook.html") + 
-                S.Server.LoadFileFromCache("/Pages/Dashboard/templates/newentry.html") +
-                S.Server.LoadFileFromCache("/Pages/Dashboard/templates/newchapter.html") +
-                S.Server.LoadFileFromCache("/Pages/Dashboard/templates/noentries.html");
+                Server.LoadFileFromCache("/Views/Dashboard/templates/newbook.html") + 
+                Server.LoadFileFromCache("/Views/Dashboard/templates/newentry.html") +
+                Server.LoadFileFromCache("/Views/Dashboard/templates/newchapter.html") +
+                Server.LoadFileFromCache("/Views/Dashboard/templates/noentries.html");
             
             return base.Render(path, dash.Render(), metadata);
         }
