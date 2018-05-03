@@ -18,12 +18,7 @@ namespace Legendary.Services
                 var user = query.AuthenticateUser(email, encrypted);
                 if (user != null)
                 {
-                    User.userId = user.userId;
-                    User.userType = user.usertype;
-                    User.email = email;
-                    User.photo = user.photo;
-                    User.name = user.name;
-                    User.datecreated = user.datecreated;
+                    User.LogIn(user.userId, user.email, user.name, user.datecreated, "", user.usertype, user.photo);
                     User.Save(true);
                     return Success();
                 }
