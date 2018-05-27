@@ -1,8 +1,8 @@
 {
-  "namespace":  "Legendary",
+  "assembly":  "Legendary",
   "environment": "development",
   "port": "80",
-  "data": {
+  "sql": {
     "active": "SqlServerTrusted",
     "SqlServerTrusted": "server=.\\SQL2017; database=Legendary; Trusted_Connection=true"
   },

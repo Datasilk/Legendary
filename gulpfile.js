@@ -37,7 +37,7 @@ var paths = {
 paths.working = {
     js: {
         platform: [
-            paths.scripts + 'selector/dist/selector.js',
+            paths.scripts + 'selector/selector.js',
             paths.scripts + 'utility/velocity.min.js',
             paths.scripts + 'platform/_super.js', // <---- Datasilk Core Js: S object
             paths.scripts + 'platform/ajax.js', //   <---- Optional platform features
@@ -91,7 +91,8 @@ paths.working = {
             '!' + paths.app + 'Content/**/',
             '!' + paths.app + 'CSS/**/',
             '!' + paths.app + 'CSS/',
-            '!' + paths.app + 'Scripts/**/'
+            '!' + paths.app + 'Scripts/**/',
+            '!' + paths.app + 'obj/**/*'
         ]
     },
 

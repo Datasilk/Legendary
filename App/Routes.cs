@@ -2,13 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Datasilk;
 
-class Routes : Datasilk.Routes
+public class Routes : Datasilk.Routes
 {
-    public Routes(HttpContext context) : base(context)
-    {
-    }
-
-    public override Page FromPageRoutes(string name)
+    public override Page FromPageRoutes(HttpContext context, string name)
     {
         var isUser = context.Session.Keys.Contains("user");
         switch (name)

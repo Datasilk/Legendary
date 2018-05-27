@@ -66,10 +66,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="access-denied.html">
+    <None Update="Views\access-denied.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="layout.html">
+    <None Update="Views\Shared\layout.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Views\Dashboard\dashboard.html">
