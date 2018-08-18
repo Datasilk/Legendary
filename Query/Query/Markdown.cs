@@ -6,10 +6,6 @@ namespace Legendary.Query
 {
     class Markdown:QuerySql
     {
-        public Markdown(string connectionString) : base(connectionString)
-        {
-        }
-
         public string GetDetails(int entryId, int historicalId = 0)
         {
             return Sql.ExecuteScalar<string>(

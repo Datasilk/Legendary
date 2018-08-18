@@ -71,6 +71,7 @@
     <Folder Include="dbo\Stored Procedures\Chapters" />
     <Folder Include="dbo\Stored Procedures\Markdown" />
     <Folder Include="dbo\Stored Procedures\Trash" />
+    <Folder Include="dbo\Stored Procedures\Utility" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Functions\SplitArray.sql" />
@@ -127,6 +128,10 @@
     <Build Include="dbo\Stored Procedures\Markdown\Markdown_GetHistory.sql" />
     <Build Include="dbo\Stored Procedures\Books\Book_Trash.sql" />
     <Build Include="dbo\Stored Procedures\Books\Book_Restore.sql" />
+    <Build Include="dbo\Tables\User_AuthTokens.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_CreateAuthToken.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_AuthenticateByToken.sql" />
+    <Build Include="dbo\Stored Procedures\Utility\GetCustomId.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

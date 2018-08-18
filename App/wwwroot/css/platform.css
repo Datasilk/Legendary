@@ -474,10 +474,10 @@ body {
   font-size: 1.8rem;
 }
 .box h4 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 .box h5 {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
 }
 .box h6 {
   font-size: 1.1rem;
@@ -6072,133 +6072,4 @@ body > .bg {
   max-width: 1024px;
   margin: 0 auto;
   padding: 0 20px;
-}
-/* accordion */
-.accordion {
-  padding-bottom: 30px;
-}
-.accordion > .title {
-  padding: 11px 15px;
-  background-color: #dbdbdb;
-  border-bottom: 1px solid #cfcfcf;
-  border-left: 4px solid #75bad4;
-  font-size: 17px;
-  font-weight: bold;
-  line-height: 1;
-  cursor: pointer;
-  overflow: hidden;
-  transition: max-height 0.3s, padding 0.3s;
-}
-.accordion > .title:hover {
-  background-color: #acdae4;
-  color: #0066a9;
-}
-.accordion > .title.expanded {
-  background-color: #75bad4;
-  color: #004476;
-}
-.accordion > .title.expanded:hover {
-  background-color: #00b1ca;
-}
-.accordion > .title.hide {
-  max-height: 0;
-  border-bottom-width: 0;
-  padding: 0 15px;
-}
-.accordion > .box {
-  background-color: #222;
-  color: #aaa;
-  max-height: 0px;
-  transition: max-height 0.3s, padding 0.3s;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-.accordion > .white {
-  background-color: #fff;
-  color: #111;
-}
-.accordion > .box.expanded {
-  padding: 20px;
-  max-height: 800px;
-  overflow: hidden;
-}
-.accordion > .box > .content {
-  white-space: nowrap;
-}
-.accordion > .box a:link {
-  color: #d83a8d;
-}
-.accordion > .box a:visited {
-  color: #d83a8d;
-}
-.accordion > .box a:hover {
-  color: #ff49a9;
-}
-.accordion > .box a:active {
-  color: #ff49a9;
-}
-.accordion > .box .button {
-  background-color: #9a9a9a !important;
-  color: #fff !important;
-  border-color: #9a9a9a !important;
-  background-image: -webkit-linear-gradient(#9a9a9a, #727272);
-  background-image: linear-gradient(#9a9a9a, #727272);
-}
-.accordion > .box .button:hover {
-  background-color: #b9b9b9 !important;
-  color: #fff !important;
-  border-color: #b9b9b9 !important;
-  background-image: -webkit-linear-gradient(#b9b9b9, #8d8d8d);
-  background-image: linear-gradient(#b9b9b9, #8d8d8d);
-}
-.accordion > .box .button.blue {
-  background-color: #66abc8 !important;
-  color: #fff !important;
-  border-color: #66abc8 !important;
-  background-image: -webkit-linear-gradient(#66abc8, #3380a1);
-  background-image: linear-gradient(#66abc8, #3380a1);
-}
-.accordion > .box .button.blue:hover {
-  background-color: #79c4e4 !important;
-  color: #fff !important;
-  border-color: #79c4e4 !important;
-  background-image: -webkit-linear-gradient(#79c4e4, #138bbf);
-  background-image: linear-gradient(#79c4e4, #138bbf);
-}
-.accordion > .box .button.green {
-  background-color: #29a091 !important;
-  color: #fff !important;
-  border-color: #30b7a6 !important;
-  background-image: -webkit-linear-gradient(#30b7a6, #198376);
-  background-image: linear-gradient(#30b7a6, #198376);
-}
-.accordion > .box .button.green:hover {
-  background-color: #29a091 !important;
-  color: #fff !important;
-  border-color: #05d8bd !important;
-  background-image: -webkit-linear-gradient(#05d8bd, #0c9c8a);
-  background-image: linear-gradient(#05d8bd, #0c9c8a);
-}
-.accordion > .box .button.outline {
-  border: 2px solid rgba(255, 255, 255, 0.15) !important;
-  color: rgba(255, 255, 255, 0.25) !important;
-  background-color: transparent !important;
-  background-image: none !important;
-  font-size: 24px;
-  font-weight: 300;
-  padding: 10px 50px;
-}
-.accordion > .box .button.outline:hover {
-  border: 2px solid rgba(255, 255, 255, 0.3) !important;
-  color: rgba(255, 255, 255, 0.5) !important;
-}
-.accordion > .menu {
-  width: 100%;
-  max-height: 0px;
-  overflow: hidden;
-  transition: max-height 0.3s;
-}
-.accordion > .menu.expanded {
-  max-height: 500px;
-  overflow: hidden;
 }

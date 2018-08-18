@@ -29,7 +29,7 @@ namespace Legendary.Pages
 
             //get list of books
             var html = new StringBuilder();
-            var query = new Query.Books(Server.sqlConnectionString);
+            var query = new Query.Books();
             var books = query.GetList(User.userId);
             if(books.Count > 0)
             {
@@ -58,7 +58,7 @@ namespace Legendary.Pages
                 if (books.Count > 0)
                 {
                     bookId = books[0].bookId;
-                    var first = new Query.Entries(Server.sqlConnectionString).GetFirst(User.userId, bookId, (int)Common.Platform.Entries.SortType.byChapter);
+                    var first = new Query.Entries().GetFirst(User.userId, bookId, (int)Common.Platform.Entries.SortType.byChapter);
                     if(first != null)
                     {
                         scripts.Append("<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.editor.entryId=" + first.entryId.ToString() + ";S.dash.init();</script>");

@@ -7,7 +7,8 @@ public class Startup : Datasilk.Startup {
     public override void Configured(IApplicationBuilder app, IHostingEnvironment env, IConfigurationRoot config)
     {
         base.Configured(app, env, config);
-        var query = new Legendary.Query.Users(server.sqlConnectionString);
+        Legendary.Query.QuerySql.connectionString = server.sqlConnectionString;
+        var query = new Legendary.Query.Users();
         server.resetPass = query.HasPasswords();
         server.hasAdmin = query.HasAdmin();
     }

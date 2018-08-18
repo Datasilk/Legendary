@@ -6,10 +6,6 @@ namespace Legendary.Query
 {
     public class Chapters : QuerySql
     {
-        public Chapters(string connectionString) : base(connectionString)
-        {
-        }
-
         public void CreateChapter(int bookId, int chapter, string title, string summary)
         {
             Sql.ExecuteNonQuery("Chapter_Create",

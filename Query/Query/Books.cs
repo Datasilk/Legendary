@@ -5,10 +5,6 @@ namespace Legendary.Query
 {
     public class Books : QuerySql
     {
-        public Books(string connectionString) : base(connectionString)
-        {
-        }
-
         public int CreateBook(int userId, string title, bool favorite, int sort = 0)
         {
             return Sql.ExecuteScalar<int>("Book_Create",

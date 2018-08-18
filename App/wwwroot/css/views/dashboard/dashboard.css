@@ -5,9 +5,18 @@ header {
   line-height: 0;
   height: 50px;
 }
+header svg {
+  width: 100% !important;
+  height: auto !important;
+}
 header .logo {
-  width: 160px;
-  padding-left: 10px;
+  float: left;
+  width: 200px;
+  padding: 2px 0 0 10px;
+}
+header .logo-feather {
+  float: left;
+  width: 33px;
 }
 header .logo-d {
   float: right;
@@ -35,6 +44,17 @@ header .logo-d img {
 }
 .sidebar ul.menu li.sub {
   padding-left: 40px;
+}
+.sidebar .logo-feather {
+  position: absolute;
+  bottom: 0px;
+  left: 50px;
+  width: 150px;
+  opacity: 0.05;
+}
+.sidebar .logo-feather svg {
+  width: 100% !important;
+  height: auto !important;
 }
 .subbar {
   float: left;

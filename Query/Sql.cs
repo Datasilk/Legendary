@@ -9,7 +9,6 @@ namespace Legendary.Query
 {
     public class Sql
     {
-
         private SqlConnection conn = new SqlConnection();
         private SqlCommand cmd = new SqlCommand();
         private string connString = "";
@@ -27,6 +26,14 @@ namespace Legendary.Query
                 conn.ConnectionString = connString;
                 conn.Open();
                 cmd.Connection = conn;
+            }
+        }
+
+        public void Close()
+        {
+            if (conn.State != System.Data.ConnectionState.Closed)
+            {
+                conn.Close();
             }
         }
 
@@ -63,7 +70,7 @@ namespace Legendary.Query
             try
             {
                 if (parameters != null) { GetSqlParameters(parameters).ForEach(a => cmd.Parameters.Add(a)); }
-                return cmd.ExecuteReader();
+                return cmd.ExecuteReader();  //developer must manually close connection within connection pool
             }
             catch (Exception ex)
             {
@@ -80,6 +87,7 @@ namespace Legendary.Query
             {
                 if (parameters != null) { GetSqlParameters(parameters).ForEach(a => cmd.Parameters.Add(a)); }
                 cmd.ExecuteNonQuery();
+                Close(); //make sure to close connection within connection pool
             }
             catch (Exception ex)
             {
@@ -95,7 +103,9 @@ namespace Legendary.Query
             try
             {
                 if (parameters != null) { cmd.Parameters.AddRange(GetSqlParameters(parameters).ToArray()); }
-                return (T)cmd.ExecuteScalar();
+                var result = (T)cmd.ExecuteScalar();
+                Close(); //make sure to close connection within connection pool
+                return result;
             }
             catch (Exception ex)
             {
@@ -106,18 +116,20 @@ namespace Legendary.Query
         public async Task<int> ExecuteNonQueryAsync(string storedproc, Dictionary<string, object> parameters = null)
         {
             using (var newConnection = new SqlConnection(connString))
-            using (var newCommand = new SqlCommand(GetStoredProc(storedproc, parameters), newConnection))
             {
-                try
+                using (var newCommand = new SqlCommand(GetStoredProc(storedproc, parameters), newConnection))
                 {
-                    if (parameters != null) newCommand.Parameters.AddRange(GetSqlParameters(parameters).ToArray());
-                    await newConnection.OpenAsync().ConfigureAwait(false);
-                    return await newCommand.ExecuteNonQueryAsync().ConfigureAwait(false);
+                    try
+                    {
+                        if (parameters != null) newCommand.Parameters.AddRange(GetSqlParameters(parameters).ToArray());
+                        await newConnection.OpenAsync().ConfigureAwait(false);
+                        return await newCommand.ExecuteNonQueryAsync().ConfigureAwait(false);
 
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
         }
@@ -125,12 +137,15 @@ namespace Legendary.Query
         public List<T> Populate<T>(string storedproc, Dictionary<string, object> parameters = null)
         {
             Start();
-            return conn.Query<T>(GetStoredProc(storedproc, parameters), parameters).AsList<T>();
+            var results = conn.Query<T>(GetStoredProc(storedproc, parameters), parameters).AsList<T>();
+            Close(); //make sure to close connection within connection pool
+            return results;
         }
 
         public SqlMapper.GridReader PopulateMultiple(string storedproc, Dictionary<string, object> parameters = null)
         {
             Start();
+            //developer must manually close connection within connection pool
             return conn.QueryMultiple(GetStoredProc(storedproc, parameters), parameters);
         }
     }

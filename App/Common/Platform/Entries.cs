@@ -49,9 +49,9 @@ namespace Legendary.Common.Platform
             var entries = new Scaffold("/Views/Entries/entries.html", Server.Scaffold);
             var item = new Scaffold("/Views/Entries/list-item.html", Server.Scaffold);
             var chapter = new Scaffold("/Views/Entries/chapter.html", Server.Scaffold);
-            var books = new Query.Books(Server.sqlConnectionString);
-            var query = new Query.Entries(Server.sqlConnectionString);
-            var chapters = new Query.Chapters(Server.sqlConnectionString);
+            var books = new Query.Books();
+            var query = new Query.Entries();
+            var chapters = new Query.Chapters();
             var chapterlist = chapters.GetList(bookId);
             var list = query.GetList(request.User.userId, bookId, start, length, (int)sort);
             var chapterInc = -1;
@@ -92,7 +92,7 @@ namespace Legendary.Common.Platform
         public static int CreateEntry(Datasilk.Request request, int bookId, string title, string summary, int chapter)
         {
             Server Server = Server.Instance;
-            var query = new Query.Entries(Server.sqlConnectionString);
+            var query = new Query.Entries();
             try
             {
                 return query.CreateEntry(request.User.userId, bookId, DateTime.Now, title, summary, chapter);
@@ -133,7 +133,7 @@ namespace Legendary.Common.Platform
         public static void SaveEntry(Datasilk.Request request, int entryId, string content)
         {
             Server Server = Server.Instance;
-            var query = new Query.Entries(Server.sqlConnectionString);
+            var query = new Query.Entries();
             var entry = query.GetDetails(request.User.userId, entryId);
             var path = "/Content/books/" + entry.bookId + "/";
             if (!Directory.Exists(Server.MapPath(path)))

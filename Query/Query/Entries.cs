@@ -5,10 +5,6 @@ namespace Legendary.Query
 {
     public class Entries : QuerySql
     {
-        public Entries(string connectionString) : base(connectionString)
-        {
-        }
-
         public int CreateEntry(int userId, int bookId, DateTime dateCreated, string title, string summary = "", int chapter = 0, int sort = 0)
         {
             return Sql.ExecuteScalar<int>("Entry_Create",
