@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Legendary.Query
+namespace Query
 {
-    public class Entries : QuerySql
+    public static class Entries
     {
-        public int CreateEntry(int userId, int bookId, DateTime dateCreated, string title, string summary = "", int chapter = 0, int sort = 0)
+        public static int CreateEntry(int userId, int bookId, DateTime dateCreated, string title, string summary = "", int chapter = 0, int sort = 0)
         {
             return Sql.ExecuteScalar<int>("Entry_Create",
                 new Dictionary<string, object>()
@@ -21,7 +21,7 @@ namespace Legendary.Query
             );
         }
 
-        public void TrashEntry(int userId, int entryId)
+        public static void TrashEntry(int userId, int entryId)
         {
             Sql.ExecuteNonQuery("Entry_Trash",
                 new Dictionary<string, object>()
@@ -32,7 +32,7 @@ namespace Legendary.Query
             );
         }
 
-        public void RestoreEntry(int userId, int entryId)
+        public static void RestoreEntry(int userId, int entryId)
         {
             Sql.ExecuteNonQuery("Entry_Restore",
                 new Dictionary<string, object>()
@@ -43,7 +43,7 @@ namespace Legendary.Query
             );
         }
 
-        public void DeleteEntry(int userId, int entryId)
+        public static void DeleteEntry(int userId, int entryId)
         {
             Sql.ExecuteNonQuery("Entry_Delete",
                 new Dictionary<string, object>()
@@ -54,7 +54,7 @@ namespace Legendary.Query
             );
         }
 
-        public Models.Entry GetDetails(int userId, int entryId)
+        public static Models.Entry GetDetails(int userId, int entryId)
         {
             var list = Sql.Populate<Models.Entry>(
                 "Entry_GetDetails",
@@ -68,7 +68,7 @@ namespace Legendary.Query
             return null;
         }
 
-        public Models.Entry GetFirst(int userId, int bookId, int sort = 0)
+        public static Models.Entry GetFirst(int userId, int bookId, int sort = 0)
         {
             var list = Sql.Populate<Models.Entry>(
                 "Entries_GetFirst",
@@ -83,7 +83,7 @@ namespace Legendary.Query
             return null;
         }
 
-        public List<Models.Entry> GetList(int userId, int bookId, int start = 1, int length = 50, int sort = 0)
+        public static List<Models.Entry> GetList(int userId, int bookId, int start = 1, int length = 50, int sort = 0)
         {
             return Sql.Populate<Models.Entry>(
                 "Entries_GetList",
@@ -98,7 +98,7 @@ namespace Legendary.Query
             );
         }
 
-        public void UpdateBook(int userId, int entryId, int bookId)
+        public static void UpdateBook(int userId, int entryId, int bookId)
         {
             Sql.ExecuteNonQuery("Entry_UpdateBook",
                 new Dictionary<string, object>()
@@ -110,7 +110,7 @@ namespace Legendary.Query
             );
         }
 
-        public void UpdateChapter(int userId, int entryId, int chapter)
+        public static void UpdateChapter(int userId, int entryId, int chapter)
         {
             Sql.ExecuteNonQuery("Entry_UpdateChapter",
                 new Dictionary<string, object>()
@@ -122,7 +122,7 @@ namespace Legendary.Query
             );
         }
 
-        public void UpdateSummary(int userId, int entryId, string summary)
+        public static void UpdateSummary(int userId, int entryId, string summary)
         {
             Sql.ExecuteNonQuery("Entry_UpdateSummary",
                 new Dictionary<string, object>()
@@ -134,7 +134,7 @@ namespace Legendary.Query
             );
         }
 
-        public void UpdateTitle(int userId, int entryId, string title)
+        public static void UpdateTitle(int userId, int entryId, string title)
         {
             Sql.ExecuteNonQuery("Entry_UpdateTitle",
                 new Dictionary<string, object>()

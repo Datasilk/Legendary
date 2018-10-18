@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Legendary.Query.Models
+namespace Query.Models
 {
     public class Entry
     {

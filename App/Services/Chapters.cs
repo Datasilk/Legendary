@@ -21,8 +21,7 @@ namespace Legendary.Services
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var list = new List<chapter>();
-            var query = new Query.Chapters();
-            query.GetList(bookId).ForEach((Query.Models.Chapter chap) =>
+            Query.Chapters.GetList(bookId).ForEach((Query.Models.Chapter chap) =>
             {
                 list.Add(new chapter()
                 {
@@ -36,18 +35,16 @@ namespace Legendary.Services
         public string GetMax(int bookId)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            var query = new Query.Chapters();
-            return query.GetMax(bookId).ToString();
+            return Query.Chapters.GetMax(bookId).ToString();
 
         }
 
         public string CreateChapter(int bookId, int chapter, string title, string summary)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            var query = new Query.Chapters();
             try
             {
-                query.CreateChapter(bookId, chapter, title, summary);
+                Query.Chapters.CreateChapter(bookId, chapter, title, summary);
             }
             catch (Exception)
             {

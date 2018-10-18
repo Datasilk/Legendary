@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Legendary.Query
+namespace Query
 {
-    class Markdown:QuerySql
+    public static class Markdown
     {
-        public string GetDetails(int entryId, int historicalId = 0)
+        public static string GetDetails(int entryId, int historicalId = 0)
         {
             return Sql.ExecuteScalar<string>(
                 "Markdown_GetDetails",
@@ -18,7 +17,7 @@ namespace Legendary.Query
             );
         }
 
-        public List<DateTime> GetHistory(int entryId)
+    public static List<DateTime> GetHistory(int entryId)
         {
             return Sql.Populate<DateTime>(
                 "Markdown_GetHistory",
@@ -29,7 +28,7 @@ namespace Legendary.Query
             );
         }
 
-        public void Update(int userId, int entryId, string markdown, bool historical = false)
+    public static void Update(int userId, int entryId, string markdown, bool historical = false)
         {
             Sql.ExecuteNonQuery("Markdown_Update",
                 new Dictionary<string, object>()

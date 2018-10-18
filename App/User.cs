@@ -18,8 +18,7 @@ namespace Datasilk
             //check for persistant cookie
             if (userId <= 0 && context.Request.Cookies.ContainsKey("authId"))
             {
-                var query = new Legendary.Query.Users();
-                var user = query.AuthenticateUser(context.Request.Cookies["authId"]);
+                var user = Query.Users.AuthenticateUser(context.Request.Cookies["authId"]);
                 if (user != null)
                 {
                     //persistant cookie was valid, log in
@@ -31,8 +30,7 @@ namespace Datasilk
         partial void VendorLogIn()
         {
             //create persistant cookie
-            var query = new Legendary.Query.Users();
-            var auth = query.CreateAuthToken(userId);
+            var auth = Query.Users.CreateAuthToken(userId);
             var options = new CookieOptions()
             {
                 Expires = DateTime.Now.AddMonths(1)

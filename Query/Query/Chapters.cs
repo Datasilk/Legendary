@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Legendary.Query
+namespace Query
 {
-    public class Chapters : QuerySql
+    public static class Chapters
     {
-        public void CreateChapter(int bookId, int chapter, string title, string summary)
+        public static void CreateChapter(int bookId, int chapter, string title, string summary)
         {
             Sql.ExecuteNonQuery("Chapter_Create",
                 new Dictionary<string, object>()
@@ -19,7 +17,7 @@ namespace Legendary.Query
             );
         }
 
-        public void TrashChapter(int bookId, int chapter, bool entries = false)
+        public static void TrashChapter(int bookId, int chapter, bool entries = false)
         {
             Sql.ExecuteNonQuery("Chapter_Trash",
                 new Dictionary<string, object>()
@@ -31,7 +29,7 @@ namespace Legendary.Query
             );
         }
 
-        public void RestoreChapter(int bookId, int chapter)
+        public static void RestoreChapter(int bookId, int chapter)
         {
             Sql.ExecuteNonQuery("Chapter_Restore",
                 new Dictionary<string, object>()
@@ -42,7 +40,7 @@ namespace Legendary.Query
             );
         }
 
-        public void DeleteChapter(int bookId, int chapter)
+        public static void DeleteChapter(int bookId, int chapter)
         {
             Sql.ExecuteNonQuery("Chapter_Delete",
                 new Dictionary<string, object>()
@@ -53,7 +51,7 @@ namespace Legendary.Query
             );
         }
 
-        public void UpdateChapter(int bookId, int chapter, string title, string summary)
+        public static void UpdateChapter(int bookId, int chapter, string title, string summary)
         {
             Sql.ExecuteNonQuery("Chapter_Update",
                 new Dictionary<string, object>()
@@ -66,12 +64,12 @@ namespace Legendary.Query
             );
         }
 
-        public int GetMax(int bookId)
+        public static int GetMax(int bookId)
         {
             return Sql.ExecuteScalar<int>("Chapter_GetMax", new Dictionary<string, object>() { { "bookId", bookId } });
         }
 
-        public List<Models.Chapter> GetList(int bookId)
+        public static List<Models.Chapter> GetList(int bookId)
         {
             return Sql.Populate<Models.Chapter>(
                 "Chapters_GetList",

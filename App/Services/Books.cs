@@ -13,10 +13,9 @@ namespace Legendary.Services
         public string CreateBook(string title)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            var query = new Query.Books();
             var bookId = 0;
             try { 
-                bookId = query.CreateBook(User.userId, title, false);
+                bookId = Query.Books.CreateBook(User.userId, title, false);
             }
             catch (Exception)
             {
@@ -30,8 +29,7 @@ namespace Legendary.Services
             if (!CheckSecurity()) { return AccessDenied(); }
             var html = new StringBuilder();
             var scaffold = new Scaffold("/Views/Books/list-item.html", Server.Scaffold);
-            var query = new Query.Books();
-            var books = query.GetList(User.userId);
+            var books = Query.Books.GetList(User.userId);
             books.ForEach((Query.Models.Book book) =>
             {
                 scaffold.Data["id"] = book.bookId.ToString();
