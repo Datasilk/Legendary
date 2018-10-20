@@ -1,8 +1,15 @@
 /* dashboard */
 S.dash = {
-    init: function() {
+    init: function () {
+        //buttons
         $('.btn-newbook').on('click', S.books.create.view);
         $('.item-trash > a').on('click', S.trash.show);
+
+        //events
+        $(window).on('resize', S.entries.resize);
+        S.entries.resize();
+
+        //init editor
         S.editor.init();
     },
 
@@ -50,6 +57,116 @@ S.books = {
 /* Entries */
 S.entries = {
     bookId: 0,
+
+    resize: function () {
+        //resize entries height
+        const win = S.window.pos();
+        const container = $('.subbar .entries .container');
+        const scrollbar = container.find('.scrollbar');
+        const pos = container.position();
+        const height = win.h - pos.top;
+        container.css({ height: height });
+
+        //show/hide entries scrollbar 
+        const entries = $('.subbar .entry');
+        let h = 0;
+        for (let x = 0; x < entries.length; x++) {
+            h += $(entries[x]).height();
+        }
+        if (h > win.h - pos.top) {
+            //show scrollbar
+            if (!container.hasClass('scroll')) {
+                container.addClass('scroll');
+                scrollbar.on('mousedown', S.entries.scroll.start);
+            }
+            //update scrollbar height
+            container.find('.scroller').css({ height: height - 7 });
+            scrollbar.css({ height: ((height - 7) / h) * (height) });
+        } else {
+            //hide scrollbar
+            if (container.hasClass('scroll')) {
+                container.removeClass('scroll');
+                scrollbar.off('mousedown', S.entries.scroll.start);
+            }
+        }
+    },
+
+    scroll: {
+        selected: { scrollable: null, height: null, itemsH: null },
+        start: function (e) {
+            e.cancelBubble = true;
+            e.stopPropagation();
+            e.preventDefault();
+            const win = S.window.pos();
+            const container = $('.subbar .entries .container');
+            const entries = $('.subbar .entry');
+            const scrollbar = container.find('.scrollbar');
+            const scroller = container.find('.scroller');
+            const pos = container.position();
+            const height = win.h - pos.top;
+            let h = 0;
+            for (let x = 0; x < entries.length; x++) {
+                h += $(entries[x]).height();
+            }
+            container.addClass('scrolling');
+            S.entries.scroll.selected = {
+                scrollbar: scrollbar,
+                height: height,
+                barHeight: ((height) / h) * height,
+                container: container,
+                entries: entries,
+                entriesH: h,
+                offsetY: scroller.offset().top,
+                cursorY: e.clientY,
+                currentY: e.clientY,
+                barY: scrollbar.offset().top
+            };
+
+            $('body').on('mousemove', S.entries.scroll.move);
+            $('body').on('mouseup', S.entries.scroll.stop);
+            S.entries.scroll.animate.call(S.entries.scroll); 
+        },
+
+        move: function (e) {
+            S.entries.scroll.selected.currentY = e.clientY;
+        },
+
+        animate: function () {
+            const scroll = S.entries.scroll.selected;
+            if (scroll == null) { return; }
+            const curr = scroll.currentY - scroll.cursorY - (scroll.offsetY - scroll.barY);
+            let perc = (100 / (scroll.height - scroll.barHeight)) * curr;
+            if (perc > 100) { perc = 100; }
+            if (perc < 0) { perc = 0; }
+            scroll.scrollbar.css({ top: ((scroll.height - scroll.barHeight) / 100) * perc });
+            scroll.entries.css({ top: -1 * (((scroll.entriesH - scroll.height) / 100) * perc) });
+            requestAnimationFrame(() => {
+                S.entries.scroll.animate.call(S.entries.scroll);
+            });
+        },
+
+        stop: function () {
+            $('body').off('mousemove', S.entries.scroll.move);
+            $('body').off('mouseup', S.entries.scroll.stop);
+            S.entries.scroll.selected.container.removeClass('scrolling');
+            S.entries.scroll.selected = null;
+        },
+
+        wheel: function (e) {
+            var delta = 0;
+            if (!e) e = window.event;
+            // normalize delta
+            if (e.wheelDelta) {
+                // IE and Opera
+                delta = e.wheelDelta / 60;
+            } else if (e.detail) {
+                // W3C
+                delta = -e.detail / 2;
+            }
+
+            //animate scroll
+        }
+    },
 
     view: function (id) {
         var data = { bookId: id, start: 1, length: 50, sort: 0, includeCount:true };

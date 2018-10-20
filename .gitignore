@@ -9,6 +9,8 @@ app/content/books/
 *.bak
 /Sql/Sql.jfm
 /.vs
+App/wwwroot/js
+App/wwwroot/css
 
 # Build results
 [Dd]ebug/

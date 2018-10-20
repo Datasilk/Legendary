@@ -21,9 +21,26 @@
 }
 
 .subbar{float:left; height:~"calc(100% - 50px)"; width:350px; line-height:1.5;
+    .entries > .list{float:left;}
+    .entries:after{content:'';display:block;clear:both;}
+    .scroller{position:relative; float:right; background-color:rgba(0,0,0,0.05); width:10px; height:100%; overflow:hidden; border-radius:10px; margin-top:7px;}
+    .scrollable{overflow:hidden;
+        .scroller{display:none;}
+        &:after{content:' '; display:block; clear:both; height:0; overflow:hidden;}
+        &.scroll{
+            .items{float:left; width:224px;}
+            .item{padding-right:8px;}
+            .scroller{display:block;}
+            & > .list{width:~"calc(100% - 10px)"}
+        }
+    }
+    .scrollbar{position:relative; background:rgba(0,0,0,0.2); width:10px; min-height:20px; overflow:hidden; border-radius:10px;}
     .no-entries{width:100%; text-align:center; padding:20px;}
-    .entry{border-bottom:1px solid transparent;}
+    .entry{float:left; border-bottom:1px solid transparent;
+        .summary{line-height:1.25 !important; opacity:0.75;}
+    }
 }
+
 .box .addentry{ position:relative; top:-4px;
     .button.circle.large{padding:10px;}
 }
@@ -33,19 +50,31 @@
 
 #txtentry_summary{height:70px;}
 
-.editor{ height:~"calc(100% - 50px)"; width:~"calc(100% - 600px)"; float:left; position:relative;
+.editor{font-family:'Roboto Mono', monospace; height:~"calc(100% - 50px)"; width:~"calc(100% - 600px)"; float:left; position:relative;
     .markdown-editor{overflow:hidden;}
-    .CodeMirror{overflow:auto !important; height:100%; border-radius:0px !important; border-left-style:none; border-right-style:none; border-bottom-style:none;}
+    .CodeMirror{overflow:auto !important; line-height:1.5; height:100%; border-radius:0px !important; border-left-style:none; border-right-style:none; border-bottom-style:none;}
     .CodeMirror-scroll{height:~"calc(100% - 59px)" !important; overflow:auto !important; overflow-y:auto; margin-right:-10px !important; top:-10px;}
     .CodeMirror-code{box-sizing:content-box;}
     .CodeMirror-vscrollbar{display:none !important;}
     .editor-statusbar{display:none;}
-    .editor-preview{overflow-y:auto; height:~"calc(100% - 48px)" !important;}
     .editor-toolbar{border:0px none transparent !important; border-radius:0px !important;
         *:nth-child(1n+18){float:right;}
     }
     & > .message{width:97%; z-index:100; margin-top:10px !important;}
     .hljs{display:inline-block; padding:4px 7px !important; position:relative; top:8px;}
+}
+
+
+.editor-preview{font-family:'Lora', Georgia, sans; overflow-y:auto; height:~"calc(100% - 48px)" !important; line-height:1.25;
+    h1{font-size:58px; padding-bottom:15px;}
+    h2{font-size:46px; padding-bottom:10px;}
+    h3{font-size:40px; padding-bottom:5px;}
+    h4{font-size:32px;}
+    h5{font-size:26px;}
+    h6{font-size:22px;}
+    p, li{font-size:20px; line-height:1.5;}
+    ul{padding-left:20px;}
+    li{padding-bottom:10px;}
 }
 
 .editor-toolbar.disabled-for-preview{

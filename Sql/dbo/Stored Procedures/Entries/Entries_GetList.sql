@@ -8,8 +8,11 @@ AS
 	SELECT * FROM (
 		SELECT ROW_NUMBER() OVER ( ORDER BY
 			book_title ASC,
+			/* default sort by chapter & date */
 			CASE WHEN @sort = 0 THEN chapter END ASC,
 			CASE WHEN @sort = 0 THEN sort END ASC,
+			CASE WHEN @sort = 0 THEN datecreated END DESC,
+			/* sort by other fields */
 			CASE WHEN @sort = 1 THEN datecreated END DESC,
 			CASE WHEN @sort = 2 THEN datecreated END ASC,
 			CASE WHEN @sort = 3 THEN title END ASC

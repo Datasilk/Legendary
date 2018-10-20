@@ -44,7 +44,7 @@ paths.working = {
             paths.scripts + 'platform/loader.js',
             paths.scripts + 'platform/message.js',
             paths.scripts + 'platform/polyfill.js',
-            paths.scripts + 'platform/popup.js',
+            paths.scripts + 'platform/popup.js', 
             paths.scripts + 'platform/scaffold.js',
             paths.scripts + 'platform/svg.js',
             paths.scripts + 'platform/util.js',
@@ -66,7 +66,8 @@ paths.working = {
     less:{
         platform: paths.css + 'platform.less',
         app: [
-            paths.app + '**/*.less'
+            paths.app + '**/*.less',
+            '!' + paths.css + '**/*.less'
         ],
         themes: paths.css + 'themes/*.less',
         tapestry: paths.css + 'tapestry/tapestry.less',
@@ -137,13 +138,6 @@ gulp.task('js:app', function () {
     return p.pipe(gulp.dest(paths.compiled.js, { overwrite: true }));
 });
 
-gulp.task('js:platform', ['js:selector'], function () {
-    var p = gulp.src(paths.working.js.platform, { base: '.' })
-        .pipe(concat(paths.compiled.platform));
-    if (prod == true) { p = p.pipe(uglify()); }
-    return p.pipe(gulp.dest('.', { overwrite: true }));
-});
-
 gulp.task('js:selector', function () {
     var p = gulp.src(paths.scripts + 'selector/selector.js', { base: '.' })
             .pipe(concat('selector.js'));
@@ -158,6 +152,13 @@ gulp.task('js:selector', function () {
         p = p.pipe(uglify());
     }
     return p.pipe(gulp.dest(paths.compiled.js, { overwrite: true }));
+});
+
+gulp.task('js:platform', gulp.series('js:selector'), function () {
+    var p = gulp.src(paths.working.js.platform, { base: '.' })
+        .pipe(concat(paths.compiled.platform));
+    if (prod == true) { p = p.pipe(uglify()); }
+    return p.pipe(gulp.dest('.', { overwrite: true }));
 });
 
 gulp.task('js:utility', function () {
@@ -192,13 +193,13 @@ gulp.task('js:dashboard', function () {
     return p.pipe(gulp.dest('.', { overwrite: true }));
 });
 
-gulp.task('js', function () {
-    gulp.start('js:app');
-    gulp.start('js:platform');
-    gulp.start('js:utility');
-    gulp.start('js:core');
-    gulp.start('js:dashboard');
-});
+gulp.task('js', gulp.series(
+    'js:app',
+    'js:platform',
+    'js:utility',
+    'js:core',
+    'js:dashboard'
+));
 
 //tasks for compiling LESS & CSS /////////////////////////////////////////////////////////////////////
 gulp.task('less:app', function () {
@@ -274,32 +275,32 @@ gulp.task('css:utility', function () {
 });
 
 /* custom css compiling */
-gulp.task('css:dashboard', ['less:app'], function () {
+gulp.task('css:dashboard', function () {
     var p = gulp.src(paths.working.dashboard.css, { base: '.' })
         .pipe(concat(paths.compiled.css + 'dashboard.css'));
     if (prod == true) { p = p.pipe(uglify()); }
     return p.pipe(gulp.dest('.', { overwrite: true }));
 });
 
-gulp.task('less', function () {
-    gulp.start('less:platform');
-    gulp.start('less:app');
-    gulp.start('less:themes');
-    gulp.start('less:utility');
-});
+gulp.task('less', gulp.series(
+    'less:platform',
+    'less:app',
+    'less:themes',
+    'less:utility'
+));
 
-gulp.task('css', function () {
-    gulp.start('css:themes');
-    gulp.start('css:app');
-    gulp.start('css:utility');
-    gulp.start('css:dashboard');
-});
+gulp.task('css', gulp.series(
+    'css:themes',
+    'css:app',
+    'css:utility',
+    'css:dashboard'
+));
 
 //tasks for compiling vendor app dependencies /////////////////////////////////////////////////
 
 
 //default task
-gulp.task('default', ['js', 'less', 'css']);
+gulp.task('default', gulp.series('js', 'less', 'css'));
 
 //watch task
 gulp.task('watch', function () {
@@ -308,10 +309,10 @@ gulp.task('watch', function () {
         paths.scripts + 'selector/selector.js',
         paths.scripts + 'core/platform.js',
         paths.scripts + 'platform/*.js'
-    ], ['js:platform']);
+    ], gulp.series('js:platform'));
 
     //watch core JS
-    gulp.watch(paths.working.js.core, ['js:core']);
+    gulp.watch(paths.working.js.core, gulp.series('js:core'));
 
     //watch app JS
     var pathjs = paths.working.exclude.app.slice(0);
@@ -319,10 +320,10 @@ gulp.task('watch', function () {
         pathjs[x] += '*.js';
     }
     pathjs.unshift(paths.working.js.app);
-    gulp.watch(pathjs, ['js:app']);
+    gulp.watch(pathjs, gulp.series('js:app'));
 
     //watch dashboard JS
-    gulp.watch(paths.working.dashboard.js, ['js:dashboard']);
+    gulp.watch(paths.working.dashboard.js, gulp.series('js:dashboard'));
 
     //watch app LESS
     var pathless = paths.working.exclude.app.slice(0);
@@ -332,23 +333,23 @@ gulp.task('watch', function () {
     for (var x = paths.working.less.app.length - 1; x >= 0; x--) {
         pathless.unshift(paths.working.less.app[x]);
     }
-    gulp.watch(pathless, ['less:app']);
+    gulp.watch(pathless, gulp.series('less:app', 'css:dashboard'));
 
     //watch platform LESS
     gulp.watch([
         paths.working.less.platform,
         paths.working.less.tapestry
-    ], ['less:platform']);
+    ], gulp.series('less:platform'));
 
     //watch themes LESS
     gulp.watch([
         paths.working.less.themes
-    ], ['less:themes']);
+    ], gulp.series('less:themes', 'less:platform'));
 
     //watch utility LESS
     gulp.watch([
         paths.working.less.utility
-    ], ['less:utility']);
+    ], gulp.series('less:utility'));
 
     //watch app CSS
     var pathcss = paths.working.exclude.app.slice(0);
@@ -356,23 +357,15 @@ gulp.task('watch', function () {
         pathcss[x] += '*.css';
     }
     pathcss.unshift(paths.working.css.app);
-    gulp.watch(pathcss, ['css:app']);
+    gulp.watch(pathcss, gulp.series('css:app'));
 
     //watch themes CSS
     gulp.watch([
         paths.working.css.themes
-    ], ['css:themes']);
+    ], gulp.series('css:themes'));
 
     //watch utility CSS
     gulp.watch([
         paths.working.css.utility
-    ], ['css:utility']);
-
-    //watch utility CSS
-    gulp.watch([
-        paths.working.css.utility
-    ], ['css:utility']);
-
-    //watch dashboard CSS
-    gulp.watch(paths.working.dashboard.compiled, ['css:dashboard']);
+    ], gulp.series('css:utility'));
 });

@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "google-closure-compiler-js": "^20170218.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-clean-css": "^2.3.2",
     "gulp-closure-compiler": "^0.4.0",
     "gulp-concat": "2.6.0",
