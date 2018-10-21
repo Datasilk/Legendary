@@ -23,14 +23,14 @@ if (environment != 'dev' && environment != 'development' && environment != null)
 
 //paths
 var paths = {
-    scripts: './App/Scripts/',
-    css: './App/CSS/',
-    app: './App/',
-    themes: './App/Content/themes/',
+    scripts: 'App/Scripts/',
+    css: 'App/CSS/',
+    app: 'App/',
+    themes: 'App/Content/themes/',
     vendor: {
-        root: './App/Vendor/**/'
+        root: 'App/Vendor/**/'
     },
-    webroot: './App/wwwroot/',
+    webroot: 'App/wwwroot/',
 };
 
 //working paths
@@ -88,11 +88,11 @@ paths.working = {
 
     exclude: {
         app: [
-            '!' + paths.app + 'wwwroot/**/',
-            '!' + paths.app + 'Content/**/',
-            '!' + paths.app + 'CSS/**/',
-            '!' + paths.app + 'CSS/',
-            '!' + paths.app + 'Scripts/**/',
+            '!' + paths.app + 'wwwroot/**/*',
+            '!' + paths.app + 'Content/**/*',
+            '!' + paths.app + 'CSS/**/*',
+            '!' + paths.app + 'CSS/*',
+            '!' + paths.app + 'Scripts/**/*',
             '!' + paths.app + 'obj/**/*'
         ]
     },
@@ -127,6 +127,7 @@ paths.compiled = {
 gulp.task('js:app', function () {
     var pathlist = paths.working.exclude.app.slice(0);
     pathlist.unshift(paths.working.js.app);
+    console.log(pathlist);
     var p = gulp.src(pathlist)
         .pipe(rename(function (path) {
             path.dirname = path.dirname.toLowerCase();

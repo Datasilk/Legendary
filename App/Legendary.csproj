@@ -18,9 +18,9 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <Content Remove="config.json" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
