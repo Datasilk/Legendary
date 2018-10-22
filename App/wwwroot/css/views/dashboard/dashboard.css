@@ -65,6 +65,12 @@ header .logo-d img {
 .subbar .entries > .list {
   float: left;
 }
+.subbar .entries .container {
+  position: relative;
+}
+.subbar .entries .scrolled {
+  position: relative;
+}
 .subbar .entries:after {
   content: '';
   display: block;

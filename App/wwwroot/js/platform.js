@@ -941,11 +941,11 @@
             if (this.length > 0) {
                 const box = this[0].getBoundingClientRect();
                 return {
-                    top: box.top + document.body.scrollTop,
-                    left: box.left + document.body.scrollLeft
+                    left: box.left + document.body.scrollLeft,
+                    top: box.top + document.body.scrollTop
                 };
             }
-            return { top: 0, left: 0 };
+            return { left: 0, top: 0 };
         },
 
         offsetParent: function () {
@@ -1871,8 +1871,8 @@ S.message = {
             el.css({ opacity: 0, overflow:'hidden' }).show();
             var h = el.height();
             el.css({ height: 0, marginTop: 10, marginBottom: 10, paddingTop:0, paddingBottom:0 });
-            el.animate({ opacity: 1, height: h + 7 + 7, marginTop: 10, marginBottom: 10, paddingTop: 7, paddingBottom: 7 },
-                { duration: 333 }); //, easing: 'easeInSine' });
+            el.animate({ opacity: 1, height: h, marginTop: 10, marginBottom: 10, paddingTop: 7, paddingBottom: 7 },
+                { duration: 333, easing: 'easeInSine' });
         } else {
             el.css({ opacity: 1, height:'auto' }).show();
         }
@@ -2119,7 +2119,7 @@ S.svg = {
 
 S.util = {
     js: {
-        load: function (file, id, callback) {
+        load: function (file, id, callback, error) {
             //add javascript file to DOM
             if (document.getElementById(id)) { if (callback) { callback(); } return false; }
             var body = document.body;
@@ -2128,6 +2128,7 @@ S.util = {
             script.src = file;
             script.id = id;
             script.onload = callback;
+            script.onerror = error;
             body.appendChild(script);
         }
     },
@@ -2168,6 +2169,18 @@ S.util = {
             return null;
         }
     },
+
+    location: {
+        queryString: function (key, url) {
+            if (!url) url = window.location.href;
+            key = key.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + key + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+    }
 };
 
 S.math = {
@@ -2178,6 +2191,9 @@ S.math = {
         } else {
             return false;
         }
+    },
+    clamp: function (num, min, max) {
+        return num <= min ? min : num >= max ? max : num;
     }
 };
 

@@ -33,6 +33,11 @@ S.dash = {
 
         //events
         $(window).on('resize', S.entries.resize);
+
+        //scrollbar
+        $('.subbar .entries .scrollbar').on('mousedown', S.entries.scroll.start);
+        $('.subbar .entries .scroller').on('mousedown', S.entries.scroll.bar);
+        $('.subbar .entries .container').on('wheel', S.entries.scroll.wheel);
         S.entries.resize();
 
         //init editor
@@ -103,54 +108,70 @@ S.entries = {
             //show scrollbar
             if (!container.hasClass('scroll')) {
                 container.addClass('scroll');
-                scrollbar.on('mousedown', S.entries.scroll.start);
             }
             //update scrollbar height
             container.find('.scroller').css({ height: height - 7 });
             scrollbar.css({ height: ((height - 7) / h) * (height) });
+
+            //update scroll info
+            S.entries.scroll.init();
         } else {
             //hide scrollbar
             if (container.hasClass('scroll')) {
                 container.removeClass('scroll');
-                scrollbar.off('mousedown', S.entries.scroll.start);
             }
         }
     },
 
     scroll: {
+        config: {skip:15},
         selected: { scrollable: null, height: null, itemsH: null },
-        start: function (e) {
-            e.cancelBubble = true;
-            e.stopPropagation();
-            e.preventDefault();
+
+        init: function () {
             const win = S.window.pos();
             const container = $('.subbar .entries .container');
-            const entries = $('.subbar .entry');
             const scrollbar = container.find('.scrollbar');
+            const scrolled = $('.subbar .entries .scrolled');
+            const entries = $('.subbar .entry');
             const scroller = container.find('.scroller');
             const pos = container.position();
             const height = win.h - pos.top;
+            container.css({ height: height });
+
+            //show/hide entries scrollbar
             let h = 0;
             for (let x = 0; x < entries.length; x++) {
                 h += $(entries[x]).height();
             }
-            container.addClass('scrolling');
+
             S.entries.scroll.selected = {
                 scrollbar: scrollbar,
                 height: height,
                 barHeight: ((height) / h) * height,
                 container: container,
                 entries: entries,
+                scrolled: scrolled,
                 entriesH: h,
                 offsetY: scroller.offset().top,
-                cursorY: e.clientY,
-                currentY: e.clientY,
                 barY: scrollbar.offset().top
             };
+        },
+
+        start: function (e) {
+            e.cancelBubble = true;
+            e.stopPropagation();
+            e.preventDefault();
+
+            //update class for container
+            const container = $('.subbar .entries .container');
+            container.addClass('scrolling');
+            S.entries.scroll.init();
+            S.entries.scroll.selected.cursorY = e.clientY;
+            S.entries.scroll.selected.currentY = e.clientY;
 
             $('body').on('mousemove', S.entries.scroll.move);
             $('body').on('mouseup', S.entries.scroll.stop);
-            S.entries.scroll.animate.call(S.entries.scroll); 
+            S.entries.scroll.animate.call(S.entries.scroll);
         },
 
         move: function (e) {
@@ -159,13 +180,9 @@ S.entries = {
 
         animate: function () {
             const scroll = S.entries.scroll.selected;
-            if (scroll == null) { return; }
             const curr = scroll.currentY - scroll.cursorY - (scroll.offsetY - scroll.barY);
             let perc = (100 / (scroll.height - scroll.barHeight)) * curr;
-            if (perc > 100) { perc = 100; }
-            if (perc < 0) { perc = 0; }
-            scroll.scrollbar.css({ top: ((scroll.height - scroll.barHeight) / 100) * perc });
-            scroll.entries.css({ top: -1 * (((scroll.entriesH - scroll.height) / 100) * perc) });
+            S.entries.scroll.to(perc);
             requestAnimationFrame(() => {
                 S.entries.scroll.animate.call(S.entries.scroll);
             });
@@ -175,11 +192,40 @@ S.entries = {
             $('body').off('mousemove', S.entries.scroll.move);
             $('body').off('mouseup', S.entries.scroll.stop);
             S.entries.scroll.selected.container.removeClass('scrolling');
-            S.entries.scroll.selected = null;
+        },
+
+        to: function (percent) {
+            const scroll = S.entries.scroll.selected;
+            let perc = S.math.clamp(percent, 0, 100);
+            scroll.scrollbar.css({ top: ((scroll.height - scroll.barHeight) / 100) * perc });
+            scroll.scrolled.css({ top: -1 * (((scroll.entriesH - scroll.height) / 100) * perc) });
+        },
+
+        add: function (px) {
+            S.entries.scroll.init();
+            const scroll = S.entries.scroll.selected;
+            const scrolled = $('.subbar .entries .scrolled');
+            let pos = scrolled.position();
+            let perc = (100 / (scroll.entriesH - scroll.height)) * -(pos.top + px);
+            S.entries.scroll.to(perc);
+        },
+
+        bar: function (e) {
+            if ($(e.target).hasClass('scrollbar')) { return;}
+            const y = e.clientY;
+            const scrollbar = $('.entries .scrollbar');
+            const pos = scrollbar.offset();
+            if (y < pos.top) {
+                //above scrollbar
+                S.entries.scroll.add(S.entries.scroll.config.skip * 8);
+            } else {
+                //below scrollbar
+                S.entries.scroll.add(-S.entries.scroll.config.skip * 8);
+            }
         },
 
         wheel: function (e) {
-            var delta = 0;
+            let delta = 0;
             if (!e) e = window.event;
             // normalize delta
             if (e.wheelDelta) {
@@ -189,8 +235,7 @@ S.entries = {
                 // W3C
                 delta = -e.detail / 2;
             }
-
-            //animate scroll
+            S.entries.scroll.add(delta * S.entries.scroll.config.skip);
         }
     },
 

@@ -155,11 +155,11 @@ gulp.task('js:selector', function () {
     return p.pipe(gulp.dest(paths.compiled.js, { overwrite: true }));
 });
 
-gulp.task('js:platform', gulp.series('js:selector'), function () {
+gulp.task('js:platform', function () {
     var p = gulp.src(paths.working.js.platform, { base: '.' })
-        .pipe(concat(paths.compiled.platform));
+        .pipe(concat('platform.js'));
     if (prod == true) { p = p.pipe(uglify()); }
-    return p.pipe(gulp.dest('.', { overwrite: true }));
+    return p.pipe(gulp.dest(paths.compiled.js, { overwrite: true }));
 });
 
 gulp.task('js:utility', function () {
