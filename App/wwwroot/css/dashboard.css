@@ -2486,7 +2486,7 @@ header .logo-d img {
 .subbar .entries .container {
   position: relative;
 }
-.subbar .entries .scrolled {
+.subbar .entries .movable {
   position: relative;
 }
 .subbar .entries:after {
