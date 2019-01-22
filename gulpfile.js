@@ -4,7 +4,6 @@
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
-    compile = require('google-closure-compiler-js').gulp(),
     cleancss = require('gulp-clean-css'),
     less = require('gulp-less'),
     rename = require('gulp-rename'),
@@ -57,10 +56,6 @@ paths.working = {
         utility: [
             paths.scripts + 'utility/*.js',
             paths.scripts + 'utility/**/*.js'
-        ],
-        core: [
-            '!' + paths.scripts + 'core/platform.js',
-            paths.scripts + 'core/*.js'
         ]
     },
 
@@ -94,7 +89,8 @@ paths.working = {
             '!' + paths.app + 'CSS/**/*',
             '!' + paths.app + 'CSS/*',
             '!' + paths.app + 'Scripts/**/*',
-            '!' + paths.app + 'obj/**/*'
+            '!' + paths.app + 'obj/**/*',
+            '!' + paths.app + 'bin/**/*'
         ]
     },
 
@@ -144,13 +140,6 @@ gulp.task('js:selector', function () {
     var p = gulp.src(paths.scripts + 'selector/selector.js', { base: '.' })
             .pipe(concat('selector.js'));
     if (prod == true) { 
-        //p = p
-        //    .pipe(compile({
-        //        compilationLevel: 'SIMPLE',
-        //        warningLevel: 'VERBOSE',
-        //        jsOutputFile: 'selector.js',  // outputs single file
-        //        createSourceMap: true
-        //    }));
         p = p.pipe(uglify());
     }
     return p.pipe(gulp.dest(paths.compiled.js, { overwrite: true }));
@@ -175,18 +164,6 @@ gulp.task('js:utility', function () {
     return p.pipe(gulp.dest(paths.compiled.js + 'utility', { overwrite: true }));
 });
 
-gulp.task('js:core', function () {
-    var p = gulp.src(paths.working.js.core)
-        .pipe(rename(function (path) {
-            path.dirname = path.dirname.toLowerCase();
-            path.basename = path.basename.toLowerCase();
-            path.extname = path.extname.toLowerCase();
-        }));
-
-    if (prod == true) { p = p.pipe(uglify()); }
-    return p.pipe(gulp.dest(paths.compiled.js + 'core', { overwrite: true }));
-});
-
 /* custom js compiling */
 gulp.task('js:dashboard', function () {
     var p = gulp.src(paths.working.dashboard.js, { base: '.' })
@@ -199,7 +176,6 @@ gulp.task('js', gulp.series(
     'js:app',
     'js:platform',
     'js:utility',
-    'js:core',
     'js:dashboard'
 ));
 
@@ -309,32 +285,18 @@ gulp.task('watch', function () {
     //watch platform JS
     gulp.watch([
         paths.scripts + 'selector/selector.js',
-        paths.scripts + 'core/platform.js',
         paths.scripts + 'platform/*.js'
     ], gulp.series('js:platform'));
 
-    //watch core JS
-    gulp.watch(paths.working.js.core, gulp.series('js:core'));
-
     //watch app JS
-    var pathjs = paths.working.exclude.app.slice(0);
-    for (var x = 0; x < pathjs.length; x++) {
-        pathjs[x] += '*.js';
-    }
-    pathjs.unshift(paths.working.js.app);
+    var pathjs = [paths.working.js.app, ...paths.working.exclude.app.map(a => a + '*.js')];
     gulp.watch(pathjs, gulp.series('js:app'));
 
     //watch dashboard JS
     gulp.watch(paths.working.dashboard.js, gulp.series('js:dashboard'));
 
     //watch app LESS
-    var pathless = paths.working.exclude.app.slice(0);
-    for (var x = 0; x < pathless.length; x++) {
-        pathless[x] += '*.less';
-    }
-    for (var x = paths.working.less.app.length - 1; x >= 0; x--) {
-        pathless.unshift(paths.working.less.app[x]);
-    }
+    var pathless = [...paths.working.less.app, ...paths.working.exclude.app.map(a => a + '*.less')];
     gulp.watch(pathless, gulp.series('less:app', 'css:dashboard'));
 
     //watch platform LESS
@@ -354,11 +316,7 @@ gulp.task('watch', function () {
     ], gulp.series('less:utility'));
 
     //watch app CSS
-    var pathcss = paths.working.exclude.app.slice(0);
-    for (var x = 0; x < pathcss.length; x++) {
-        pathcss[x] += '*.css';
-    }
-    pathcss.unshift(paths.working.css.app);
+    var pathcss = [paths.working.css.app, ...paths.working.exclude.app.map(a => a + '*.css')];
     gulp.watch(pathcss, gulp.series('css:app'));
 
     //watch themes CSS
