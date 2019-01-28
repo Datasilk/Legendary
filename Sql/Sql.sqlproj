@@ -132,6 +132,8 @@
     <Build Include="dbo\Stored Procedures\Users\User_CreateAuthToken.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_AuthenticateByToken.sql" />
     <Build Include="dbo\Stored Procedures\Utility\GetCustomId.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entry_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Entries\Entries_FixSortOrder.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

@@ -1,0 +1,37 @@
+﻿<div class="row message hide"><span></span></div>
+<form method="post">
+    <div class="row field">Title</div>
+    <div class="row input hover">
+        <input type="text" id="txtentry_title" placeholder="A New Entry" value="{{title}}" />
+    </div>
+    <div class="row field">Summary</div>
+    <div class="row input hover">
+        <textarea id="txtentry_summary" placeholder="A short description about this new entry" maxlength="255">{{summary}}</textarea>
+    </div>
+
+    <div class="row field">Book</div>
+    <div class="row input hover">
+        <select id="lstentry_book">{{books}}</select>
+    </div>
+
+    <div class="row field">
+        Chapter
+        <div class="col right icon small pad-right-sm">
+            <a href="javascript:" onclick="S.editor.info.newChapter()" title="Create a new Chapter">
+                <svg viewBox="0 0 32 32">
+                    <use xlink:href="#icon-add" x="0" y="0" width="32" height="32"></use>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div class="row input hover">
+        <select id="lstentry_chapter">{{chapters}}</select>
+    </div>
+    <div class="row field">Date Created</div>
+    <div class="row input hover">
+        <input type="text" id="txtentry_datecreated" placeholder="m/dd/yyyy h:mm:ss ampm" value="{{datecreated}}" />
+    </div>
+    <div class="row pad-top text-center">
+        <input type="submit" class="button apply" value="Update Entry" />
+    </div>
+</form>

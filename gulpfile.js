@@ -124,7 +124,6 @@ paths.compiled = {
 gulp.task('js:app', function () {
     var pathlist = paths.working.exclude.app.slice(0);
     pathlist.unshift(paths.working.js.app);
-    console.log(pathlist);
     var p = gulp.src(pathlist)
         .pipe(rename(function (path) {
             path.dirname = path.dirname.toLowerCase();

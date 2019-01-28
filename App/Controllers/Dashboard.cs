@@ -54,13 +54,15 @@ namespace Legendary.Pages
 
                 //get list of entries for top book
                 var bookId = 0;
+                var entryId = 0;
                 if (books.Count > 0)
                 {
                     bookId = books[0].bookId;
                     var first = Query.Entries.GetFirst(User.userId, bookId, (int)Common.Platform.Entries.SortType.byChapter);
+                    entryId = first.entryId;
                     if(first != null)
                     {
-                        scripts.Append("<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.editor.entryId=" + first.entryId.ToString() + ";S.dash.init();</script>");
+                        scripts.Append("<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.editor.entryId=" + entryId.ToString() + ";S.dash.init();</script>");
 
                         //load content of first entry
                         dash.Data["editor-content"] = Entries.LoadEntry(first.entryId, bookId);
@@ -71,7 +73,7 @@ namespace Legendary.Pages
                         scripts.Append("<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.entries.noentries();S.dash.init();</script>");
                     }
                 }
-                dash.Data["entries"] = Entries.GetList(this, bookId, 1, 50, Entries.SortType.byChapter);
+                dash.Data["entries"] = Entries.GetList(User.userId, bookId, entryId, 1, 50, Entries.SortType.byChapter);
             }
             else
             {

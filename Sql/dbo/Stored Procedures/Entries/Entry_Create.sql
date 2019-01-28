@@ -24,19 +24,6 @@ AS
 	VALUES (@id, @userId, @bookId, @chapter, @sort, @datecreated, @datecreated, @title, @summary)
 
 	/* fix broken sort order */
-	IF @chapter > 0 BEGIN
-		DECLARE @i int, @cursor CURSOR, @inc int = 1
-		SET @cursor = CURSOR FOR
-		SELECT entryId FROM Entries WHERE bookId=@bookId ORDER BY chapter ASC, sort ASC
-		OPEN @cursor
-		FETCH FROM @cursor INTO @i
-		WHILE @@FETCH_STATUS = 0 BEGIN
-			UPDATE Entries SET sort=@inc WHERE entryId=@i
-			SET @inc += 1
-			FETCH FROM @cursor INTO @i
-		END
-		CLOSE @cursor
-		DEALLOCATE @cursor
-	END
+	EXEC Entries_FixSortOrder @bookId=@bookId
 
 	SELECT @id

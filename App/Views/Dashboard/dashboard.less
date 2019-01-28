@@ -37,19 +37,22 @@
     }
     .scrollbar{position:relative; background:rgba(0,0,0,0.2); width:10px; min-height:20px; overflow:hidden; border-radius:10px;}
     .no-entries{width:100%; text-align:center; padding:20px;}
-    .entry{float:left; border-bottom:1px solid transparent;
+    .entry{border-bottom:1px solid transparent; cursor:default;
         .summary{line-height:1.25 !important; opacity:0.75;}
+    }
+
+    .chapter{
+        .wrap{width:~"calc(100% - 9px)";}
     }
 }
 
-.box .addentry{ position:relative; top:-4px;
+.box .addentry{ position:relative; top:6px;
     .button.circle.large{padding:10px;}
+    svg{width:16px; height:16px;}
 }
 
 .no-books{float:left; width:~"calc(100% - 250px)"; text-align:center; }
 .no-entries{float:left; width:~"calc(100% - 600px)"; text-align:center; }
-
-#txtentry_summary{height:70px;}
 
 .editor{font-family:'Roboto Mono', monospace; height:~"calc(100% - 50px)"; width:~"calc(100% - 600px)"; float:left; position:relative;
     .markdown-editor{overflow:hidden;}
@@ -82,4 +85,8 @@
 .editor-toolbar.disabled-for-preview{
     a, .separator:nth-child(-n+17){opacity:0.1;}
     a.no-disable{opacity:1;}
+}
+
+.popup{
+    #txtentry_summary{min-height:80px;}
 }

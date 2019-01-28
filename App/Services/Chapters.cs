@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Utility.Serialization;
+using Legendary.Common.Platform;
 
 namespace Legendary.Services
 {
@@ -11,19 +12,13 @@ namespace Legendary.Services
         {
         }
 
-        public struct chapter
-        {
-            public string title;
-            public int num;
-        }
-
         public string GetList(int bookId)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            var list = new List<chapter>();
+            var list = new List<Chapter>();
             Query.Chapters.GetList(bookId).ForEach((Query.Models.Chapter chap) =>
             {
-                list.Add(new chapter()
+                list.Add(new Chapter()
                 {
                     num = chap.chapter,
                     title = chap.title

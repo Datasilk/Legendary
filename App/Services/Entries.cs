@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Legendary.Services
 {
@@ -6,10 +7,10 @@ namespace Legendary.Services
     {
         public Entries(HttpContext context) : base(context) {}
 
-        public string GetList(int bookId, int start = 1, int length = 50, int sort = 0, bool includeCount = false)
+        public string GetList(int bookId, int entryId, int start = 1, int length = 50, int sort = 0, bool includeCount = false)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            return Common.Platform.Entries.GetList(this, bookId, start, length, (Common.Platform.Entries.SortType)sort, includeCount);
+            return Common.Platform.Entries.GetList(User.userId, bookId, entryId, start, length, (Common.Platform.Entries.SortType)sort, includeCount);
             
         }
 
@@ -18,9 +19,10 @@ namespace Legendary.Services
             if (!CheckSecurity()) { return AccessDenied(); }
             try
             {
+                var entryId = Common.Platform.Entries.CreateEntry(User.userId, bookId, title, summary, chapter);
                 return 
-                    Common.Platform.Entries.CreateEntry(this, bookId, title, summary, chapter) + "|" + 
-                    Common.Platform.Entries.GetList(this, bookId, 1, 50, (Common.Platform.Entries.SortType)sort);
+                    entryId + "|" + 
+                    Common.Platform.Entries.GetList(User.userId, bookId, entryId, 1, 50, (Common.Platform.Entries.SortType)sort);
             }
             catch (ServiceErrorException ex)
             {
@@ -33,13 +35,13 @@ namespace Legendary.Services
             if (!CheckSecurity()) { return AccessDenied(); }
             try
             {
-                Common.Platform.Entries.SaveEntry(this, entryId, content);
+                Common.Platform.Entries.SaveEntry(User.userId, entryId, content);
             }
             catch (ServiceErrorException)
             {
-                return Error();
+                return Error("An error occurred while saving your entry");
             }
-            return "success";
+            return Success();
         }
 
         public string LoadEntry(int entryId, int bookId)
@@ -48,6 +50,33 @@ namespace Legendary.Services
             try
             {
                 return Common.Platform.Entries.LoadEntry(entryId, bookId);
+            }
+            catch (ServiceErrorException ex)
+            {
+                return Error(ex.Message);
+            }
+        }
+
+        public string LoadEntryInfo(int entryId, int bookId)
+        {
+            if (!CheckSecurity()) { return AccessDenied(); }
+            try
+            {
+                return Common.Platform.Entries.LoadEntryInfo(User.userId, entryId, bookId);
+            }
+            catch (ServiceErrorException ex)
+            {
+                return Error(ex.Message);
+            }
+        }
+
+        public string UpdateEntryInfo(int entryId, int bookId, DateTime datecreated, string title, string summary, int chapter)
+        {
+            if (!CheckSecurity()) { return AccessDenied(); }
+            try
+            {
+                Common.Platform.Entries.UpdateEntryInfo(entryId, bookId, datecreated, title, summary, chapter);
+                return Success();
             }
             catch (ServiceErrorException ex)
             {

@@ -145,5 +145,20 @@ namespace Query
                 }
             );
         }
+
+        public static void Update(int entryId, int bookId, DateTime dateCreated, string title, string summary = "", int chapter = 0)
+        {
+            Sql.ExecuteNonQuery("Entry_Update",
+                new Dictionary<string, object>()
+                {
+                    {"entryId", entryId },
+                    {"bookId", bookId },
+                    {"chapter", chapter },
+                    {"datecreated", dateCreated },
+                    {"title", title },
+                    {"summary", summary }
+                }
+            );
+        }
     }
 }

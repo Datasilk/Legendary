@@ -39,17 +39,18 @@ S.books = {
                 return false;
             }
 
-            S.ajax.post('Books/CreateBook', data, function (d) {
-                if (d.indexOf('success') == 0) {
+            S.ajax.post('Books/CreateBook', data,
+                function (d) {
                     var f = d.split('|');
                     $('.menu .sub.book').remove();
                     $('.menu .item-books').after(f[2]);
                     S.popup.hide();
                     S.entries.view(f[1]);
-                } else {
-                    S.message.show('.popup .message', 'error', d);
+                },
+                function (err) {
+                    S.message.show('.popup .message', 'error', err);
                 }
-            });
+            );
 
             return false;
         }
@@ -70,29 +71,33 @@ S.entries = {
         const win = S.window.pos();
         const container = $('.subbar .entries .container');
         const pos = container.position();
-        const height = win.h - pos.top;
-        container.css({ height: height });
+        container.css({ height: win.h - pos.top - 1 });
     },
 
     view: function (id) {
-        var data = { bookId: id, start: 1, length: 50, sort: 0, includeCount:true };
-        S.ajax.post('Entries/GetList', data, function (d) {
-            var f = d.split('|');
-            if (f.length > 1) {
-                $('ul.menu li.book.selected').removeClass('selected');
-                $('ul.menu li.book.id-' + id).addClass('selected');
-                $('.subbar .entries').html(f[1]);
-                $('.subbar').removeClass('hide');
-                S.popup.hide();
-                if (parseInt(f[0]) > 0) {
-                    $('.editor').removeClass('hide');
-                } else {
-                    S.entries.noentries();
+        var data = { bookId: id, entryId: S.editor.entryId, start: 1, length: 50, sort: 0, includeCount:true };
+        S.ajax.post('Entries/GetList', data,
+            function (d) {
+                var f = d.split('|');
+                if (f.length > 1) {
+                    $('ul.menu li.book.selected').removeClass('selected');
+                    $('ul.menu li.book.id-' + id).addClass('selected');
+                    $('.subbar .entries').html(f[1]);
+                    $('.subbar').removeClass('hide');
+                    S.popup.hide();
+                    if (parseInt(f[0]) > 0) {
+                        $('.editor').removeClass('hide');
+                    } else {
+                        S.entries.noentries();
+                    }
                 }
+                S.entries.init();
+                S.entries.bookId = id;
+            },
+            function (err) {
+                S.message.show('.popup .message', 'error', err);
             }
-            
-            S.entries.bookId = id;
-        });
+        );
     },
 
     create: {
@@ -103,7 +108,7 @@ S.entries = {
             S.popup.show('Create a new Entry', scaffold.render(), { width: 350 });
             $('.popup form').on('submit', S.entries.create.submit);
             //get list of chapters
-            S.entries.create.getChapters(callback);  
+            S.chapters.get($('#lstentry_chapter'), callback);  
         },
 
         submit: function (e) {
@@ -125,39 +130,27 @@ S.entries = {
                 return false;
             }
 
-            S.ajax.post('Entries/CreateEntry', data, function (d) {
-                if (d.indexOf('|') > 0) {
+            S.ajax.post('Entries/CreateEntry', data,
+                function (d) {
                     var f = d.split('|');
                     $('.subbar .entries').html(f[1]);
                     $('.editor').removeClass('hide');
                     $('.no-entries').remove();
                     S.popup.hide();
-                    S.editor.setContent('');
                     S.editor.entryId = parseInt(f[0]);
+                    S.editor.setContent('# ' + data.title + '\n#### ' + data.summary + '\n\n');
                     S.entries.init();
-                } else {
-                    S.message.show('.popup .message', 'error', d);
+                    //scroll to bottom of entries list
+                    S.scrollbar.to(S.scrollbar.get($('.entries .container')), 100);
+                    //save new entry with default content (title/summary)
+                    S.editor.save();
+                },
+                function (err) {
+                    S.message.show('.popup .message', 'error', err);
                 }
-            });
+            );
 
             return false;
-        },
-
-        getChapters: function (callback) {
-            S.ajax.post('Chapters/GetList', { bookId: S.entries.bookId }, function (d) {
-                if (d.indexOf('[') == 0) {
-                    var data = JSON.parse(d);
-                    data = [{ title: '[No Chapter]', num: 0 }].concat(data);
-                    var list = $('#lstentry_chapter');
-                    list.html('');
-                    data.map(a => {
-                        list.append(new Option((a.num > 0 ? a.num + ': ' : '') + a.title, a.num));
-                    });
-                    if (typeof callback == 'function') { callback();}
-                } else {
-                    S.message.show('.popup .message', 'error', 'An error occurred while trying to retrieve a list of chapters');
-                }
-            });
         },
 
         newChapter: function () {
@@ -188,6 +181,23 @@ S.entries = {
 
 /* Chapters */
 S.chapters = {
+    get: function (list, callback) {
+        S.ajax.post('Chapters/GetList', { bookId: S.entries.bookId },
+            function (d) {
+                var data = JSON.parse(d);
+                data = [{ title: '[No Chapter]', num: 0 }].concat(data);
+                list.html('');
+                data.map(a => {
+                    list.append(new Option((a.num > 0 ? a.num + ': ' : '') + a.title, a.num));
+                });
+                if (typeof callback == 'function') { callback(); }
+            },
+            function (err) {
+                S.message.show('.popup .message', 'error', err);
+            }
+        );
+    },
+
     create: {
         callback: null,
 
@@ -196,13 +206,14 @@ S.chapters = {
             S.popup.show('Create a new Chapter', scaffold.render(), { width: 400 });
             $('.popup form').on('submit', S.chapters.create.submit);
             //get max chapter # for book
-            S.ajax.post('Chapters/GetMax', { bookId: S.entries.bookId }, function (d) {
-                try {
+            S.ajax.post('Chapters/GetMax', { bookId: S.entries.bookId },
+                function (d) {
                     $('#txtchapter_num').val(parseInt(d) + 1);
-                } catch (ex) {
-                    S.message.show('.popup .message', 'error', S.message.error.generic);
+                },
+                function (err) {
+                    S.message.show('.popup .message', 'error', err);
                 }
-            });
+            );
             S.chapters.create.callback = callback;
         },
 
@@ -228,16 +239,17 @@ S.chapters = {
                     return false;
                 }
 
-                S.ajax.post('Chapters/CreateChapter', data, function (d) {
-                    if (d.indexOf('success') == 0) {
+                S.ajax.post('Chapters/CreateChapter', data,
+                    function (d) {
                         S.popup.hide();
                         if (typeof S.chapters.create.callback == 'function') {
                             S.chapters.create.callback(data.chapter);
                         }
-                    } else {
-                        S.message.show('.popup .message', 'error', d);
+                    },
+                    function (err) {
+                        S.message.show('.popup .message', 'error', err);
                     }
-                });
+                );
             } catch (ex) {
                 S.message.show('.popup .message', 'error', S.message.error.generic);
             }
@@ -419,16 +431,20 @@ S.editor = {
     },
 
     getContent: function (entryId) {
+        if (S.editor.entryId == entryId) { return;}
         if (editor.value() != '' && S.editor.changed == true) { S.editor.save(); }
         S.editor.setContent('');
         S.editor.entryId = entryId;
-        S.ajax.post('Entries/LoadEntry', { entryId: entryId, bookId: S.entries.bookId }, function (d) {
-            if (d == 'error') {
-                S.message.show('.editor .message', 'error', 'An error occurred while trying to load your entry');
-            } else {
+        S.ajax.post('Entries/LoadEntry', { entryId: entryId, bookId: S.entries.bookId },
+            function (d) {
                 S.editor.setContent(d);
+                $('.entries .entry.selected').removeClass('selected');
+                $('.entries .entry.entryid-' + entryId).addClass('selected');
+            },
+            function (err) {
+                S.message.show('.popup .message', 'error', err);
             }
-        });
+        );
     },
 
     setContent: function (content) {
@@ -463,13 +479,13 @@ S.editor = {
             entryId: S.editor.entryId,
             content: editor.value()
         };
-        S.ajax.post('Entries/SaveEntry', data, function (d) {
-            if (d.indexOf('success') == 0) {
-
-            } else {
-                S.message.show('.editor .message', 'error', 'An error occurred while trying to save your entry');
+        S.ajax.post('Entries/SaveEntry', data,
+            function (d) {
+            },
+            function (err) {
+                S.message.show('.popup .message', 'error', err);
             }
-        });
+        );
     },
 
     guide: {
@@ -482,11 +498,77 @@ S.editor = {
     },
 
     info: {
-        show: function () {
-
+        show: function (callback) {
+            var data = { bookId:S.entries.bookId, entryId:S.editor.entryId };
+            S.ajax.post('Entries/LoadEntryInfo', data,
+                function (d) {
+                    S.popup.show('Entry Details', d, { width: 350 });
+                    $('.popup form').on('submit', S.editor.info.submit);
+                    if (typeof callback == 'function') {
+                        callback();
+                    }
+                },
+                function (err) {
+                    S.message.show('.popup .message', 'error', err);
+                }
+            );
+            
         },
-        hide: function () {
 
+        newChapter: function () {
+            S.editor.info.temp = {
+                title: $('#txtentry_title').val(),
+                summary: $('#txtentry_summary').val()
+            };
+            S.chapters.create.view(S.editor.info.createdChapter);
+        },
+
+        createdChapter: function (chapter) {
+            var temp = S.editor.info.temp;
+            S.editor.info.show(() => {
+                $('#txtentry_title').val(temp.title);
+                $('#txtentry_summary').val(temp.summary);
+            });
+        },
+
+        submit: function (e) {
+            e.preventDefault();
+            e.cancelBubble = true;
+            let date = $('#txtentry_datecreated').val();
+            if (date == '' || (new Date(date)).toString() == 'Invalid Date') {
+                S.message.show('.popup .message', 'error', 'Please provide a valid date & time');
+                return false;
+            }
+            var data = {
+                entryId: S.editor.entryId,
+                bookId: parseInt($('#lstentry_book').val()),
+                datecreated: date,
+                title: $('#txtentry_title').val(),
+                summary: $('#txtentry_summary').val(),
+                chapter: parseInt($('#lstentry_chapter').val()),
+            };
+
+            if (data.title == '') {
+                S.message.show('.popup .message', 'error', 'Please provide a title for your entry');
+                return false;
+            }
+            if (data.summary == '') {
+                S.message.show('.popup .message', 'error', 'Please provide a summary for your entry');
+                return false;
+            }
+
+            S.ajax.post('Entries/UpdateEntryInfo', data,
+                function (d) {
+                    S.popup.hide();
+                    //view book based on selected book within entry info form
+                    S.entries.view(data.bookId);
+                },
+                function (err) {
+                    S.message.show('.popup .message', 'error', err);
+                }
+            );
+
+            return false;
         }
     }
 };
