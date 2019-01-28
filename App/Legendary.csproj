@@ -58,6 +58,9 @@
     <None Update="Views\access-denied.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Views\Dashboard\templates\entryinfo.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Views\Shared\layout.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
