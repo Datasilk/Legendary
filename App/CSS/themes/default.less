@@ -202,11 +202,16 @@ body, input, textarea{font-family: 'Source Sans Pro', Arial, Helvetica, sans; fo
     .box(#ddd, transparent, #555);
     .row(transparent, #bdd0b8, #b5ccca, #555, #555, #555, #555, #555, #555, #555, #555, #555, #555, #555, #555);
     .entry{border-bottom-color:#ccc;}
-    .row a.button.circle{
-        &:link, &:visited{use{color:#ddd; fill:#ddd}}
-    }
     .row.chapter{
         .box(#d0d0d0, transparent, #555);
+    }
+}
+
+.box{
+    .subbar, .popup, .no-entries{    
+        .row a.button.circle, a.button.circle{
+            &:link, &:visited{use{color:#ddd; fill:#ddd}}
+        }
     }
 }
 

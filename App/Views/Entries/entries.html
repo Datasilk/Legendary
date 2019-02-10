@@ -1,6 +1,13 @@
 ﻿<div class="row pad">
     <div class="col book-title">
-        <h4>{{book-title}}</h4>
+        <h4>
+            <span class="col icon small pad-right">
+                <svg viewBox="0 0 32 32">
+                    <use xlink:href="#icon-book" x="0" y="0" width="32" height="32"></use>
+                </svg>
+            </span>
+            {{book-title}}
+        </h4>
     </div>
     <div class="col right addentry">
         <a href="javascript:" onclick="S.entries.create.view()" class="button circle" title="Add a new Entry">

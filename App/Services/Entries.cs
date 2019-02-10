@@ -83,5 +83,18 @@ namespace Legendary.Services
                 return Error(ex.Message);
             }
         }
+
+        public string TrashEntry(int entryId)
+        {
+            if (!CheckSecurity()) { return AccessDenied(); }
+            try
+            {
+                return Common.Platform.Entries.TrashEntry(User.userId, entryId).ToString();
+            }
+            catch (ServiceErrorException ex)
+            {
+                return Error(ex.Message);
+            }
+        }
     }
 }

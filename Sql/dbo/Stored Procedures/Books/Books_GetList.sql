@@ -4,6 +4,7 @@
 AS
 	SELECT * FROM Books 
 	WHERE userId=@userId 
+	AND deleted=0
 	ORDER BY 
 	CASE WHEN @sort = 0 THEN sort END ASC,
 	CASE WHEN @sort = 1 THEN title END ASC

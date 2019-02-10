@@ -21,9 +21,9 @@ namespace Query
             );
         }
 
-        public static void TrashEntry(int userId, int entryId)
+        public static int TrashEntry(int userId, int entryId)
         {
-            Sql.ExecuteNonQuery("Entry_Trash",
+            return Sql.ExecuteScalar<int>("Entry_Trash",
                 new Dictionary<string, object>()
                 {
                     {"userId", userId },

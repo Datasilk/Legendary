@@ -188,5 +188,10 @@ namespace Legendary.Common.Platform
                 throw new ServiceErrorException("Error updating existing entry");
             }
         }
+
+        public static int TrashEntry(int userId, int entryId)
+        {
+            return Query.Entries.TrashEntry(userId, entryId);
+        }
     }
 }

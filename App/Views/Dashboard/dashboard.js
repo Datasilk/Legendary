@@ -171,6 +171,45 @@ S.entries = {
         }
     },
 
+    trash: function (id) {
+        if (confirm('Do you really want to send this entry to the trash?\n' +
+            'You will be able to restore it later if you need to.')) {
+            S.ajax.post('Entries/TrashEntry', { entryId: id },
+                function (d) {
+                    let entry = $('.entries .entryid-' + id);
+                    //get next entry
+                    let nextEntry = entry.prev('.entry');
+                    if (nextEntry.length == 0) {
+                        nextEntry = entry.next('.entry');
+                    }
+                    if (nextEntry.length == 0) {
+                        //no more entries
+                        S.entries.noentries();
+                        $('.entries .movable > *').remove();
+                    } else {
+                        //select next entry
+                        let nextId = parseInt(nextEntry.attr('class')
+                            .replace('row ', '')
+                            .replace('hover ', '')
+                            .replace('entry ', '')
+                            .replace('entryid-', '')
+                            .replace('selected', '')
+                            .trim());
+                        S.editor.getContent(nextId);
+                    }
+                    //remove trashed entry from list
+                    entry.remove();
+                    S.popup.hide();
+                    //update trash count
+                    $('.item-trash .count').html('(' + d + ')');
+                },
+                function (err) {
+                    S.message.show('.popup .message', 'error', err);
+                }
+            );
+        }
+    },
+
     noentries: function () {
         $('.editor').addClass('hide');
         $('.no-entries').remove();

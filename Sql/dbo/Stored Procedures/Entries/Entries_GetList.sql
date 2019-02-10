@@ -20,5 +20,6 @@ AS
 		FROM View_Entries
 		WHERE userId=@userId
 		AND bookId=CASE WHEN @bookId > 0 THEN @bookId ELSE bookId END
+		AND deleted=0
 	) AS tbl
 	WHERE rownum >= @start AND rownum <= @start + @length

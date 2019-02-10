@@ -15,13 +15,6 @@ namespace Legendary.Pages
             if (!CheckSecurity()) { return AccessDenied(true, new Login(context)); }
 
             //add scripts to page
-            //AddCSS("/css/utility/font-awesome.css");
-            //AddScript("/js/utility/simplemde.min.js");
-            //AddCSS("/css/utility/simplemde.min.css");
-            //AddScript("/js/utility/highlight.min.js");
-            //AddCSS("/css/utility/highlight/atelier-forest-light.css"); // <-- define custom code highlight theme here
-            //AddScript("/js/utility/remarkable.min.js");
-            //AddScript("/js/pages/dashboard/dashboard.js");
             AddScript("/js/dashboard.js");
             AddCSS("/css/dashboard.css");
 
@@ -58,7 +51,7 @@ namespace Legendary.Pages
                 if (books.Count > 0)
                 {
                     bookId = books[0].bookId;
-                    var first = Query.Entries.GetFirst(User.userId, bookId, (int)Common.Platform.Entries.SortType.byChapter);
+                    var first = Query.Entries.GetFirst(User.userId, bookId, (int)Entries.SortType.byChapter);
                     entryId = first.entryId;
                     if(first != null)
                     {
@@ -83,11 +76,9 @@ namespace Legendary.Pages
             }
 
             //get count for tags & trash
-            var tags = 0;
-            var trash = 0;
 
-            dash.Data["tags-count"] = tags.ToString();
-            dash.Data["trash-count"] = trash.ToString();
+            dash.Data["tags-count"] = "0";
+            dash.Data["trash-count"] = Trash.GetCount(User.userId).ToString();
 
             //load script templates (for popups)
             dash.Data["templates"] = 

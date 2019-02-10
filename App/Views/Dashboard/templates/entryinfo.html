@@ -31,7 +31,12 @@
     <div class="row input hover">
         <input type="text" id="txtentry_datecreated" placeholder="m/dd/yyyy h:mm:ss ampm" value="{{datecreated}}" />
     </div>
-    <div class="row pad-top text-center">
-        <input type="submit" class="button apply" value="Update Entry" />
+    <div class="row pad-top">
+        <div class="col right">
+            <input type="submit" class="button apply" value="Update Entry" />
+        </div>
+        <div class="col">
+            <a class="button delete" href="javascript:" onclick="S.entries.trash(S.editor.entryId)">Trash</a>
+        </div>
     </div>
 </form>

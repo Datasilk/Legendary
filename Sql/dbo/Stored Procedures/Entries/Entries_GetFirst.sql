@@ -12,5 +12,5 @@ AS
 		CASE WHEN @sort = 3 THEN title END ASC
 	) AS rownum, *
 	FROM View_Entries
-	WHERE userId=@userId
+	WHERE userId=@userId AND deleted=0
 	AND bookId=CASE WHEN @bookId > 0 THEN @bookId ELSE bookId END
