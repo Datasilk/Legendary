@@ -109,13 +109,13 @@
     <None Update="Views\Entries\no-entries.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\Trash\trash-book.html">
+    <None Update="Views\Trash\item-book.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\Trash\trash-chapter.html">
+    <None Update="Views\Trash\item-chapter.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\Trash\trash-entry.html">
+    <None Update="Views\Trash\item-entry.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Views\Trash\trash.html">

@@ -69,7 +69,6 @@
     <Folder Include="dbo\Stored Procedures\Entries" />
     <Folder Include="dbo\Views" />
     <Folder Include="dbo\Stored Procedures\Chapters" />
-    <Folder Include="dbo\Stored Procedures\Markdown" />
     <Folder Include="dbo\Stored Procedures\Trash" />
     <Folder Include="dbo\Stored Procedures\Utility" />
   </ItemGroup>
@@ -115,17 +114,12 @@
     <Build Include="dbo\Stored Procedures\Books\Book_GetDetails.sql" />
     <Build Include="dbo\Stored Procedures\Chapters\Chapter_GetMax.sql" />
     <Build Include="dbo\Stored Procedures\Entries\Entries_GetFirst.sql" />
-    <Build Include="dbo\Tables\Markdown.sql" />
-    <Build Include="dbo\Stored Procedures\Markdown\Markdown_Update.sql" />
-    <Build Include="dbo\Stored Procedures\Markdown\Markdown_Delete.sql" />
     <Build Include="dbo\Stored Procedures\Entries\Entry_Trash.sql" />
     <Build Include="dbo\Stored Procedures\Entries\Entry_Restore.sql" />
     <Build Include="dbo\Stored Procedures\Chapters\Chapter_Trash.sql" />
     <Build Include="dbo\Stored Procedures\Chapters\Chapter_Restore.sql" />
     <Build Include="dbo\Stored Procedures\Trash\Trash_Empty.sql" />
     <Build Include="dbo\Stored Procedures\Trash\Trash_RestoreAll.sql" />
-    <Build Include="dbo\Stored Procedures\Markdown\Markdown_GetDetails.sql" />
-    <Build Include="dbo\Stored Procedures\Markdown\Markdown_GetHistory.sql" />
     <Build Include="dbo\Stored Procedures\Books\Book_Trash.sql" />
     <Build Include="dbo\Stored Procedures\Books\Book_Restore.sql" />
     <Build Include="dbo\Tables\User_AuthTokens.sql" />
@@ -135,6 +129,7 @@
     <Build Include="dbo\Stored Procedures\Entries\Entry_Update.sql" />
     <Build Include="dbo\Stored Procedures\Entries\Entries_FixSortOrder.sql" />
     <Build Include="dbo\Stored Procedures\Trash\Trash_GetCount.sql" />
+    <Build Include="dbo\Stored Procedures\Trash\Trash_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />
