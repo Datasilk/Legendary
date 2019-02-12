@@ -109,6 +109,9 @@
     <None Update="Views\Entries\no-entries.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Views\Shared\UI\checkbox.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Views\Trash\item-book.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
