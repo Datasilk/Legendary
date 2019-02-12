@@ -7,7 +7,6 @@ var gulp = require('gulp'),
     cleancss = require('gulp-clean-css'),
     less = require('gulp-less'),
     rename = require('gulp-rename'),
-    merge = require('merge-stream'),
     config = require('./App/config.json');
     
 //get config variables from config.json
@@ -40,6 +39,8 @@ paths.working = {
             paths.scripts + 'utility/velocity.min.js',
             paths.scripts + 'platform/_super.js', // <---- Datasilk Core Js: S object
             paths.scripts + 'platform/ajax.js', //   <---- Optional platform features
+            paths.scripts + 'platform/field.js',
+            paths.scripts + 'platform/field.checkbox.js',
             paths.scripts + 'platform/loader.js',
             paths.scripts + 'platform/message.js',
             paths.scripts + 'platform/polyfill.js',

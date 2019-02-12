@@ -55,16 +55,31 @@
     </div>
 </div>
 <div class="subbar {{no-books}}">
-    <div class="entries">
-        {{entries}}
-    </div>
+    <div class="entries">{{entries}}</div>
     <div class="tags hide"></div>
     <div class="trash hide"></div>
 </div>
-<div class="editor {{no-entries}}">
+<div class="editor body hide {{no-entries}}">
     <div class="row message hide absolute margin"><span></span></div>
     <div class="markdown-editor">
         <textarea id="editor">{{editor-content}}</textarea>
+    </div>
+</div>
+<div class="tag-details body hide"></div>
+<div class="trash-details body hide">
+    <div class="selected-items hide pad">
+        <h5>Selected Trash Items</h5>
+        <p>
+            <a href="javascript:" class="button delete">Permanently Delete Selected</a>
+            <a href="javascript:" class="button apply">Restore Selected</a>
+        </p>
+    </div>
+    <div class="all-items pad">
+        <h5>All Trash Items</h5>
+        <p>
+            <a href="javascript:" class="button delete">Permanently Delete All</a>
+            <a href="javascript:" class="button apply">Restore All</a>
+        </p>
     </div>
 </div>
 {{no-content}}

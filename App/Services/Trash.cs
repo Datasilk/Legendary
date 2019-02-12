@@ -30,8 +30,10 @@ namespace Legendary.Services
                 content.Append(scaffHeader.Render() + "\n");
                 foreach (var book in trash.Item1)
                 {
-                    scaffBook.Data["id"] = book.bookId.ToString();
+                    var id = book.bookId.ToString();
+                    scaffBook.Data["id"] = id;
                     scaffBook.Data["title"] = book.title;
+                    scaffBook.Data["checkbox"] = Common.UI.Checkbox.Render("checkbox-" + id, false, "S.trash.select()");
                     content.Append(scaffBook.Render() + "\n");
                 }
             }
@@ -43,7 +45,9 @@ namespace Legendary.Services
                 content.Append(scaffHeader.Render() + "\n");
                 foreach (var chapter in trash.Item2)
                 {
-                    scaffBook.Data["id"] = chapter.bookId + "-" + chapter.chapter;
+                    var id = chapter.bookId + "-" + chapter.chapter;
+                    scaffBook.Data["id"] = id;
+                    scaffBook.Data["checkbox"] = Common.UI.Checkbox.Render("checkbox-" + id, false, "S.trash.select()");
                     scaffBook.Data["title"] = chapter.title;
                     content.Append(scaffChapter.Render() + "\n");
                 }
@@ -56,8 +60,10 @@ namespace Legendary.Services
                 content.Append(scaffHeader.Render() + "\n");
                 foreach (var entry in trash.Item3)
                 {
-                    scaffBook.Data["id"] = entry.entryId.ToString();
+                    var id = entry.entryId.ToString();
+                    scaffBook.Data["id"] = id;
                     scaffBook.Data["title"] = entry.title;
+                    scaffBook.Data["checkbox"] = Common.UI.Checkbox.Render("checkbox-" + id, false, "S.trash.select()");
                     scaffBook.Data["date-created"] = entry.datecreated.ToString("M/dd/yyyy");
                     content.Append(scaffBook.Render() + "\n");
                 }
@@ -65,11 +71,7 @@ namespace Legendary.Services
 
             scaffold.Data["content"] = content.ToString();
 
-            return Inject(new Response()
-            {
-                selector = ".trash",
-                html = scaffold.Render()
-            });
+            return scaffold.Render();
         }
 
         public string Empty()

@@ -52,19 +52,21 @@ namespace Legendary.Pages
                 {
                     bookId = books[0].bookId;
                     var first = Query.Entries.GetFirst(User.userId, bookId, (int)Entries.SortType.byChapter);
+                    var script = new StringBuilder("<script language=\"javascript\">S.entries.bookId=" + bookId + ";");
                     entryId = first.entryId;
-                    if(first != null)
+                    
+                    if (first != null)
                     {
-                        scripts.Append("<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.editor.entryId=" + entryId.ToString() + ";S.dash.init();</script>");
-
                         //load content of first entry
                         dash.Data["editor-content"] = Entries.LoadEntry(first.entryId, bookId);
+                        script.Append("S.editor.entryId=" + entryId.ToString() + ";$('.editor').removeClass('hide');");
                     }
                     else
                     {
                         dash.Data["no-entries"] = "hide";
-                        scripts.Append("<script language=\"javascript\">S.entries.bookId=" + bookId + ";S.entries.noentries();S.dash.init();</script>");
+                        script.Append("S.entries.noentries();");
                     }
+                    scripts.Append(script.ToString() + "S.dash.init();</script>");
                 }
                 dash.Data["entries"] = Entries.GetList(User.userId, bookId, entryId, 1, 50, Entries.SortType.byChapter);
             }

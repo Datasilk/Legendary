@@ -7,10 +7,10 @@ namespace Legendary.Services
     {
         public Entries(HttpContext context) : base(context) {}
 
-        public string GetList(int bookId, int entryId, int start = 1, int length = 50, int sort = 0, bool includeCount = false)
+        public string GetList(int bookId, int entryId, int start = 1, int length = 50, int sort = 0)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
-            return Common.Platform.Entries.GetList(User.userId, bookId, entryId, start, length, (Common.Platform.Entries.SortType)sort, includeCount);
+            return Common.Platform.Entries.GetList(User.userId, bookId, entryId, start, length, (Common.Platform.Entries.SortType)sort);
             
         }
 

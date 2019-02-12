@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Legendary.Common.Platform
+﻿namespace Legendary.Common.Platform
 {
     public struct Chapter
     {

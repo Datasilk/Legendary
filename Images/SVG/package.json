@@ -20,24 +20,25 @@
   },
   "homepage": "https://github.com/w0rm/gulp-svgstore",
   "dependencies": {
-    "gulp-util": "^3.0.0",
+    "gulp-cli": "^2.0.1",
+    "gulp-util": "^3.0.8",
     "through2": "^0.4.1"
   },
   "peerDependencies": {
     "cheerio": "0.*"
   },
   "devDependencies": {
-    "cheerio": "0.*",
-    "connect": "^3.1.0",
-    "gm": "^1.16.0",
-    "gulp": "^3.9.1",
+    "cheerio": "^0.22.0",
+    "connect": "^3.6.6",
+    "gm": "^1.23.1",
+    "gulp": "^4.0.0",
     "gulp-cheerio": "^0.4.0",
-    "gulp-inject": "^1.0.1",
-    "gulp-mocha": "^0.5.2",
+    "gulp-inject": "^1.5.0",
+    "gulp-mocha": "^6.0.0",
     "gulp-replace": "^0.5.4",
-    "serve-static": "^1.4.3",
+    "serve-static": "^1.13.2",
     "tmp": "0.0.24",
-    "wd": "^0.3.4"
+    "wd": "^1.11.1"
   },
   "keywords": [
     "gulpplugin",

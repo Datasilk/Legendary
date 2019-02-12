@@ -43,7 +43,7 @@ namespace Legendary.Common.Platform
             }
         }
 
-        public static string GetList(int userId, int bookId, int entryId, int start = 1, int length = 50, SortType sort = 0, bool includeCount = false)
+        public static string GetList(int userId, int bookId, int entryId, int start = 1, int length = 50, SortType sort = 0)
         {
             Server Server = Server.Instance;
             var html = new StringBuilder();
@@ -53,6 +53,7 @@ namespace Legendary.Common.Platform
             var chapterlist = Query.Chapters.GetList(bookId);
             var list = Query.Entries.GetList(userId, bookId, start, length, (int)sort);
             var chapterInc = -1;
+            var entryIndex = 0;
             var book = Query.Books.GetDetails(userId, bookId);
             entries.Data["book-title"] = book.title;
 
@@ -60,6 +61,7 @@ namespace Legendary.Common.Platform
             {
                 list.ForEach((Query.Models.Entry entry) =>
                 {
+                    entryIndex++;
                     if (chapterInc != entry.chapter && sort == 0)
                     {
                         if (entry.chapter > 0)
@@ -72,7 +74,7 @@ namespace Legendary.Common.Platform
                         chapterInc = entry.chapter;
                     }
                     item.Data["id"] = entry.entryId.ToString();
-                    item.Data["selected"] = entry.entryId == entryId ? "selected" : "";
+                    item.Data["selected"] = entry.entryId == entryId ? "selected" : entryId == 0 && entryIndex == 1 ? "selected" : "";
                     item.Data["title"] = entry.title;
                     item.Data["summary"] = entry.summary;
                     item.Data["date-created"] = entry.datecreated.ToString("M/dd/yyyy");
@@ -85,7 +87,7 @@ namespace Legendary.Common.Platform
                 html.Append(Server.LoadFileFromCache("/Views/Entries/no-entries.html"));
             }
 
-            return (includeCount == true ? list.Count + "|" : "") + entries.Render();
+            return entries.Render();
         }
 
         public static int CreateEntry(int userId, int bookId, string title, string summary, int chapter)
