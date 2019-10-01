@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Text;
 
-namespace Legendary.Pages
+namespace Legendary.Controllers
 {
-    public class Home : Page
+    public class Home : Controller
     {
-        public Home(HttpContext context) : base(context)
+        public Home(HttpContext context, Parameters parameters) : base(context, parameters)
         {
         }
 

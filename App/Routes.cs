@@ -1,29 +1,27 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Datasilk;
 
-public class Routes : Datasilk.Routes
+public class Routes : Datasilk.Web.Routes
 {
-    public override Page FromPageRoutes(HttpContext context, string name)
+    public override Datasilk.Mvc.Controller FromControllerRoutes(HttpContext context, Parameters parameters, string name)
     {
         var isUser = context.Session.Keys.Contains("user");
         switch (name)
         {
-            case "": case "home":
+            case "": case "home": default:
                 if (isUser == true)
                 {
-                    return new Legendary.Pages.Dashboard(context);
+                    return new Legendary.Controllers.Dashboard(context, parameters);
                 }
                 else
                 {
-                    return new Legendary.Pages.Home(context);
+                    return new Legendary.Controllers.Home(context, parameters);
                 }
                 
-            case "dashboard": return new Legendary.Pages.Dashboard(context);
-            case "login": return new Legendary.Pages.Login(context);
-            case "logout": return new Legendary.Pages.Logout(context);
-            case "access-denied": return new Legendary.Pages.ErrorCodes.AccessDenied(context);
+            case "dashboard": return new Legendary.Controllers.Dashboard(context, parameters);
+            case "login": return new Legendary.Controllers.Login(context, parameters);
+            case "logout": return new Legendary.Controllers.Logout(context, parameters);
+            case "access-denied": return new Legendary.Controllers.ErrorCodes.AccessDenied(context, parameters);
         }
-        return new Page(context);
     }
 }

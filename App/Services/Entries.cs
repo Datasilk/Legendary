@@ -5,7 +5,9 @@ namespace Legendary.Services
 {
     public class Entries : Service
     {
-        public Entries(HttpContext context) : base(context) {}
+        public Entries(HttpContext context, Parameters parameters) : base(context, parameters)
+        {
+        }
 
         public string GetList(int bookId, int entryId, int start = 1, int length = 50, int sort = 0)
         {

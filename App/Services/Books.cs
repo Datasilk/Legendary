@@ -6,7 +6,7 @@ namespace Legendary.Services
 {
     public class Books : Service
     {
-        public Books(HttpContext context) : base(context)
+        public Books(HttpContext context, Parameters parameters) : base(context, parameters)
         {
         }
 
@@ -28,12 +28,12 @@ namespace Legendary.Services
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             var html = new StringBuilder();
-            var scaffold = new Scaffold("/Views/Books/list-item.html", Server.Scaffold);
+            var scaffold = new Scaffold("/Views/Books/list-item.html");
             var books = Query.Books.GetList(User.userId);
             books.ForEach((Query.Models.Book book) =>
             {
-                scaffold.Data["id"] = book.bookId.ToString();
-                scaffold.Data["title"] = book.title;
+                scaffold["id"] = book.bookId.ToString();
+                scaffold["title"] = book.title;
                 html.Append(scaffold.Render());
             });
             return html.ToString();

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Legendary.Pages
+namespace Legendary.Controllers
 
 {
-    public class Login: Page
+    public class Login: Controller
     {
-        public Login(HttpContext context) : base(context)
+        public Login(HttpContext context, Parameters parameters) : base(context, parameters)
         {
         }
 
@@ -18,20 +18,20 @@ namespace Legendary.Pages
             }
 
             //check for database reset
-            var scaffold = new Scaffold("/Views/Login/login.html", Server.Scaffold);
+            var scaffold = new Scaffold("/Views/Login/login.html");
 
             if(Server.environment == Server.Environment.development && Server.hasAdmin == false)
             {
                 //load new administrator form
-                scaffold = new Scaffold("/Views/Login/new-admin.html", Server.Scaffold);
-                scaffold.Data["title"] = "Create an administrator account";
+                scaffold = new Scaffold("/Views/Login/new-admin.html");
+                scaffold["title"] = "Create an administrator account";
                 scripts.Append("<script src=\"/js/views/login/new-admin.js\"></script>");
             }
             else if (Server.environment == Server.Environment.development && User.resetPass == true)
             {
                 //load new password form (for admin only)
-                scaffold = new Scaffold("/Views/Login/new-pass.html", Server.Scaffold);
-                scaffold.Data["title"] = "Create an administrator password";
+                scaffold = new Scaffold("/Views/Login/new-pass.html");
+                scaffold["title"] = "Create an administrator password";
                 scripts.Append("<script src=\"/js/views/login/new-pass.js\"></script>");
             }
             else

@@ -6,7 +6,7 @@ namespace Legendary.Services
 {
     public class Trash : Service
     {
-        public Trash(HttpContext context) : base(context)
+        public Trash(HttpContext context, Parameters parameters) : base(context, parameters)
         {
         }
 
@@ -14,11 +14,11 @@ namespace Legendary.Services
         {
             if (!CheckSecurity()) { return AccessDenied(); }
 
-            var scaffold = new Scaffold("/Views/Trash/trash.html", Server.Scaffold);
-            var scaffHeader = new Scaffold("/Views/Trash/section-header", Server.Scaffold);
-            var scaffBook = new Scaffold("/Views/Trash/item-book.html", Server.Scaffold);
-            var scaffChapter = new Scaffold("/Views/Trash/item-chapter.html", Server.Scaffold);
-            var scaffEntry = new Scaffold("/Views/Trash/item-entry.html", Server.Scaffold);
+            var scaffold = new Scaffold("/Views/Trash/trash.html");
+            var scaffHeader = new Scaffold("/Views/Trash/section-header");
+            var scaffBook = new Scaffold("/Views/Trash/item-book.html");
+            var scaffChapter = new Scaffold("/Views/Trash/item-chapter.html");
+            var scaffEntry = new Scaffold("/Views/Trash/item-entry.html");
 
             var trash = Common.Platform.Trash.GetList(User.userId);
             var content = new StringBuilder();
@@ -26,14 +26,14 @@ namespace Legendary.Services
             //render list of books
             if(trash.Item1.Count > 0)
             {
-                scaffHeader.Data["title"] = "Books";
+                scaffHeader["title"] = "Books";
                 content.Append(scaffHeader.Render() + "\n");
                 foreach (var book in trash.Item1)
                 {
                     var id = book.bookId.ToString();
-                    scaffBook.Data["id"] = id;
-                    scaffBook.Data["title"] = book.title;
-                    scaffBook.Data["checkbox"] = Common.UI.Checkbox.Render("checkbox-" + id, false, "S.trash.select()");
+                    scaffBook["id"] = id;
+                    scaffBook["title"] = book.title;
+                    scaffBook["checkbox"] = Common.UI.Checkbox.Render("checkbox-" + id, false, "S.trash.select()");
                     content.Append(scaffBook.Render() + "\n");
                 }
             }
@@ -41,14 +41,14 @@ namespace Legendary.Services
             //render list of chapters
             if (trash.Item2.Count > 0)
             {
-                scaffHeader.Data["title"] = "Chapters";
+                scaffHeader["title"] = "Chapters";
                 content.Append(scaffHeader.Render() + "\n");
                 foreach (var chapter in trash.Item2)
                 {
                     var id = chapter.bookId + "-" + chapter.chapter;
-                    scaffBook.Data["id"] = id;
-                    scaffBook.Data["checkbox"] = Common.UI.Checkbox.Render("checkbox-" + id, false, "S.trash.select()");
-                    scaffBook.Data["title"] = chapter.title;
+                    scaffBook["id"] = id;
+                    scaffBook["checkbox"] = Common.UI.Checkbox.Render("checkbox-" + id, false, "S.trash.select()");
+                    scaffBook["title"] = chapter.title;
                     content.Append(scaffChapter.Render() + "\n");
                 }
             }
@@ -56,20 +56,20 @@ namespace Legendary.Services
             //render list of entries
             if (trash.Item3.Count > 0)
             {
-                scaffHeader.Data["title"] = "Entries";
+                scaffHeader["title"] = "Entries";
                 content.Append(scaffHeader.Render() + "\n");
                 foreach (var entry in trash.Item3)
                 {
                     var id = entry.entryId.ToString();
-                    scaffBook.Data["id"] = id;
-                    scaffBook.Data["title"] = entry.title;
-                    scaffBook.Data["checkbox"] = Common.UI.Checkbox.Render("checkbox-" + id, false, "S.trash.select()");
-                    scaffBook.Data["date-created"] = entry.datecreated.ToString("M/dd/yyyy");
+                    scaffBook["id"] = id;
+                    scaffBook["title"] = entry.title;
+                    scaffBook["checkbox"] = Common.UI.Checkbox.Render("checkbox-" + id, false, "S.trash.select()");
+                    scaffBook["date-created"] = entry.datecreated.ToString("M/dd/yyyy");
                     content.Append(scaffBook.Render() + "\n");
                 }
             }
 
-            scaffold.Data["content"] = content.ToString();
+            scaffold["content"] = content.ToString();
 
             return scaffold.Render();
         }

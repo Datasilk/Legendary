@@ -2,9 +2,9 @@
 
 namespace Legendary
 {
-    public class Page : Datasilk.Page
+    public class Controller : Datasilk.Mvc.Controller
     {
-        public Page(HttpContext context) : base(context)
+        public Controller(HttpContext context, Parameters parameters) : base(context, parameters)
         {
             title = "Legendary";
             description = "Open Source Publishing. Collect Research. Write Books. Become A Legend. Do it all with Markdown.";

@@ -45,17 +45,16 @@ namespace Legendary.Common.Platform
 
         public static string GetList(int userId, int bookId, int entryId, int start = 1, int length = 50, SortType sort = 0)
         {
-            Server Server = Server.Instance;
             var html = new StringBuilder();
-            var entries = new Scaffold("/Views/Entries/entries.html", Server.Scaffold);
-            var item = new Scaffold("/Views/Entries/list-item.html", Server.Scaffold);
-            var chapter = new Scaffold("/Views/Entries/chapter.html", Server.Scaffold);
+            var entries = new Scaffold("/Views/Entries/entries.html");
+            var item = new Scaffold("/Views/Entries/list-item.html");
+            var chapter = new Scaffold("/Views/Entries/chapter.html");
             var chapterlist = Query.Chapters.GetList(bookId);
             var list = Query.Entries.GetList(userId, bookId, start, length, (int)sort);
             var chapterInc = -1;
             var entryIndex = 0;
             var book = Query.Books.GetDetails(userId, bookId);
-            entries.Data["book-title"] = book.title;
+            entries["book-title"] = book.title;
 
             if (list.Count > 0)
             {
@@ -67,20 +66,20 @@ namespace Legendary.Common.Platform
                         if (entry.chapter > 0)
                         {
                             //display chapter
-                            chapter.Data["chapter"] = "Chapter " + entry.chapter.ToString() + ": " +
+                            chapter["chapter"] = "Chapter " + entry.chapter.ToString() + ": " +
                                 chapterlist.Find((Query.Models.Chapter c) => { return c.chapter == entry.chapter; }).title;
                             html.Append(chapter.Render());
                         }
                         chapterInc = entry.chapter;
                     }
-                    item.Data["id"] = entry.entryId.ToString();
-                    item.Data["selected"] = entry.entryId == entryId ? "selected" : entryId == 0 && entryIndex == 1 ? "selected" : "";
-                    item.Data["title"] = entry.title;
-                    item.Data["summary"] = entry.summary;
-                    item.Data["date-created"] = entry.datecreated.ToString("M/dd/yyyy");
+                    item["id"] = entry.entryId.ToString();
+                    item["selected"] = entry.entryId == entryId ? "selected" : entryId == 0 && entryIndex == 1 ? "selected" : "";
+                    item["title"] = entry.title;
+                    item["summary"] = entry.summary;
+                    item["date-created"] = entry.datecreated.ToString("M/dd/yyyy");
                     html.Append(item.Render());
                 });
-                entries.Data["entries"] = html.ToString();
+                entries["entries"] = html.ToString();
             }
             else
             {
@@ -92,7 +91,6 @@ namespace Legendary.Common.Platform
 
         public static int CreateEntry(int userId, int bookId, string title, string summary, int chapter)
         {
-            Server Server = Server.Instance;
             try
             {
                 return Query.Entries.CreateEntry(userId, bookId, DateTime.Now, title, summary, chapter);
@@ -105,7 +103,6 @@ namespace Legendary.Common.Platform
 
         public static void SaveEntry(int userId, int entryId, string content)
         {
-            Server Server = Server.Instance;
             var entry = Query.Entries.GetDetails(userId, entryId);
             var path = "/Content/books/" + entry.bookId + "/";
             if (!Directory.Exists(Server.MapPath(path)))
@@ -151,12 +148,11 @@ namespace Legendary.Common.Platform
 
         public static string LoadEntryInfo(int userId, int entryId, int bookId)
         {
-            Server Server = Server.Instance;
-            var info = new Scaffold("/Views/Dashboard/templates/entryinfo.html", Server.Scaffold);
+            var info = new Scaffold("/Views/Dashboard/templates/entryinfo.html");
             var details = Query.Entries.GetDetails(userId, entryId);
-            info.Data["title"] = details.title.Replace("\"", "&quot;");
-            info.Data["summary"] = details.summary.Replace("\"", "&quot;");
-            info.Data["datecreated"] = details.datecreated.ToString("M/dd/yyyy h:mm:ss tt");
+            info["title"] = details.title.Replace("\"", "&quot;");
+            info["summary"] = details.summary.Replace("\"", "&quot;");
+            info["datecreated"] = details.datecreated.ToString("M/dd/yyyy h:mm:ss tt");
 
             //get list of chapters
             var chapters = new StringBuilder();
@@ -173,14 +169,13 @@ namespace Legendary.Common.Platform
                 books.Append("<option value=\"" + book.bookId + "\"" + (book.bookId == bookId ? " selected" : "") + ">" + book.title + "</option>");
             });
 
-            info.Data["chapters"] = chapters.ToString();
-            info.Data["books"] = books.ToString();
+            info["chapters"] = chapters.ToString();
+            info["books"] = books.ToString();
             return info.Render();
         }
 
         public static void UpdateEntryInfo(int entryId, int bookId, DateTime datecreated, string title, string summary, int chapter)
         {
-            Server Server = Server.Instance;
             try
             {
                 Query.Entries.Update(entryId, bookId, datecreated, title, summary, chapter);

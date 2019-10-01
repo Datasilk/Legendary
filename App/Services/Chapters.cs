@@ -8,7 +8,7 @@ namespace Legendary.Services
 {
     public class Chapters : Service
     {
-        public Chapters(HttpContext context) : base(context)
+        public Chapters(HttpContext context, Parameters parameters) : base(context, parameters)
         {
         }
 

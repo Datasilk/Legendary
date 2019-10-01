@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Legendary.Pages.ErrorCodes
+namespace Legendary.Controllers.ErrorCodes
 {
-    public class AccessDenied : Page
+    public class AccessDenied : Controller
     {
-        public AccessDenied(HttpContext context) : base(context)
+        public AccessDenied(HttpContext context, Parameters parameters) : base(context, parameters)
         {
         }
 
