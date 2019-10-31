@@ -9,7 +9,7 @@ namespace Legendary.Services
         {
         }
 
-        public string GetList(int bookId, int entryId, int start = 1, int length = 50, int sort = 0)
+        public string GetList(int bookId, int entryId, int start = 1, int length = 500, int sort = 0)
         {
             if (!CheckSecurity()) { return AccessDenied(); }
             return Common.Platform.Entries.GetList(User.userId, bookId, entryId, start, length, (Common.Platform.Entries.SortType)sort);
@@ -24,7 +24,7 @@ namespace Legendary.Services
                 var entryId = Common.Platform.Entries.CreateEntry(User.userId, bookId, title, summary, chapter);
                 return 
                     entryId + "|" + 
-                    Common.Platform.Entries.GetList(User.userId, bookId, entryId, 1, 50, (Common.Platform.Entries.SortType)sort);
+                    Common.Platform.Entries.GetList(User.userId, bookId, entryId, 1, 500, (Common.Platform.Entries.SortType)sort);
             }
             catch (ServiceErrorException ex)
             {

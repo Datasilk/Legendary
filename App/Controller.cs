@@ -13,7 +13,7 @@ namespace Legendary
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {
-            scripts.Append("<script language=\"javascript\">S.svg.load('/images/icons.svg');</script>");
+            scripts.Append("<script language=\"javascript\">S.svg.load('/images/icons.svg?v=" + Server.Version + "');</script>");
             return base.Render(path, body, metadata);
         }
     }

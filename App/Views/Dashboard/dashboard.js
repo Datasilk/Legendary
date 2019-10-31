@@ -82,7 +82,7 @@ S.entries = {
             $('.editor').removeClass('hide');
             return;
         }
-        var data = { bookId: id, entryId: S.editor.entryId || 0, start: 1, length: 50, sort: 0};
+        var data = { bookId: id, entryId: S.editor.entryId || 0, start: 1, length: 500, sort: 0};
         S.ajax.post('Entries/GetList', data,
             function (d) {
                 S.dash.hideAll();

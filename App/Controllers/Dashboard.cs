@@ -15,8 +15,8 @@ namespace Legendary.Controllers
             if (!CheckSecurity()) { AccessDenied(new Login(context, parameters)); }
 
             //add scripts to page
-            AddScript("/js/dashboard.js");
-            AddCSS("/css/dashboard.css");
+            AddScript("/js/dashboard.js?v=" + Server.Version);
+            AddCSS("/css/dashboard.css?v=" + Server.Version);
 
             var dash = new Scaffold("/Views/Dashboard/dashboard.html");
 
@@ -68,7 +68,7 @@ namespace Legendary.Controllers
                     }
                     scripts.Append(script.ToString() + "S.dash.init();</script>");
                 }
-                dash["entries"] = Entries.GetList(User.userId, bookId, entryId, 1, 50, Entries.SortType.byChapter);
+                dash["entries"] = Entries.GetList(User.userId, bookId, entryId, 1, 500, Entries.SortType.byChapter);
             }
             else
             {

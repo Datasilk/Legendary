@@ -8,49 +8,28 @@ namespace Query
         public static int CreateEntry(int userId, int bookId, DateTime dateCreated, string title, string summary = "", int chapter = 0, int sort = 0)
         {
             return Sql.ExecuteScalar<int>("Entry_Create",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"bookId", bookId },
-                    {"chapter", chapter },
-                    {"sort", sort },
-                    {"datecreated", dateCreated },
-                    {"title", title },
-                    {"summary", summary }
-                }
+                new { userId, bookId, chapter, sort, dateCreated, title, summary }
             );
         }
 
         public static int TrashEntry(int userId, int entryId)
         {
             return Sql.ExecuteScalar<int>("Entry_Trash",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"entryId", entryId }
-                }
+                new { userId, entryId }
             );
         }
 
         public static void RestoreEntry(int userId, int entryId)
         {
             Sql.ExecuteNonQuery("Entry_Restore",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"entryId", entryId }
-                }
+                new { userId, entryId }
             );
         }
 
         public static void DeleteEntry(int userId, int entryId)
         {
             Sql.ExecuteNonQuery("Entry_Delete",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"entryId", entryId }
-                }
+                new { userId, entryId }
             );
         }
 
@@ -58,11 +37,7 @@ namespace Query
         {
             var list = Sql.Populate<Models.Entry>(
                 "Entry_GetDetails",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"entryId", entryId }
-                }
+                new { userId, entryId }
             );
             if(list.Count > 0) { return list[0]; }
             return null;
@@ -72,12 +47,7 @@ namespace Query
         {
             var list = Sql.Populate<Models.Entry>(
                 "Entries_GetFirst",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"bookId", bookId },
-                    {"sort", sort }
-                }
+                new { userId, bookId, sort }
             );
             if (list.Count > 0) { return list[0]; }
             return null;
@@ -87,77 +57,42 @@ namespace Query
         {
             return Sql.Populate<Models.Entry>(
                 "Entries_GetList",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"bookId", bookId },
-                    {"start", start },
-                    {"length", length },
-                    {"sort", sort }
-                }
+                new { userId, bookId, start, length, sort }
             );
         }
 
         public static void UpdateBook(int userId, int entryId, int bookId)
         {
             Sql.ExecuteNonQuery("Entry_UpdateBook",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"entryId", entryId },
-                    {"bookId", bookId }
-                }
+                new { userId, entryId, bookId }
             );
         }
 
         public static void UpdateChapter(int userId, int entryId, int chapter)
         {
             Sql.ExecuteNonQuery("Entry_UpdateChapter",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"entryId", entryId },
-                    {"chapter", chapter }
-                }
+                new { userId, entryId, chapter }
             );
         }
 
         public static void UpdateSummary(int userId, int entryId, string summary)
         {
             Sql.ExecuteNonQuery("Entry_UpdateSummary",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"entryId", entryId },
-                    {"summary", summary }
-                }
+                new { userId, entryId, summary }
             );
         }
 
         public static void UpdateTitle(int userId, int entryId, string title)
         {
             Sql.ExecuteNonQuery("Entry_UpdateTitle",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"entryId", entryId },
-                    {"title", title }
-                }
+                new { userId, entryId, title }
             );
         }
 
         public static void Update(int entryId, int bookId, DateTime dateCreated, string title, string summary = "", int chapter = 0)
         {
             Sql.ExecuteNonQuery("Entry_Update",
-                new Dictionary<string, object>()
-                {
-                    {"entryId", entryId },
-                    {"bookId", bookId },
-                    {"chapter", chapter },
-                    {"datecreated", dateCreated },
-                    {"title", title },
-                    {"summary", summary }
-                }
+                new { entryId, bookId, chapter, dateCreated, title, summary }
             );
         }
     }

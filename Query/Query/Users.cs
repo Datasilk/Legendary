@@ -8,25 +8,14 @@ namespace Query
         {
             return Sql.ExecuteScalar<int>(
                 "User_Create",
-                new Dictionary<string, object>()
-                {
-                    {"name", user.name },
-                    {"email", user.email },
-                    {"password", user.password },
-                    {"photo", user.photo },
-                    {"usertype", user.usertype }
-                }
+                new { user.name, user.email, user.password, user.photo, user.usertype }
             );
         }
 
         public static Models.User AuthenticateUser(string email, string password)
         {
             var list = Sql.Populate<Models.User>("User_Authenticate",
-                new Dictionary<string, object>()
-                {
-                    {"email", email },
-                    {"password", password }
-                }
+                new { email, password }
             );
             if (list.Count > 0) { return list[0]; }
             return null;
@@ -34,12 +23,7 @@ namespace Query
 
         public static Models.User AuthenticateUser(string token)
         {
-            var list = Sql.Populate<Models.User>("User_AuthenticateByToken",
-                new Dictionary<string, object>()
-                {
-                    {"token", token }
-                }
-            );
+            var list = Sql.Populate<Models.User>("User_AuthenticateByToken",new { token });
             if (list.Count > 0) { return list[0]; }
             return null;
         }
@@ -47,53 +31,35 @@ namespace Query
         public static string CreateAuthToken(int userId, int expireDays = 30)
         {
             return Sql.ExecuteScalar<string>("User_CreateAuthToken",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"expireDays", expireDays }
-                }
+                new { userId, expireDays }
             );
         }
 
         public static void UpdatePassword(int userId, string password)
         {
             Sql.ExecuteNonQuery("User_UpdatePassword",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"password", password }
-                }
+                new { userId, password }
             );
         }
 
         public static string GetEmail(int userId)
         {
             return Sql.ExecuteScalar<string>("User_GetEmail",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId }
-                }
+                new { userId }
             );
         }
 
         public static string GetPassword(string email)
         {
             return Sql.ExecuteScalar<string>("User_GetPassword",
-                new Dictionary<string, object>()
-                {
-                    {"email", email }
-                }
+                new { email }
             );
         }
 
         public static void UpdateEmail(int userId, string email)
         {
             Sql.ExecuteNonQuery("User_UpdateEmail",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"email", email }
-                }
+                new { userId, email }
             );
         }
 

@@ -43,7 +43,7 @@ namespace Legendary.Common.Platform
             }
         }
 
-        public static string GetList(int userId, int bookId, int entryId, int start = 1, int length = 50, SortType sort = 0)
+        public static string GetList(int userId, int bookId, int entryId, int start = 1, int length = 500, SortType sort = 0)
         {
             var html = new StringBuilder();
             var entries = new Scaffold("/Views/Entries/entries.html");

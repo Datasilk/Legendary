@@ -1,17 +1,12 @@
 {
-  "assembly":  "Legendary",
-  "environment": "development",
-  "port": "80",
+  "assembly": "Legendary",
+  "version": "1.0",
   "sql": {
     "active": "SqlServerTrusted",
     "SqlServerTrusted": "server=.\\SQL2017; database=Legendary; Trusted_Connection=true"
   },
-
   "encryption": {
     "salt": "?",
     "bcrypt_work_factor": "10"
-  },
-  "session": {
-    "expires": 720
   }
 }

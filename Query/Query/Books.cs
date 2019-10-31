@@ -7,71 +7,42 @@ namespace Query
         public static int CreateBook(int userId, string title, bool favorite, int sort = 0)
         {
             return Sql.ExecuteScalar<int>("Book_Create",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"title", title },
-                    {"favorite", favorite },
-                    {"sort", sort }
-                }
+                new {userId, title, favorite, sort }
             );
         }
 
         public static void TrashBook(int userId, int bookId)
         {
             Sql.ExecuteNonQuery("Book_Trash",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"bookId", bookId }
-                }
+                new {userId, bookId }
             );
         }
 
         public static void DeleteBook(int userId, int bookId)
         {
             Sql.ExecuteNonQuery("Book_Delete",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"bookId", bookId }
-                }
+                new { userId, bookId }
             );
         }
 
         public static void UpdateBook(int userId, int bookId, string title)
         {
             Sql.ExecuteNonQuery("Book_Update",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"bookId", bookId },
-                    {"title", title }
-                }
+                new { userId, bookId, title }
             );
         }
 
         public static void UpdateBookFavorite(int userId, int bookId, bool favorite)
         {
             Sql.ExecuteNonQuery("Book_UpdateFavorite",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"bookId", bookId },
-                    {"favorite", favorite }
-                }
+                new { userId, bookId, favorite }
             );
         }
 
         public static void UpdateBookSort(int userId, int bookId, int sort)
         {
             Sql.ExecuteNonQuery("Book_UpdateSort",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"bookId", bookId },
-                    {"sort", sort }
-                }
+                new { userId, bookId, sort }
             );
         }
 
@@ -79,11 +50,7 @@ namespace Query
         {
             var list = Sql.Populate<Models.Book>(
                 "Book_GetDetails",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"bookId", bookId }
-                }
+                new { userId, bookId }
             );
             if(list.Count > 0) { return list[0]; }
             return null;
@@ -93,11 +60,7 @@ namespace Query
         {
             return Sql.Populate<Models.Book>(
                 "Books_GetList",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"sort", sort }
-                }
+                new { userId, sort }
             );
         }
     }
