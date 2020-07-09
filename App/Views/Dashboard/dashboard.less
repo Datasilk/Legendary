@@ -8,10 +8,10 @@
 }
 
 .sidebar{float:left; height:~"calc(100% - 50px)"; width:250px; line-height:1.5;
+
+    .pulltab{display:none; width:100px; height:48px; position:absolute; right:0; top:0; font-size:11px; font-family:monospace; text-align:right; padding: 6px 20px 6px 0;}
     ul.menu {padding:10px; list-style:none;
         li.row{padding:7px; margin:3px 0;}
-    }
-    ul.menu{
         li.root > a{font-size:17px;}
         li.sub{padding-left:40px;}
     }
@@ -91,4 +91,23 @@
 
 .popup{
     #txtentry_summary{min-height:80px;}
+}
+
+@media (max-width:1240px){
+    .body{width:~"calc(100% - 600px + 250px)";}
+    .sidebar{position:absolute; left:-240px; z-index:100;
+        .pulltab{display:block;}
+    }
+}
+
+@media (max-width:975px){
+    .body{width:~"calc(100% - 600px + 250px + 70px)";}
+    .subbar{width:280px;}
+}
+
+@media (max-width:895px){
+    .body{width:~"calc(100% - 600px + 250px + 70px + 280px)";}
+    .subbar{position:absolute; width:100%; display:none;
+        &.show{display:block;}
+    }
 }

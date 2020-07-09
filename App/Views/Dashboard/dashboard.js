@@ -25,8 +25,8 @@ S.dash = {
 S.books = {
     create: {
         view: function() {
-            var scaffold = new S.scaffold($('#template_newbook').html());
-            S.popup.show('Create a new Book', scaffold.render(), { width: 350 });
+            var view = new S.view($('#template_newbook').html());
+            S.popup.show('Create a new Book', view.render(), { width: 350 });
             $('.popup form').on('submit', S.books.create.submit);
         },
 
@@ -116,8 +116,8 @@ S.entries = {
         temp: { title: '', summary: '' },
 
         view: function (callback) {
-            var scaffold = new S.scaffold($('#template_newentry').html());
-            S.popup.show('Create a new Entry', scaffold.render(), { width: 350 });
+            var view = new S.view($('#template_newentry').html());
+            S.popup.show('Create a new Entry', view.render(), { width: 350 });
             $('.popup form').on('submit', S.entries.create.submit);
             //get list of chapters
             S.chapters.get($('#lstentry_chapter'), callback);  
@@ -257,8 +257,8 @@ S.chapters = {
         callback: null,
 
         view: function (callback) {
-            var scaffold = new S.scaffold($('#template_newchapter').html());
-            S.popup.show('Create a new Chapter', scaffold.render(), { width: 400 });
+            var view = new S.view($('#template_newchapter').html());
+            S.popup.show('Create a new Chapter', view.render(), { width: 400 });
             $('.popup form').on('submit', S.chapters.create.submit);
             //get max chapter # for book
             S.ajax.post('Chapters/GetMax', { bookId: S.entries.bookId },
@@ -486,7 +486,8 @@ S.editor = {
     },
 
     getContent: function (entryId) {
-        if (S.editor.entryId == entryId) { return;}
+        if (S.editor.entryId == entryId) { return; }
+        S.editor.updated.stop(); //stop auto-save timer
         if (editor.value() != '' && S.editor.changed == true) { S.editor.save(); }
         S.editor.setContent('');
         S.editor.entryId = entryId;
@@ -503,8 +504,8 @@ S.editor = {
     },
 
     setContent: function (content) {
+        S.editor.updated.stop(); //stop auto-save timer
         editor.codemirror.off('change', S.editor.updated.check);
-
         editor.value(content || '');
         $('#editor').val(content || '');
         if (editor.isPreviewActive() == true) {
@@ -520,6 +521,10 @@ S.editor = {
 
     updated: {
         timer: null,
+
+        stop: function () {
+            clearTimeout(S.editor.updated.timer);
+        },
 
         check: function () {
             S.editor.changed = true;
