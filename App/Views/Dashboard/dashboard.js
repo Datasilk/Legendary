@@ -4,6 +4,9 @@ S.dash = {
         //buttons
         $('.btn-newbook').on('click', S.books.create.view);
         $('.item-trash > a').on('click', S.trash.view);
+        $('.top-menu li:nth-child(1)').on('click', S.menus.books.show);
+        $('.top-menu li:nth-child(2)').on('click', S.menus.chapters.show);
+        $('.top-menu li:nth-child(3)').on('click', S.menus.page.show);
 
         //events
         $(window).on('resize', S.entries.resize);
@@ -63,7 +66,7 @@ S.entries = {
 
     init: function () {
         S.entries.resize();
-        S.scrollbar.add($('.entries .container'));
+        S.scrollbar.add($('.entries .container'), { touch: true });
     },
 
     resize: function () {
@@ -80,6 +83,11 @@ S.entries = {
             $('ul.menu li.book.id-' + id).addClass('selected');
             $('.subbar, .subbar .entries').removeClass('hide');
             $('.editor').removeClass('hide');
+            const win = S.window.pos();
+            if ($('.sidebar.show-card').length > 0 && win.w <= 895) {
+                //mobile view, show shapters
+                S.menus.chapters.show();
+            }
             return;
         }
         var data = { bookId: id, entryId: S.editor.entryId || 0, start: 1, length: 500, sort: 0};
@@ -105,6 +113,11 @@ S.entries = {
                 }
                 S.entries.init();
                 S.entries.bookId = id;
+                const win = S.window.pos();
+                if ($('.sidebar.show-card').length > 0 && win.w <= 895) {
+                    //mobile view, show chapters
+                    S.menus.chapters.show();
+                }
             },
             function (err) {
                 S.message.show('.popup .message', 'error', err);
@@ -496,6 +509,11 @@ S.editor = {
                 S.editor.setContent(d);
                 $('.entries .entry.selected').removeClass('selected');
                 $('.entries .entry.entryid-' + entryId).addClass('selected');
+                var win = S.window.pos();
+                if ($('.subbar.show-card').length > 0 && win.w <= 895) {
+                    //mobile view, show page
+                    S.menus.page.show();
+                }
             },
             function (err) {
                 S.message.show('.popup .message', 'error', err);
@@ -645,7 +663,7 @@ S.tags = {
 S.trash = {
     init: function() {
         S.trash.resize();
-        S.scrollbar.add($('.trash .container'));
+        S.scrollbar.add($('.trash .container'), { touch: true });
     },
 
     resize: function () {
@@ -673,6 +691,46 @@ S.trash = {
             $('.trash-details .selected-items').removeClass('hide');
         } else {
             $('.trash-details .selected-items').addClass('hide');
+        }
+    }
+};
+
+/* Menus */
+S.menus = {
+    books: {
+        show: function () {
+            $('.sidebar').removeClass('hide-card').addClass('show-card');
+            var hide = $('.subbar');
+            if (hide.hasClass('show-card')) {
+                hide.addClass('hide-card').removeClass('show-card');
+                setTimeout(() => { hide.removeClass('hide-card'); }, 1000);
+            }
+        }
+    },
+
+    chapters: {
+        show: function () {
+            $('.subbar').removeClass('hide-card').addClass('show-card');
+            var hide = $('.sidebar');
+            if (hide.hasClass('show-card')) {
+                hide.addClass('hide-card').removeClass('show-card');
+                setTimeout(() => { hide.removeClass('hide-card'); }, 1000);
+            }
+        }
+    },
+
+    page: {
+        show: function () {
+            var hide = $('.sidebar');
+            if (hide.hasClass('show-card')) {
+                hide.addClass('hide-card').removeClass('show-card');
+                setTimeout(() => { hide.removeClass('hide-card'); }, 1000);
+            }
+            var hide2 = $('.subbar');
+            if (hide2.hasClass('show-card')) {
+                hide2.addClass('hide-card').removeClass('show-card');
+                setTimeout(() => { hide2.removeClass('hide-card'); }, 1000);
+            }
         }
     }
 };
