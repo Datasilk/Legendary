@@ -13,6 +13,10 @@
                 }
                 return user;
             }
+            set
+            {
+                user = value;
+            }
         }
     }
 }

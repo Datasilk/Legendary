@@ -146,6 +146,8 @@ namespace Legendary
             //run Datasilk Core MVC Middleware
             app.UseDatasilkMvc(new MvcOptions()
             {
+                InvokeNext = false,
+                WriteDebugInfoToConsole = true,
                 IgnoreRequestBodySize = true,
                 Routes = new Routes()
             });

@@ -10,13 +10,18 @@ public class Routes : Datasilk.Core.Web.Routes
         switch (name)
         {
             case "": case "home": default:
-                if (User.Get(context).userId > 0)
+                var user = User.Get(context);
+                if (user.userId > 0)
                 {
-                    return new Legendary.Controllers.Dashboard();
+                    var dash = new Legendary.Controllers.Dashboard();
+                    dash.User = user;
+                    return dash;
                 }
                 else
                 {
-                    return new Legendary.Controllers.Login();
+                    var login = new Legendary.Controllers.Login();
+                    login.User = user;
+                    return login;
                 }
                 
             case "dashboard": return new Legendary.Controllers.Dashboard();
