@@ -1,20 +1,79 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Datasilk.Core.Web;
 
 namespace Legendary
 {
-    public class Controller : Datasilk.Mvc.Controller
+    public class Controller : Request, IController
     {
-        public Controller(HttpContext context, Parameters parameters) : base(context, parameters)
+        public string title = "Legendary";
+        public string description = "";
+        public string theme = "default";
+
+        public virtual string Render(string body = "")
         {
-            title = "Legendary";
-            description = "Open Source Publishing. Collect Research. Write Books. Become A Legend. Do it all with Markdown.";
-            favicon = "/images/favicon.ico";
+            Scripts.Append("<script language=\"javascript\">S.svg.load('/images/icons.svg?v=" + Server.Version + "');</script>");
+            var view = new View("/Views/Shared/layout.html");
+            view["title"] = title;
+            view["description"] = description;
+            view["version"] = Server.Version;
+            view["language"] = User.language;
+            view["theme"] = theme;
+            view["head-css"] = Css.ToString();
+
+            //load body
+            view["body"] = body;
+
+            //add initialization script
+            view["scripts"] = Scripts.ToString();
+
+            return view.Render();
         }
 
-        public override string Render(string[] path, string body = "", object metadata = null)
+        public override void Unload()
         {
-            scripts.Append("<script language=\"javascript\">S.svg.load('/images/icons.svg?v=" + Server.Version + "');</script>");
-            return base.Render(path, body, metadata);
+            User.Save();
+        }
+
+        public override bool CheckSecurity()
+        {
+            if (!base.CheckSecurity())
+            {
+                return false;
+            }
+            if (User.userId > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public string AccessDenied<T>() where T : IController
+        {
+            return IController.AccessDenied<T>(this);
+        }
+
+        public string Redirect(string url)
+        {
+            return "<script language=\"javascript\">window.location.href = '" + url + "';</script>";
+        }
+
+        public override void AddScript(string url, string id = "", string callback = "")
+        {
+            if (ContainsResource(url)) { return; }
+            Scripts.Append("<script language=\"javascript\"" + (id != "" ? " id=\"" + id + "\"" : "") + " src=\"" + url + "\"" +
+                (callback != "" ? " onload=\"" + callback + "\"" : "") + "></script>");
+        }
+
+        public override void AddCSS(string url, string id = "")
+        {
+            if (ContainsResource(url)) { return; }
+            Css.Append("<link rel=\"stylesheet\" type=\"text/css\"" + (id != "" ? " id=\"" + id + "\"" : "") + " href=\"" + url + "\"></link>");
+        }
+
+        public bool ContainsResource(string url)
+        {
+            if (Resources.Contains(url)) { return true; }
+            Resources.Add(url);
+            return false;
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Crypto;
-using Utility.Strings;
 
 namespace Legendary.Common.Platform
 {
@@ -46,9 +44,9 @@ namespace Legendary.Common.Platform
         public static string GetList(int userId, int bookId, int entryId, int start = 1, int length = 500, SortType sort = 0)
         {
             var html = new StringBuilder();
-            var entries = new Scaffold("/Views/Entries/entries.html");
-            var item = new Scaffold("/Views/Entries/list-item.html");
-            var chapter = new Scaffold("/Views/Entries/chapter.html");
+            var entries = new View("/Views/Entries/entries.html");
+            var item = new View("/Views/Entries/list-item.html");
+            var chapter = new View("/Views/Entries/chapter.html");
             var chapterlist = Query.Chapters.GetList(bookId);
             var list = Query.Entries.GetList(userId, bookId, start, length, (int)sort);
             var chapterInc = -1;
@@ -111,7 +109,7 @@ namespace Legendary.Common.Platform
             }
 
             // encrypt content using ChaCha20
-            var data = content.GetBytes();
+            var data = GetBytes(content);
             var chacha = new ChaCha20(chachaKey);
             chacha.Transform(data);
 
@@ -148,7 +146,7 @@ namespace Legendary.Common.Platform
 
         public static string LoadEntryInfo(int userId, int entryId, int bookId)
         {
-            var info = new Scaffold("/Views/Dashboard/templates/entryinfo.html");
+            var info = new View("/Views/Dashboard/templates/entryinfo.html");
             var details = Query.Entries.GetDetails(userId, entryId);
             info["title"] = details.title.Replace("\"", "&quot;");
             info["summary"] = details.summary.Replace("\"", "&quot;");
@@ -189,6 +187,13 @@ namespace Legendary.Common.Platform
         public static int TrashEntry(int userId, int entryId)
         {
             return Query.Entries.TrashEntry(userId, entryId);
+        }
+
+        private static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
         }
     }
 }

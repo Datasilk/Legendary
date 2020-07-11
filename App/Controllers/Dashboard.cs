@@ -1,24 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Text;
+﻿using System.Text;
+using Datasilk.Core.Web;
 using Legendary.Common.Platform;
 
 namespace Legendary.Controllers
 {
     public class Dashboard : Controller
     {
-        public Dashboard(HttpContext context, Parameters parameters) : base(context, parameters)
+        public override string Render(string body = "")
         {
-        }
+            if (!CheckSecurity()) { AccessDenied(IController.LoadController<Login>(this).Render()); }
 
-        public override string Render(string[] path, string body = "", object metadata = null)
-        {
-            if (!CheckSecurity()) { AccessDenied(new Login(context, parameters)); }
-
-            //add scripts to page
+            //add Scripts to page
             AddScript("/js/dashboard.js?v=" + Server.Version);
             AddCSS("/css/dashboard.css?v=" + Server.Version);
 
-            var dash = new Scaffold("/Views/Dashboard/dashboard.html");
+            var dash = new View("/Views/Dashboard/dashboard.html");
 
             //get list of books
             var html = new StringBuilder();
@@ -26,7 +22,7 @@ namespace Legendary.Controllers
             if(books.Count > 0)
             {
                 //books exist
-                var list = new Scaffold("/Views/Books/list-item.html");
+                var list = new View("/Views/Books/list-item.html");
                 var i = 0;
                 books.ForEach((Query.Models.Book book) =>
                 {
@@ -66,7 +62,7 @@ namespace Legendary.Controllers
                         dash["no-entries"] = "hide";
                         script.Append("S.entries.noentries();");
                     }
-                    scripts.Append(script.ToString() + "S.dash.init();</script>");
+                    Scripts.Append(script.ToString() + "S.dash.init();</script>");
                 }
                 dash["entries"] = Entries.GetList(User.userId, bookId, entryId, 1, 500, Entries.SortType.byChapter);
             }
@@ -89,7 +85,7 @@ namespace Legendary.Controllers
                 Server.LoadFileFromCache("/Views/Dashboard/templates/newchapter.html") +
                 Server.LoadFileFromCache("/Views/Dashboard/templates/noentries.html");
             
-            return base.Render(path, dash.Render(), metadata);
+            return base.Render(dash.Render());
         }
     }
 }

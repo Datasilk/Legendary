@@ -1,14 +1,9 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 
 namespace Legendary.Services
 {
     public class Entries : Service
     {
-        public Entries(HttpContext context, Parameters parameters) : base(context, parameters)
-        {
-        }
-
         public string GetList(int bookId, int entryId, int start = 1, int length = 500, int sort = 0)
         {
             if (!CheckSecurity()) { return AccessDenied(); }

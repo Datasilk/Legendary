@@ -4,11 +4,11 @@
     {
         public static string Render(string Id, bool isChecked = false, string onClick = "")
         {
-            var scaffold = new Scaffold("/Views/Shared/UI/checkbox.html");
-            scaffold["id"] = Id;
-            scaffold["checked"] = isChecked == true ? "1" : "";
-            scaffold["onclick"] = onClick;
-            return scaffold.Render();
+            var view = new View("/Views/Shared/UI/checkbox.html");
+            view["id"] = Id;
+            view["checked"] = isChecked == true ? "1" : "";
+            view["onclick"] = onClick;
+            return view.Render();
         }
     }
 }

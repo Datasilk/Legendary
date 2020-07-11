@@ -10,7 +10,7 @@
     <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,height=device-height,user-scalable=yes" />
     <link type="text/css" rel="stylesheet" href="/css/platform.css?v={{version}}" />
     {{head-css}}
-    <link rel="icon" type="image/ico" href="{{favicon}}?v={{version}}" />
+    <link rel="icon" type="image/png" href="images/favicon?v={{version}}" />
 
     <link rel="apple-touch-icon" href="/images/mobile/iphone.png">
     <link rel="apple-touch-icon" sizes="76x76" href="/images/mobile/ipad.png">
@@ -39,9 +39,12 @@
         </div>
         #body#
     </script>
-    <div class="svgicons">{{svg-icons}}</div>
+    <div class="svgicons"></div>
     <script src="/js/platform.js?v={{version}}"></script>
-    <script>S.version = '{{version}}';</script>
+    <script>
+        S.version = '{{version}}';
+        S.svg.load('/images/icons.svg');
+    </script>
     {{scripts}}
 </body>
 </html>

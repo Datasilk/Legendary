@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <StartupObject>Datasilk.Program</StartupObject>
+    <StartupObject>Legendary.Program</StartupObject>
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>

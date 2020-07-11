@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Legendary.Services
+﻿namespace Legendary.Services
 {
     public class User : Service
     {
-        public User(HttpContext context, Parameters parameters) : base(context, parameters)
-        {
-        }
-
         public string Authenticate(string email, string password)
         {
             var encrypted = Query.Users.GetPassword(email);
@@ -46,7 +40,7 @@ namespace Legendary.Services
                 }
                 return Success();
             }
-            context.Response.StatusCode = 500;
+            Context.Response.StatusCode = 500;
             return "";
         }
 
@@ -64,7 +58,7 @@ namespace Legendary.Services
                 Server.resetPass = false;
                 return "success";
             }
-            context.Response.StatusCode = 500;
+            Context.Response.StatusCode = 500;
             return "";
         }
 
@@ -75,7 +69,6 @@ namespace Legendary.Services
 
         public string EncryptPassword(string email, string password)
         {
-            var bCrypt = new BCrypt.Net.BCrypt();
             return BCrypt.Net.BCrypt.HashPassword(email + Server.salt + password, Server.bcrypt_workfactor);
 
         }

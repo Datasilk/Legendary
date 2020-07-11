@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Text;
-using Microsoft.AspNetCore.Http;
 
 namespace Legendary.Services
 {
     public class Trash : Service
     {
-        public Trash(HttpContext context, Parameters parameters) : base(context, parameters)
-        {
-        }
-
         public string LoadTrash()
         {
             if (!CheckSecurity()) { return AccessDenied(); }
 
-            var scaffold = new Scaffold("/Views/Trash/trash.html");
-            var scaffHeader = new Scaffold("/Views/Trash/section-header");
-            var scaffBook = new Scaffold("/Views/Trash/item-book.html");
-            var scaffChapter = new Scaffold("/Views/Trash/item-chapter.html");
-            var scaffEntry = new Scaffold("/Views/Trash/item-entry.html");
+            var view = new View("/Views/Trash/trash.html");
+            var scaffHeader = new View("/Views/Trash/section-header");
+            var scaffBook = new View("/Views/Trash/item-book.html");
+            var scaffChapter = new View("/Views/Trash/item-chapter.html");
+            var scaffEntry = new View("/Views/Trash/item-entry.html");
 
             var trash = Common.Platform.Trash.GetList(User.userId);
             var content = new StringBuilder();
@@ -69,9 +64,9 @@ namespace Legendary.Services
                 }
             }
 
-            scaffold["content"] = content.ToString();
+            view["content"] = content.ToString();
 
-            return scaffold.Render();
+            return view.Render();
         }
 
         public string Empty()

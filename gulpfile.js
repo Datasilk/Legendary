@@ -41,6 +41,8 @@ paths.working = {
             paths.scripts + 'platform/ajax.js', //   <---- Optional platform features
             paths.scripts + 'platform/field.js',
             paths.scripts + 'platform/field.checkbox.js',
+            paths.scripts + 'platform/accordion.js',
+            paths.scripts + 'platform/clipboard.js',
             paths.scripts + 'platform/loader.js',
             paths.scripts + 'platform/message.js',
             paths.scripts + 'platform/polyfill.js',
