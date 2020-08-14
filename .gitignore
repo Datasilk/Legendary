@@ -6,6 +6,7 @@
 *.user
 *.sln.docstates
 app/content/books/
+app/content/files/
 *.bak
 /Sql/Sql.jfm
 /.vs
