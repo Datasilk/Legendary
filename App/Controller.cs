@@ -1,4 +1,5 @@
 ﻿using Datasilk.Core.Web;
+using System.Text.Json;
 
 namespace Legendary
 {
@@ -54,6 +55,12 @@ namespace Legendary
         public string Redirect(string url)
         {
             return "<script language=\"javascript\">window.location.href = '" + url + "';</script>";
+        }
+
+        public string JsonResponse(dynamic obj)
+        {
+            Context.Response.ContentType = "text/json";
+            return JsonSerializer.Serialize(obj);
         }
 
         public override void AddScript(string url, string id = "", string callback = "")

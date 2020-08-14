@@ -336,6 +336,7 @@ S.editor = {
     init: function () {
         //initialize markdown renderer (with code syntax highlighting support)
         markdown = new Remarkable({
+            breaks: true,
             highlight: function (str, lang) {
                 var language = lang || 'javascript';
                 if (language && hljs.getLanguage(language)) {
@@ -351,7 +352,7 @@ S.editor = {
         });
 
         //initialize markdown editor
-        editor = new SimpleMDE({
+        editor = new EasyMDE({
             element: document.getElementById("editor"),
             placeholder: 'Start writing here while using markdown syntax!',
             forceSync: true,
@@ -361,76 +362,76 @@ S.editor = {
             toolbar: [
                 {
                     name: "bold",
-                    action: SimpleMDE.toggleBold,
+                    action: EasyMDE.toggleBold,
                     className: "fa fa-bold",
                     title: "Bold (Ctrl+B)",
                 },
                 {
                     name: "italic",
-                    action: SimpleMDE.toggleItalic,
+                    action: EasyMDE.toggleItalic,
                     className: "fa fa-italic",
                     title: "Italic (Ctrl+I)",
                 },
                 {
                     name: "strikethrough",
-                    action: SimpleMDE.toggleStrikethrough,
+                    action: EasyMDE.toggleStrikethrough,
                     className: "fa fa-strikethrough",
                     title: "Strikethrough (Ctrl+S)",
                 },
                 {
                     name: "heading",
-                    action: SimpleMDE.toggleHeadingSmaller,
+                    action: EasyMDE.toggleHeadingSmaller,
                     className: "fa fa-header",
                     title: "Heading (Ctrl+H)",
                 },
                 {
                     name: "quote",
-                    action: SimpleMDE.toggleBlockquote,
+                    action: EasyMDE.toggleBlockquote,
                     className: "fa fa-quote-left",
                     title: "Quote",
                 },
                 "|",
                 {
                     name: "unordered-list",
-                    action: SimpleMDE.toggleUnorderedList,
+                    action: EasyMDE.toggleUnorderedList,
                     className: "fa fa-list-ul",
                     title: "Generic List (Ctrl+L)",
                 },
                 {
                     name: "ordered-list",
-                    action: SimpleMDE.toggleOrderedList,
+                    action: EasyMDE.toggleOrderedList,
                     className: "fa fa-list-ol",
                     title: "Numbered List (Ctrl+Alt+L)",
                 },
                 "|",
                 {
                     name: "link",
-                    action: SimpleMDE.drawLink,
+                    action: EasyMDE.drawLink,
                     className: "fa fa-link",
                     title: "Create Link",
                 },
                 {
                     name: "image",
-                    action: SimpleMDE.drawImage,
+                    action: S.editor.image.showDialog,
                     className: "fa fa-picture-o",
                     title: "Insert Image",
                 },
                 {
                     name: "code",
-                    action: SimpleMDE.toggleCodeBlock,
+                    action: EasyMDE.toggleCodeBlock,
                     className: "fa fa-code",
                     title: "Code (Ctrl+Alt+C)",
                 },
                 "|",
                 {
                     name: "table",
-                    action: SimpleMDE.drawTable,
+                    action: EasyMDE.drawTable,
                     className: "fa fa-table",
                     title: "Insert Table",
                 },
                 {
                     name: "horizontal-rule",
-                    action: SimpleMDE.drawHorizontalRule,
+                    action: EasyMDE.drawHorizontalRule,
                     className: "fa fa-minus",
                     title: "Insert Horizontal Line",
                 },
@@ -443,20 +444,20 @@ S.editor = {
                 },
                 {
                     name: "preview",
-                    action: SimpleMDE.togglePreview,
+                    action: EasyMDE.togglePreview,
                     className: "fa fa-eye no-disable",
                     title: "Toggle Preview",
                 },
                 "|",
                 {
                     name: "side-by-side",
-                    action: SimpleMDE.toggleSideBySide,
+                    action: EasyMDE.toggleSideBySide,
                     className: "fa fa-columns no-disable no-mobile",
                     title: "Toggle Side by Side",
                 },
                 {
                     name: "fullscreen",
-                    action: SimpleMDE.toggleFullScreen,
+                    action: EasyMDE.toggleFullScreen,
                     className: "fa fa-arrows-alt no-disable no-mobile",
                     title: "Toggle Fullscreen",
                 },
@@ -490,6 +491,9 @@ S.editor = {
         //set up window resize event
         $(window).on('resize', S.editor.resize);
         S.editor.resize();
+
+        //set up uploader
+
     },
 
     resize: function () {
@@ -535,6 +539,23 @@ S.editor = {
         editor.codemirror.on('change', S.editor.updated.check);
     },
 
+    insertText: function (text) {
+        var cm = editor.codemirror;
+        var doc = cm.getDoc();
+        var cursor = doc.getCursor();
+        var line = doc.getLine(cursor.line);
+        var pos = {
+            line: cursor.line
+        };
+        if (line.length === 0) {
+            // if line is empty, add text
+            doc.replaceRange(text, pos);
+        } else {
+            // add a new line, then text
+            doc.replaceRange("\n" + text, pos);
+        }
+    },
+
     changed: false,
 
     updated: {
@@ -547,7 +568,7 @@ S.editor = {
         check: function () {
             S.editor.changed = true;
             clearTimeout(S.editor.updated.timer);
-            S.editor.updated.timer = setTimeout(function () { S.editor.save(); }, 5000);
+            S.editor.updated.timer = setTimeout(function () { S.editor.save(); }, 5000); //auto-save after 5 seconds of no activity
         }
     },
 
@@ -647,6 +668,71 @@ S.editor = {
             );
 
             return false;
+        }
+    },
+
+    uploader: {
+        upload: function (input) {
+            if (input.files && input.files.length > 0) {
+                //get current caret position in editor
+
+                var files = input.files;
+                var progress = $('.upload-progress');
+                progress.prop({ 'width': '1%' });
+                progress.show();
+                for (var x = 0; x < files.length; x++) {
+                    var xhr = new XMLHttpRequest();
+                    var file = files[x];
+                    xhr.upload.addEventListener('progress', onProgress, false);
+                    xhr.open('POST', '/upload?entryId=' + S.editor.entryId, false);
+                    xhr.setRequestHeader("X-File-Name", file.name || file.fileName);
+                    xhr.setRequestHeader("Content-Type", "application/octet-stream");
+                    if ('getAsBinary' in file) {
+                        // Firefox 3.5
+                        xhr.sendAsBinary(file.getAsBinary());
+                    }
+                    else {
+                        // W3C-blessed interface
+                        xhr.send(file);
+                    }
+
+                    function onProgress(e) {
+                        var percent = (x / files.length * 100) + ((e.loaded / e.total * 100) / files.length);
+                        $('.upload-progress').prop({ 'width': percent + '%' });
+                    }
+
+                    xhr.onload = function () {
+                        if (xhr.status >= 200 && xhr.status < 400) {
+                            //request success
+                            console.log(xhr.responseText);
+                            let uploads = JSON.parse(xhr.responseText);
+                            console.log(uploads);
+                            if (uploads != null && uploads.length > 0) {
+                                for (var y = 0; y < uploads.length; y++) {
+                                    var f = uploads[y];
+                                    switch (f.Type) {
+                                        case 1: //image
+                                            S.editor.insertText('![' + f.Name + '](' + f.Path + f.Name + ')');
+                                            break;
+                                        default: //link to file
+                                            S.editor.insertText('[' + f.Name + '](' + f.Path + f.Name + ')');
+                                            break;
+                                    }
+                                    
+                                }
+                            }
+                            
+                        }
+                    };
+                }
+                progress.hide();
+            }
+        }
+    },
+
+    image: {
+        showDialog: function () {
+            uploader.click();
         }
     }
 };

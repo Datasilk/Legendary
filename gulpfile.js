@@ -99,7 +99,7 @@ paths.working = {
 
     dashboard: {
         js: [
-            paths.scripts + 'utility/simplemde.min.js',
+            paths.scripts + 'utility/easymde.min.js',
             paths.scripts + 'utility/highlight.min.js',
             paths.scripts + 'utility/remarkable.min.js',
             paths.app + 'views/dashboard/dashboard.js'

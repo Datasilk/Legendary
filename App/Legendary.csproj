@@ -109,4 +109,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Content\files\" />
+    <Folder Include="Content\files\1\" />
+  </ItemGroup>
+
 </Project>

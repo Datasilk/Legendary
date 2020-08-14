@@ -28,6 +28,8 @@ public class Routes : Datasilk.Core.Web.Routes
             case "login": return new Legendary.Controllers.Login();
             case "logout": return new Legendary.Controllers.Logout();
             case "access-denied": return new Legendary.Controllers.ErrorCodes.AccessDenied();
+            case "upload": return new Legendary.Controllers.Upload();
+            case "file": return new Legendary.Controllers.File();
         }
     }
 }

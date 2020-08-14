@@ -45,5 +45,5 @@
   ],
   "start_url": "/Login",
   "background_color": "#eeeeee",
-  "display": "standalone"
+  "display": "fullscreen"
 }
