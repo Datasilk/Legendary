@@ -26,7 +26,7 @@ namespace Legendary.Controllers
                     var filename = file.Value.Filename.Replace(" ", "").Replace("-", "").Replace("_", "").ToLower();
                     var ext = filename.Split('.')[^1];
                     filename = Regex.Replace(filename.Replace("." + ext, ""), "[^0-9A-Za-z]+", "");
-                    if(filename.Length > 16) { filename = filename.Substring(0, 16); }
+                    if(filename.Length > 24) { filename = filename.Substring(0, 24); }
                     var rnd = new Random();
                     var id = rnd.Next(1000, 9999);
                     var finalname =  filename + "_" + id + "." + ext;

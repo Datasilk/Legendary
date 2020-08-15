@@ -13,6 +13,7 @@ namespace Legendary.Controllers
             var filename = PathParts[2].ToLower() + "." + ext;
             var fullsize = false;
             var img = false;
+            var attachment = false;
 
             //set content type
             switch (ext)
@@ -27,10 +28,17 @@ namespace Legendary.Controllers
                     break;
                 case "svg":
                     Context.Response.ContentType = "image/svg+xml";
+                    attachment = true;
                     break;
                 default:
                     Context.Response.ContentType = "application/" + ext;
+                    attachment = true;
                     break;
+            }
+
+            if (attachment)
+            {
+                Context.Response.Headers.Add("Content-Disposition", "attachment; filename=\"" + filename + "\"");
             }
 
             //serve file
