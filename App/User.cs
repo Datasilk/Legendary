@@ -7,21 +7,16 @@ namespace Legendary
 {
     public class User
     {
-        public int userId = 0;
-        public short userType = 0;
-        public string visitorId = "";
-        public string email = "";
-        public string name = "";
-        public string displayName = "";
-        public bool photo = false;
-        public bool isBot = false;
-        public bool useAjax = true;
-        public bool isMobile = false;
-        public bool isTablet = false;
-        public bool resetPass = false;
-        public DateTime datecreated;
-        public Dictionary<string, string> Data = new Dictionary<string, string>();
-        public string language = "en";
+        public int userId { get; set; }  = 0;
+        public short userType { get; set; } = 0;
+        public string visitorId { get; set; } = "";
+        public string email { get; set; } = "";
+        public string name { get; set; } = "";
+        public string displayName { get; set; } = "";
+        public bool photo { get; set; } = false;
+        public bool resetPass { get; set; } = false;
+        public DateTime datecreated { get; set; }
+        public string language { get; set; } = "en";
         protected bool changed = false;
         protected HttpContext Context;
 
@@ -73,7 +68,7 @@ namespace Legendary
         {
             if (this.changed == true && changed == false)
             {
-                Context.Session.Set("user", GetBytes(JsonSerializer.Serialize<User>(this)));
+                Context.Session.Set("user", GetBytes(JsonSerializer.Serialize(this)));
                 this.changed = false;
             }
             if (changed == true)

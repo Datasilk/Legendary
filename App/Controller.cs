@@ -59,7 +59,7 @@ namespace Legendary
 
         public string JsonResponse(dynamic obj)
         {
-            Context.Response.ContentType = "text/json";
+            Context.Response.ContentType = "application/json";
             return JsonSerializer.Serialize(obj);
         }
 

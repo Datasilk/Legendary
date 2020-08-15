@@ -350,6 +350,7 @@ S.editor = {
                 return '';
             }
         });
+        markdown.use(S.editor.image.render);
 
         //initialize markdown editor
         editor = new EasyMDE({
@@ -683,23 +684,13 @@ S.editor = {
                 for (var x = 0; x < files.length; x++) {
                     var xhr = new XMLHttpRequest();
                     var file = files[x];
-                    xhr.upload.addEventListener('progress', onProgress, false);
-                    xhr.open('POST', '/upload?entryId=' + S.editor.entryId, false);
-                    xhr.setRequestHeader("X-File-Name", file.name || file.fileName);
-                    xhr.setRequestHeader("Content-Type", "application/octet-stream");
-                    if ('getAsBinary' in file) {
-                        // Firefox 3.5
-                        xhr.sendAsBinary(file.getAsBinary());
-                    }
-                    else {
-                        // W3C-blessed interface
-                        xhr.send(file);
-                    }
-
-                    function onProgress(e) {
+                    //show progress bar
+                    xhr.upload.addEventListener('progress', (e) => {
                         var percent = (x / files.length * 100) + ((e.loaded / e.total * 100) / files.length);
                         $('.upload-progress').prop({ 'width': percent + '%' });
-                    }
+                    }, false);
+
+                    xhr.open('POST', '/upload?entryId=' + S.editor.entryId, false);
 
                     xhr.onload = function () {
                         if (xhr.status >= 200 && xhr.status < 400) {
@@ -724,6 +715,11 @@ S.editor = {
                             
                         }
                     };
+
+                    console.log('sending file...');
+                    var formData = new FormData();
+                    formData.append("file", file);
+                    xhr.send(formData);
                 }
                 progress.hide();
             }
@@ -733,6 +729,30 @@ S.editor = {
     image: {
         showDialog: function () {
             uploader.click();
+        },
+
+        render: function (md, opt) {
+            md.inline.ruler.push("image-link", (state, checkMode) => {
+                var src = state.src;
+                if (src.indexOf('![') == 0) {
+                    if (!checkMode) {
+                        //parse image
+                        var images = src.split('\n');
+                        for (var x = 0; x < images.length; x++) {
+                            var parts = images[x].replace('![', '').replace('](', '|').replace(')', '').split('|');
+                            console.log('"' + images[x] + '"');
+                            state.push({
+                                content: '<a href="' + parts[1] + '/full" target="_blank"><img src="' + parts[1] + '" alt="' + parts[0] + '"/></a>',
+                                type: 'htmltag',
+                                level: state.level
+                            });
+                        }
+                    }
+                    state.pos += state.src.length;
+                    return true;
+                }
+                return false;
+            });
         }
     }
 };

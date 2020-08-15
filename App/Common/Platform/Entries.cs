@@ -101,6 +101,7 @@ namespace Legendary.Common.Platform
 
         public static void SaveEntry(int userId, int entryId, string content)
         {
+            if(userId == 0) { return; }
             var entry = Query.Entries.GetDetails(userId, entryId);
             var path = "/Content/books/" + entry.bookId + "/";
             if (!Directory.Exists(Server.MapPath(path)))
