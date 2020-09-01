@@ -2,6 +2,7 @@
   "assembly": "Legendary",
   "environment": "development",
   "defaultController": "Home",
+  "version": "1.01",
   "sql": {
     "active": "SqlServerTrusted",
     "SqlServerTrusted": "server=.\\SQL2017; database=Legendary; Trusted_Connection=true"

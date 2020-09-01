@@ -69,7 +69,7 @@ namespace Legendary.Common.Platform
                             chapter["chapter"] = "Chapter " + entry.chapter.ToString() + ": " +
                                 chapterlist.Find((Query.Models.Chapter c) => { return c.chapter == entry.chapter; }).title;
                             chapter["id"] = entry.chapter.ToString();
-                            if(chapterShown == entry.chapter)
+                            if(chapterShown != 0 && chapterShown == entry.chapter)
                             {
                                 chapter["expanded"] = "expanded";
                             }
@@ -78,7 +78,7 @@ namespace Legendary.Common.Platform
                         }
                         chapterInc = entry.chapter;
                     }
-                    if(entry.chapter != chapterShown)
+                    if(chapterShown != 0 && entry.chapter != chapterShown)
                     {
                         item.Show("hide-entry");
                     }

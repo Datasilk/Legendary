@@ -58,21 +58,6 @@ namespace Legendary
             var configFile = "config" +
                 (Server.IsDocker ? ".docker" : "") +
                 (Server.environment == Server.Environment.production ? ".prod" : "") + ".json";
-            if (!File.Exists(Server.MapPath(configFile)))
-            {
-                //create default config.json file
-                File.WriteAllText(Server.MapPath(configFile),
-                    "{\n" +
-                     "\"sql\": {\n" +
-                        "\"active\": \"SqlServerTrusted\",\n" +
-                        "\"SqlServerTrusted\": \"server=.\\\\SQL2017; database=Legendary; Trusted_Connection=true\"\n" +
-                      "},\n" +
-                      "\"encryption\": {\n" +
-                        "\"salt\": \"?\",\n" +
-                        "\"bcrypt_work_factor\": \"10\"\n" +
-                      "}\n" +
-                    "}\n");
-            }
 
             config = new ConfigurationBuilder()
                 .AddJsonFile(Server.MapPath(configFile))

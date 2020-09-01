@@ -75,8 +75,6 @@ S.entries = {
         $('.chapter .expander').on('click', (e) => {
             var chapter = $(e.target).parents('.chapter').first();
             var chapterId = chapter.attr('data-id');
-            console.log(chapter);
-            console.log(chapterId);
             if (chapter.hasClass('expanded')) {
                 //hide chapter entries
                 $('.entry.chapter-' + chapterId).hide();
@@ -119,7 +117,6 @@ S.entries = {
                     $('.subbar .entries').html(d);
                     $('.subbar, .subbar .entries').removeClass('hide');
                     S.popup.hide();
-                    S.entries.bindEvents();
                     if($('.entries .entry').length > 0) {
                         //load selected entry
                         $('.editor').removeClass('hide');
