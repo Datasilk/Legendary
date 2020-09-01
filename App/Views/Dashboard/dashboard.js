@@ -65,8 +65,28 @@ S.entries = {
     bookId: 0,
 
     init: function () {
+        S.entries.bindEvents();
         S.entries.resize();
         S.scrollbar.add($('.entries .container'), { touch: true });
+    },
+
+    bindEvents: function () {
+        //bind events to chapters list
+        $('.chapter .expander').on('click', (e) => {
+            var chapter = $(e.target).parents('.chapter').first();
+            var chapterId = chapter.attr('data-id');
+            console.log(chapter);
+            console.log(chapterId);
+            if (chapter.hasClass('expanded')) {
+                //hide chapter entries
+                $('.entry.chapter-' + chapterId).hide();
+                chapter.removeClass('expanded');
+            } else {
+                //show chapter entries
+                $('.entry.chapter-' + chapterId).show();
+                chapter.addClass('expanded');
+            }
+        });
     },
 
     resize: function () {
@@ -85,44 +105,48 @@ S.entries = {
             $('.editor').removeClass('hide');
             const win = S.window.pos();
             if ($('.sidebar.show-card').length > 0 && win.w <= 895) {
-                //mobile view, show shapters
+                //mobile view, show chapters
                 S.menus.chapters.show();
             }
-            return;
-        }
-        var data = { bookId: id, entryId: S.editor.entryId || 0, start: 1, length: 500, sort: 0};
-        S.ajax.post('Entries/GetList', data,
-            function (d) {
-                S.dash.hideAll();
-                $('ul.menu li.book.selected').removeClass('selected');
-                $('ul.menu li.book.id-' + id).addClass('selected');
-                $('.subbar .entries').html(d);
-                $('.subbar, .subbar .entries').removeClass('hide');
-                S.popup.hide();
-                if($('.entries .entry').length > 0) {
-                    //load selected entry
-                    $('.editor').removeClass('hide');
-                    var entry = $('.entries .entry.selected');
-                    if (entry.length > 0) {
-                        let entryId = S.entries.getId(entry);
-                        S.editor.getContent(entryId);
+        } else {
+            //load list of entries
+            var data = { bookId: id, entryId: S.editor.entryId || 0, start: 1, length: 500, sort: 0};
+            S.ajax.post('Entries/GetList', data,
+                function (d) {
+                    S.dash.hideAll();
+                    $('ul.menu li.book.selected').removeClass('selected');
+                    $('ul.menu li.book.id-' + id).addClass('selected');
+                    $('.subbar .entries').html(d);
+                    $('.subbar, .subbar .entries').removeClass('hide');
+                    S.popup.hide();
+                    S.entries.bindEvents();
+                    if($('.entries .entry').length > 0) {
+                        //load selected entry
+                        $('.editor').removeClass('hide');
+                        var entry = $('.entries .entry.selected');
+                        if (entry.length > 0) {
+                            let entryId = S.entries.getId(entry);
+                            S.editor.getContent(entryId);
+                        }
+                    } else {
+                        //no entries exist
+                        S.entries.noentries();
                     }
-                } else {
-                    //no entries exist
-                    S.entries.noentries();
+
+                    S.entries.init();
+                    S.entries.bookId = id;
+                    const win = S.window.pos();
+                    if ($('.sidebar.show-card').length > 0 && win.w <= 895) {
+                        //mobile view, show chapters
+                        S.menus.chapters.show();
+                    }
+                },
+                function (err) {
+                    S.message.show('.popup .message', 'error', err);
                 }
-                S.entries.init();
-                S.entries.bookId = id;
-                const win = S.window.pos();
-                if ($('.sidebar.show-card').length > 0 && win.w <= 895) {
-                    //mobile view, show chapters
-                    S.menus.chapters.show();
-                }
-            },
-            function (err) {
-                S.message.show('.popup .message', 'error', err);
-            }
-        );
+            );
+        }
+        
     },
 
     create: {
@@ -258,6 +282,7 @@ S.chapters = {
                 data.map(a => {
                     list.append(new Option((a.num > 0 ? a.num + ': ' : '') + a.title, a.num));
                 });
+
                 if (typeof callback == 'function') { callback(); }
             },
             function (err) {

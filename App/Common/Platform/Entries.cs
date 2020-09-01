@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Crypto;
 
@@ -50,6 +51,7 @@ namespace Legendary.Common.Platform
             var chapterlist = Query.Chapters.GetList(bookId);
             var list = Query.Entries.GetList(userId, bookId, start, length, (int)sort);
             var chapterInc = -1;
+            var chapterShown = list.Where(a => a.entryId == entryId).FirstOrDefault()?.chapter ?? 0;
             var entryIndex = 0;
             var book = Query.Books.GetDetails(userId, bookId);
             entries["book-title"] = book.title;
@@ -66,16 +68,28 @@ namespace Legendary.Common.Platform
                             //display chapter
                             chapter["chapter"] = "Chapter " + entry.chapter.ToString() + ": " +
                                 chapterlist.Find((Query.Models.Chapter c) => { return c.chapter == entry.chapter; }).title;
+                            chapter["id"] = entry.chapter.ToString();
+                            if(chapterShown == entry.chapter)
+                            {
+                                chapter["expanded"] = "expanded";
+                            }
                             html.Append(chapter.Render());
+                            chapter.Clear();
                         }
                         chapterInc = entry.chapter;
                     }
+                    if(entry.chapter != chapterShown)
+                    {
+                        item.Show("hide-entry");
+                    }
                     item["id"] = entry.entryId.ToString();
+                    item["chapter-id"] = entry.chapter.ToString();
                     item["selected"] = entry.entryId == entryId ? "selected" : entryId == 0 && entryIndex == 1 ? "selected" : "";
                     item["title"] = entry.title;
                     item["summary"] = entry.summary;
                     item["date-created"] = entry.datecreated.ToString("M/dd/yyyy");
                     html.Append(item.Render());
+                    item.Clear();
                 });
                 entries["entries"] = html.ToString();
             }

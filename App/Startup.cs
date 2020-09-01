@@ -93,7 +93,7 @@ namespace Legendary
             }
 
             //configure Server database connection strings
-            Query.Sql.connectionString = config.GetSection("sql:" + config.GetSection("sql:Active").Value).Value;
+            Query.Sql.ConnectionString = config.GetSection("sql:" + config.GetSection("sql:Active").Value).Value;
 
             //configure Server security
             Server.bcrypt_workfactor = int.Parse(config.GetSection("Encryption:bcrypt_work_factor").Value);

@@ -4,9 +4,12 @@ namespace Legendary
 {
     public class Service : Request, IService
     {
-        public override void Unload()
+        public override void Dispose()
         {
-            User.Save();
+            if(user != null)
+            {
+                User.Save();
+            }
         }
 
         public string Success()

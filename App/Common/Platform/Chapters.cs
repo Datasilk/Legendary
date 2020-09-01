@@ -2,8 +2,8 @@
 {
     public struct Chapter
     {
-        public string title;
-        public int num;
+        public string title { get; set; }
+        public int num { get; set; }
     }
 
     public class Chapters

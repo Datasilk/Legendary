@@ -27,6 +27,13 @@ header{width:100%; padding:9px; display:block; line-height:0; height:50px;
 }
 
 .subbar{float:left; height:~"calc(100% - 50px)"; width:350px; line-height:1.5;
+    .chapter{
+        .expander{transform:rotate(-90deg); position:relative; left:-5px; padding:4px 0 10px 0px;}
+        &.expanded{
+            .expander{transform:rotate(0);}
+        }
+        .wrap{width:~"calc(100% - 29px)";}
+    }
     .entries .container{position:relative;}
     .entries .movable{float:left; position:relative; width:100%;}
     .entries:after{content:'';display:block;clear:both;}
@@ -45,10 +52,6 @@ header{width:100%; padding:9px; display:block; line-height:0; height:50px;
     .no-entries{width:100%; text-align:center; padding:20px;}
     .entry{border-bottom:1px solid transparent; cursor:default;
         .summary{line-height:1.25 !important; opacity:0.75;}
-    }
-
-    .chapter{
-        .wrap{width:~"calc(100% - 9px)";}
     }
 }
 
