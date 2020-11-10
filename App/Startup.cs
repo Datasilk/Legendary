@@ -33,6 +33,8 @@ namespace Legendary
 
             //add health checks
             services.AddHealthChecks();
+
+            ViewPartialPointers.Paths.Add(new System.Collections.Generic.KeyValuePair<string, string>("shared", "Views/Shared"));
         }
 
         public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)

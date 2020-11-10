@@ -18,5 +18,10 @@
                 user = value;
             }
         }
+
+        public virtual bool CheckSecurity()
+        {
+            return true;
+        }
     }
 }

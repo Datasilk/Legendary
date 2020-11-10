@@ -4,7 +4,7 @@
     {
         public override string Render(string body = "")
         {
-            return base.Render(AccessDenied());
+            return base.Render(AccessDenied<Login>());
         }
     }
 }

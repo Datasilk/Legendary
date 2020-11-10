@@ -8,7 +8,7 @@ namespace Legendary.Controllers
     {
         public override string Render(string body = "")
         {
-            if (!CheckSecurity()) { AccessDenied(IController.LoadController<Login>(this).Render()); }
+            if (!CheckSecurity()) { return AccessDenied<Login>(); }
 
             //add Scripts to page
             AddScript("/js/dashboard.js?v=" + Server.Version);
