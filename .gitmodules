@@ -4,9 +4,6 @@
 [submodule "App/CSS/tapestry"]
 	path = App/CSS/tapestry
 	url = http://github.com/websilk/tapestry
-[submodule "App/Core"]
-	path = App/Core
-	url = http://github.com/datasilk/core
 [submodule "App/Utility/Crypto"]
 	path = App/Common/Utility/Crypto
 	url = http://github.com/datasilk/Crypto
