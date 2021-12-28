@@ -67,7 +67,8 @@ S.entries = {
     init: function () {
         S.entries.bindEvents();
         S.entries.resize();
-        S.scrollbar.add($('.entries .container'), { touch: true });
+        S.scrollbar.add($('.entries .container'), {
+            touch: true, moved: S.entries.resize, touchEnd: S.entries.resize });
     },
 
     bindEvents: function () {
@@ -91,7 +92,7 @@ S.entries = {
         //resize entries height
         const win = S.window.pos();
         const container = $('.subbar .entries .container');
-        const pos = container.position();
+        const pos = container[0].getBoundingClientRect();
         container.css({ height: win.h - pos.top - 1 });
     },
 
