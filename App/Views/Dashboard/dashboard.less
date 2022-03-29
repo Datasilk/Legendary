@@ -77,7 +77,7 @@ header{width:100%; padding:9px; display:block; line-height:0; height:50px;
     .editor-statusbar{display:none;}
     .editor-wrapper input.title:hover{opacity:1 !important;}
     .editor-toolbar{opacity:1 !important;border:0px none transparent !important; border-radius:0px !important;
-        *:nth-child(1n+18){float:right;}
+        *:nth-child(1n+19){float:right;}
     }
     & > .message{width:97%; z-index:100; margin-top:10px !important;}
     .hljs{display:inline-block; padding:4px 7px !important; position:relative; top:8px;}
@@ -97,9 +97,10 @@ header{width:100%; padding:9px; display:block; line-height:0; height:50px;
     li{padding-bottom:10px;}
     img{max-width:100%;}
 }
+.editor-preview-side{left:inherit;}
 
 .editor-toolbar.disabled-for-preview{
-    a, .separator:nth-child(-n+17){opacity:0.1;}
+    a, .separator:nth-child(-n+18){opacity:0.1;}
     a.no-disable{opacity:1;}
 }
 
@@ -145,4 +146,13 @@ header{width:100%; padding:9px; display:block; line-height:0; height:50px;
 
 @media (max-width:385px){
     header .logo{display:none;}
+}
+
+/* Print Styling */
+@media print{
+    .editor-toolbar{display:none}
+    .CodeMirror{position:static;}
+    html{display:block;}
+    body, .editor.body, .markdown-editor, .CodeMirror, .editor-preview-full{position:page; height:auto !important; overflow-y:visible !important; overflow:visible !important; min-height: auto !important;}
+    body{overflow:auto !important;}
 }

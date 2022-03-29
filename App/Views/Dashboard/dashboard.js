@@ -355,6 +355,7 @@ var markdown;
 S.editor = {
     entryId: null,
     div: null,
+    toggle: {fullscreen:false, preview:false, sidebyside:false},
 
     init: function () {
         //initialize markdown renderer (with code syntax highlighting support)
@@ -467,21 +468,27 @@ S.editor = {
                     title: "Markdown Guide",
                 },
                 {
+                    name: "print",
+                    action: S.editor.print,
+                    className: "fa fa-print",
+                    title: "Print Page",
+                },
+                {
                     name: "preview",
-                    action: EasyMDE.togglePreview,
+                    action: S.editor.preview,
                     className: "fa fa-eye no-disable",
                     title: "Toggle Preview",
                 },
                 "|",
                 {
                     name: "side-by-side",
-                    action: EasyMDE.toggleSideBySide,
+                    action: S.editor.sidebyside,
                     className: "fa fa-columns no-disable no-mobile",
                     title: "Toggle Side by Side",
                 },
                 {
                     name: "fullscreen",
-                    action: EasyMDE.toggleFullScreen,
+                    action: S.editor.fullscreen,
                     className: "fa fa-arrows-alt no-disable no-mobile",
                     title: "Toggle Fullscreen",
                 },
@@ -516,8 +523,12 @@ S.editor = {
         $(window).on('resize', S.editor.resize);
         S.editor.resize();
 
-        //set up uploader
-
+        //set up print function
+        $(window).on('afterprint', function () {
+            var toggle = S.editor.toggled;
+            if (toggle.preview) { S.editor.preview(...toggle.arguments); }
+            S.editor.toggled = null;
+        });
     },
 
     resize: function () {
@@ -693,6 +704,35 @@ S.editor = {
 
             return false;
         }
+    },
+
+    sidebyside: function () {
+        S.editor.toggle.sidebyside = !S.editor.toggle.sidebyside;
+        EasyMDE.toggleSideBySide(...arguments);
+    },
+
+    preview: function () {
+        S.editor.toggle.preview = !S.editor.toggle.preview;
+        S.editor.toggle.print = false;
+        EasyMDE.togglePreview(...arguments);
+    },
+
+    fullscreen: function () {
+        S.editor.toggle.fullscreen = !S.editor.toggle.fullscreen;
+        S.editor.toggle.print = false;
+        EasyMDE.toggleFullScreen(...arguments);
+    },
+
+    print: function () {
+        var toggle = { preview: false, fullscreen: false };
+        if (S.editor.toggle.preview == false) {
+            S.editor.preview(...arguments);
+            toggle.preview = true;
+        }
+        S.editor.toggle.print = true;
+        toggle.arguments = arguments;
+        S.editor.toggled = toggle;
+        setTimeout(window.print, 100);
     },
 
     uploader: {
